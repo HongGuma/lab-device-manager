@@ -1,0 +1,3 @@
+.wrap{display: flex; flex-direction: column; width: 100%; background-color: cadetblue;}
+.content{display: flex; flex-direction: column;}
+#item{display: flex; flex-direction: row;}
