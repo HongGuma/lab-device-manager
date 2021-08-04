@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4ca486e8-9904-4362-97e4-3b3a916cdf5c" name="TEST-SERVER">
+        <fileTransfer rootFolder="/BiO/Serve/Httpd/lab_device_manager" accessType="SFTP" host="210.218.217.110" port="3030" sshConfigId="b5312f4e-da39-4862-8611-2491e96b9b37" sshConfig="root@210.218.217.110:3030 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
