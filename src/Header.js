@@ -8,7 +8,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-import newlogoIMG from '../images/new_logo.png';
+import newlogoIMG from './images/new_logo.png';
 
 class Header extends React.Component{
     render() {
@@ -24,13 +24,21 @@ class Header extends React.Component{
                 </div>
                 <div className='header-menu'>
                     <div className="header-logo">
-                        <img className="logo-img" src = {newlogoIMG} />
+                        <Link to="/"><img className="logo-img" src = {newlogoIMG} /></Link>
                     </div>
                     <ul>
-                        <li>연구실</li>
-                        <li>서버</li>
-                        <li>실험실</li>
-                        <li>샘플</li>
+                        <li>
+                            <Link to="/office">연구실</Link>
+                        </li>
+                        <li>
+                            <Link to="/server">서버</Link>
+                        </li>
+                        <li>
+                            <Link to="/laboratory">실험실</Link>
+                        </li>
+                        <li style={{borderRight:"none"}}>
+                            <Link to="/rental">비품대여</Link>
+                        </li>
                     </ul>
                 </div>
             </div>

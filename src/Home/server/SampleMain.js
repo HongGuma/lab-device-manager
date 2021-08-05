@@ -8,16 +8,16 @@
 
 import React from 'react';
 
-class DeviceMain extends React.Component{
+class SampleMain extends React.Component{
     render() {
         return (
             <div className="main-wrap">
-                <div className="main-content">
-                    device main
+                <div className="main-current">
+                    sample main
                 </div>
             </div>
         );
     }
 }
 
-export default DeviceMain;
+export default SampleMain;

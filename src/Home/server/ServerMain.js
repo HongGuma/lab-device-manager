@@ -8,16 +8,16 @@
 
 import React from 'react';
 
-class SampleMain extends React.Component{
+class ServerMain extends React.Component{
     render() {
         return (
             <div className="main-wrap">
-                <div className="main-content">
-                    sample main
+                <div className="main-current">
+                    server main
                 </div>
             </div>
         );
     }
 }
 
-export default SampleMain;
+export default ServerMain;

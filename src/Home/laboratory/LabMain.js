@@ -12,7 +12,7 @@ class LabMain extends React.Component{
     render() {
         return (
             <div className="main-wrap">
-                <div className="main-content">
+                <div className="main-current">
                     laboratory main
                 </div>
             </div>
