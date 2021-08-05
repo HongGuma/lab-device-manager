@@ -7,13 +7,19 @@
 */
 
 import React from 'react';
+import SideBarContainer from "../container/SideBarContainer";
+import ContentContainer from "../container/ContentContainer";
 
 class OfficeMain extends React.Component{
     render() {
         return (
-            <div className="main-wrap">
-                <div className="main-current">
-                    office main
+            <div className="office-wrap">
+                <div className="office-tit">
+                    <p>연구실 비품 관리</p>
+                </div>
+                <div className="office-width">
+                    <SideBarContainer/>
+                    <ContentContainer/>
                 </div>
             </div>
         );

@@ -19,7 +19,7 @@ import Footer from "./Footer";
 
 function App(){
     return(
-        <div>
+        <div className="app">
             <Header/>
             <Route path="/" component={Main} exact/>
             <Route path="/office" component={OfficeMain}/>

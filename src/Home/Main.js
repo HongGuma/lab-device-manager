@@ -5,14 +5,13 @@
 *@desc 홈페이지 첫 화면
 *@etc(change)
 */
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from 'react'
 
 import deskImg from '../images/desk_color.png';
 import deviceImg from '../images/device_color.png';
 import microImg from '../images/microscope_color.png';
 import bloodtubeImg from '../images/bloodtube_color.png';
-import ObjectListContainer from "./ObjectListContainer";
+import MainListContainer from "./MainListContainer";
 import RentalListContainer from "./rental/RentalListContainer";
 
 class Main extends React.Component{
@@ -27,7 +26,7 @@ class Main extends React.Component{
                         <li><img src={microImg}/><p>실험실비품</p></li>
                         <li><img src={bloodtubeImg}/><p>샘플관리</p></li>
                     </ul>
-                    <ObjectListContainer/>
+                    <MainListContainer/>
                 </section>
                 <section className="main-rental">
                     <RentalListContainer/>

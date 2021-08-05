@@ -8,10 +8,10 @@
 
 import React from 'react';
 
-class ObjectListContainer extends React.Component{
+class MainListContainer extends React.Component{
     render() {
         return(
-            <div className="object container-wrap">
+            <div className="main container-wrap">
                 <section className="container-inner">
                     <div className="tit-txt">
                         <p>사무용품</p>
@@ -53,4 +53,4 @@ class ObjectListContainer extends React.Component{
         )
     }
 }
-export default ObjectListContainer;
+export default MainListContainer;

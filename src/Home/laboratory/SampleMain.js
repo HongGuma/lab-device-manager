@@ -10,14 +10,11 @@ import React from 'react';
 import SideBarContainer from "../container/SideBarContainer";
 import ContentContainer from "../container/ContentContainer";
 
-class LabMain extends React.Component{
+class SampleMain extends React.Component{
     render() {
         return (
-            <div className="Lab-wrap">
-                <div className="Lab-tit">
-                    <p>실험실 비품 관리</p>
-                </div>
-                <div className="Lab-width">
+            <div className="office-wrap">
+                <div className="office-width">
                     <SideBarContainer/>
                     <ContentContainer/>
                 </div>
@@ -26,4 +23,4 @@ class LabMain extends React.Component{
     }
 }
 
-export default LabMain;
+export default SampleMain;
