@@ -1,33 +1,86 @@
-import React from 'react';
-import './main.css';
+/**
+*@title main page
+*@date 21-08-02
+*@author 홍수희
+*@desc 홈페이지 첫 화면
+*@etc(change)
+*/
+import React from 'react'
+
+import deskImg from '../images/desk_color.png';
+import deviceImg from '../images/device_color.png';
+import microImg from '../images/microscope_color.png';
+import bloodtubeImg from '../images/bloodtube_color.png';
+import RentalListContainer from "./rental/RentalListContainer";
 
 class Main extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state= {
+            tabNum: [0, 1, 2, 3],
+            tabTitle: {
+                0: '사무용품',
+                1: '전자기기',
+                2: '실험실비품',
+                3: '샘플관리'
+            },
+            tabImg: {
+                0: deskImg,
+                1: deviceImg,
+                2: microImg,
+                3: bloodtubeImg,
+            },
+            currentID: 0,
+            currentTit: '사무용품',
+        };
+    }
+
+    /**
+     * @param id 비품현황 탭의 id
+     * @param txt 비품현황 탭의 text
+     */
+    onClickTab(id,txt) {
+        this.setState({
+            currentID: id,
+            currentTit: txt,
+        });
+    }
+
+
     render() {
+
         return (
-            <div className={"wrap"}>
-                <div className="title">비품 현황</div>
-                <div className="content">
-                    <div id={"item"}>
-                        <div>모니터</div>
-                        <div>n대</div>
+            <div className="main-wrap">
+                <section className="main-current">
+                    <span>비품현황</span>
+                    <ul className="cont-ul">
+                        {this.state.tabNum.map(idx=>(
+                            <li onClick={() => this.onClickTab(idx,this.state.tabTitle[idx])}><img src={this.state.tabImg[idx]}/><p>{this.state.tabTitle[idx]}</p></li>
+                        ))}
+                    </ul>
+                    <div className="main current-cont">
+                        <div className="current-inner">
+                            <div className="tit-txt">
+                                <p>{this.state.currentTit}</p>
+                            </div>
+                            <div className="item">
+                                <ul>
+                                    <li><p>항목항목항목항목항목항목항목</p><p>n개</p></li>
+                                    <li><p>항목항목항목항목항목항목항목항목항목항목항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div id={"item"}>
-                        <div>의자</div>
-                        <div>n개</div>
-                    </div>
-                    <div id={"item"}>
-                        <div>책상</div>
-                        <div>n개</div>
-                    </div>
-                    <div id={"item"}>
-                        <div>마우스</div>
-                        <div>n개</div>
-                    </div>
-                    <div id={"item"}>
-                        <div>키보드</div>
-                        <div>n개</div>
-                    </div>
-                </div>
+                </section>
+                <section className="main-rental">
+                    <RentalListContainer/>
+                </section>
+                <section>
+                </section>
             </div>
         );
     }
