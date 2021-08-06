@@ -27,10 +27,12 @@ class ContentContainer extends React.Component{
                 </div>
                 <div className="content-cont">
                     <ul className="tit-ul">
-                        <li>전체</li>
+                        <li>전체<br/><input type="checkbox"/></li>
                         <li>번호</li>
                         <li>품명</li>
+                        <li>사용자</li>
                         <li>상태</li>
+                        <li>위치</li>
                         <li>품질</li>
                         <li>관리자</li>
                         <li>마지막<br/>수정시간</li>
@@ -39,12 +41,14 @@ class ContentContainer extends React.Component{
                         <li><input type="checkbox"/></li>
                         <li>1</li>
                         <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>
@@ -54,77 +58,18 @@ class ContentContainer extends React.Component{
                         </li>
                         <li>홍길동</li>
                         <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>2</li>
-                        <li>의자2</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>3</li>
-                        <li>의자3</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>4</li>
-                        <li>의자4</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
+                    </ul><ul className="cont-ul">
                         <li><input type="checkbox"/></li>
                         <li>1</li>
                         <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>
@@ -134,77 +79,18 @@ class ContentContainer extends React.Component{
                         </li>
                         <li>홍길동</li>
                         <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>2</li>
-                        <li>의자2</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>3</li>
-                        <li>의자3</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>4</li>
-                        <li>의자4</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
+                    </ul><ul className="cont-ul">
                         <li><input type="checkbox"/></li>
                         <li>1</li>
                         <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>
@@ -214,77 +100,18 @@ class ContentContainer extends React.Component{
                         </li>
                         <li>홍길동</li>
                         <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>2</li>
-                        <li>의자2</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>3</li>
-                        <li>의자3</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
-                        <li><input type="checkbox"/></li>
-                        <li>4</li>
-                        <li>의자4</li>
-                        <li>
-                            <select>
-                                <option value="online">사용중</option>
-                                <option value="offline">사용안함</option>
-                            </select>
-                        </li>
-                        <li>
-                            <select>
-                                <option value="best">좋음</option>
-                                <option value="good">보통</option>
-                                <option value="bad">나쁨</option>
-                            </select>
-                        </li>
-                        <li>홍길동</li>
-                        <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
+                    </ul><ul className="cont-ul">
                         <li><input type="checkbox"/></li>
                         <li>1</li>
                         <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>
@@ -294,17 +121,18 @@ class ContentContainer extends React.Component{
                         </li>
                         <li>홍길동</li>
                         <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
+                    </ul><ul className="cont-ul">
                         <li><input type="checkbox"/></li>
-                        <li>2</li>
-                        <li>의자2</li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>
@@ -314,17 +142,18 @@ class ContentContainer extends React.Component{
                         </li>
                         <li>홍길동</li>
                         <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
+                    </ul><ul className="cont-ul">
                         <li><input type="checkbox"/></li>
-                        <li>3</li>
-                        <li>의자3</li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>
@@ -334,17 +163,102 @@ class ContentContainer extends React.Component{
                         </li>
                         <li>홍길동</li>
                         <li>2021-7-22 15:22</li>
-                    </ul>
-                    <ul className="cont-ul">
+                    </ul><ul className="cont-ul">
                         <li><input type="checkbox"/></li>
-                        <li>4</li>
-                        <li>의자4</li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
                         <li>
                             <select>
                                 <option value="online">사용중</option>
                                 <option value="offline">사용안함</option>
                             </select>
                         </li>
+                        <li>303호</li>
+                        <li>
+                            <select>
+                                <option value="best">좋음</option>
+                                <option value="good">보통</option>
+                                <option value="bad">나쁨</option>
+                            </select>
+                        </li>
+                        <li>홍길동</li>
+                        <li>2021-7-22 15:22</li>
+                    </ul><ul className="cont-ul">
+                        <li><input type="checkbox"/></li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
+                        <li>
+                            <select>
+                                <option value="online">사용중</option>
+                                <option value="offline">사용안함</option>
+                            </select>
+                        </li>
+                        <li>303호</li>
+                        <li>
+                            <select>
+                                <option value="best">좋음</option>
+                                <option value="good">보통</option>
+                                <option value="bad">나쁨</option>
+                            </select>
+                        </li>
+                        <li>홍길동</li>
+                        <li>2021-7-22 15:22</li>
+                    </ul><ul className="cont-ul">
+                        <li><input type="checkbox"/></li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
+                        <li>
+                            <select>
+                                <option value="online">사용중</option>
+                                <option value="offline">사용안함</option>
+                            </select>
+                        </li>
+                        <li>303호</li>
+                        <li>
+                            <select>
+                                <option value="best">좋음</option>
+                                <option value="good">보통</option>
+                                <option value="bad">나쁨</option>
+                            </select>
+                        </li>
+                        <li>홍길동</li>
+                        <li>2021-7-22 15:22</li>
+                    </ul><ul className="cont-ul">
+                        <li><input type="checkbox"/></li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
+                        <li>
+                            <select>
+                                <option value="online">사용중</option>
+                                <option value="offline">사용안함</option>
+                            </select>
+                        </li>
+                        <li>303호</li>
+                        <li>
+                            <select>
+                                <option value="best">좋음</option>
+                                <option value="good">보통</option>
+                                <option value="bad">나쁨</option>
+                            </select>
+                        </li>
+                        <li>홍길동</li>
+                        <li>2021-7-22 15:22</li>
+                    </ul><ul className="cont-ul">
+                        <li><input type="checkbox"/></li>
+                        <li>1</li>
+                        <li>의자1</li>
+                        <li>강감찬</li>
+                        <li>
+                            <select>
+                                <option value="online">사용중</option>
+                                <option value="offline">사용안함</option>
+                            </select>
+                        </li>
+                        <li>303호</li>
                         <li>
                             <select>
                                 <option value="best">좋음</option>

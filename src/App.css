@@ -29,19 +29,24 @@ body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 .main-current span {padding-bottom: 12px; margin-top:8px; font-size:24px; font-weight: bold; text-align: center; /* border-bottom:1px solid #ddd;*/}
 .main-current .cont-ul {list-style: none; display: flex; text-align: center; font-size: 20px; font-weight: 600; color:#393536; padding:0; margin:13px auto;}
 .main-current .cont-ul li {padding:15px 70px;}
+.main-current .cont-ul li:active,.main-current .cont-ul li:hover{border:1px solid #ddd ;box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1);}
 .main-current .cont-ul li img {width: 128px; height: 128px;}
 .main-current .cont-ul li p {text-decoration: none; color:#393536; margin:0;}
 
-.main-rental {background-color: rgba(57,53,54,0.1); margin-bottom: 200px;}
+.current-cont {padding-top:12px;}
+.current-inner {display: flex; margin-bottom: 12px;}
+.current-inner .tit-txt {border-right:1px solid #ddd; padding: 10px 44px; margin:10px 0; min-width: 134px;}
+.current-inner .tit-txt::before{ content:''; position: absolute; width: 46px; height: 2px; background-color: #66c430}
+.current-inner p {font-size:26px; font-weight: 600;}
+.current-inner ul {list-style: none; font-size:20px; font-weight: 400;}
+.current-inner li {padding-left: 12px; font-size:18px;}
+.current-inner .item {width: 100%;}
+.current-inner .item ul {display: flex; flex-direction: column;}
+.current-inner .item li {width:100%;}
+.current-inner .item li p{ float:left; font-size:18px; font-weight: normal; margin:6px 0;}
+.current-inner .item li p:nth-child(2){float:right;}
 
-/*-MainListContainer.js-*/
-.container-wrap {padding-top:12px;}
-.container-inner {display: flex; margin-bottom: 12px;}
-.container-inner .tit-txt {border-right:1px solid #ddd; padding: 10px 44px; margin:10px 0;}
-.container-inner .tit-txt::before{ content:''; position: absolute; width: 46px; height: 2px; background-color: #66c430}
-.container-inner p {font-size:26px; font-weight: 600; /*border-top:2px solid #66c430;*/}
-.container-inner ul {list-style: none; font-size:20px; font-weight: 400;}
-.container-inner li {padding-left: 12px; font-size:18px;}
+.main-rental {background-color: rgba(57,53,54,0.1); margin-bottom: 200px;}
 
 /*======Container======*/
 /*-SideBarContainer-*/
@@ -65,35 +70,35 @@ body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 
 /*======Rental======*/
 /*-RentalListContainer.js-*/
-.rental .container-inner .tit-txt::before {background-color: #2f67b6}
-.rental .container-inner {width: 1100px; margin:0 auto;}
-.rental .container-inner p {border-color:#2f67b6;}
-.rental .item {width:81%; height: 300px; overflow-y: auto;}
+.rental .current-inner .tit-txt::before {background-color: #2f67b6}
+.rental .current-inner {width: 1100px; margin:0 auto;}
+.rental .current-inner p {border-color:#2f67b6;}
+.rental .item {height: 300px; overflow-y: auto; overflow-x:hidden;}
 
 /*-RentalMain.js-*/
 .rental-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
 .rental-tit {height: 80px; margin-bottom:32px; background-color: rgba(57,53,54,0.3);}
-.rental-tit p {width:15%; font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0 auto; color:#393536; border-bottom:1px solid rgba(57,53,54,0.3);}
+.rental-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0 ; color:#393536; border-bottom:1px solid rgba(57,53,54,0.3);}
 
 .rental-width {display: flex; width: 1600px; margin:0 auto;}
 
 /*======OfficeMain.js=======*/
 .office-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
 .office-tit {height: 80px; margin-bottom:32px; background-color: rgba(102,196,48,0.3);}
-.office-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0; color:#393536;}
+.office-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0; color:#393536; border-bottom:1px solid rgba(102,196,48,0.3);}
 .office-width {display: flex; width: 1600px; margin:0 auto;}
 
 /*======ServerMain.js======*/
 .server-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
 .server-tit {height: 80px; margin-bottom:32px; background-color: rgba(47,103,182,0.3);}
-.server-tit p {width:15%; font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0 auto; color:#393536; border-bottom:1px solid rgba(47,103,182,0.3);}
+.server-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0; color:#393536; border-bottom:1px solid rgba(47,103,182,0.3);}
 
 .server-width {display: flex; width: 1600px; margin:0 auto;}
 
 /*======LabMain.js======*/
 .Lab-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
 .Lab-tit {height: 80px; margin-bottom:32px; background-color: rgba(238,30,73,0.3);}
-.Lab-tit p {width:15%; font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0 auto; color:#393536; border-bottom:1px solid rgba(4238,30,73,0.3);}
+.Lab-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 79px; margin:0; color:#393536; border-bottom:1px solid rgba(238,30,73,0.3);}
 
 .Lab-width {display: flex; width: 1600px; margin:0 auto;}
 

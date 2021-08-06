@@ -11,28 +11,75 @@ import deskImg from '../images/desk_color.png';
 import deviceImg from '../images/device_color.png';
 import microImg from '../images/microscope_color.png';
 import bloodtubeImg from '../images/bloodtube_color.png';
-import MainListContainer from "./MainListContainer";
 import RentalListContainer from "./rental/RentalListContainer";
 
 class Main extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state= {
+            tabNum: [0, 1, 2, 3],
+            tabTitle: {
+                0: '사무용품',
+                1: '전자기기',
+                2: '실험실비품',
+                3: '샘플관리'
+            },
+            tabImg: {
+                0: deskImg,
+                1: deviceImg,
+                2: microImg,
+                3: bloodtubeImg,
+            },
+            currentID: 0,
+            currentTit: '사무용품',
+        };
+    }
+
+    /**
+     * @param id 비품현황 탭의 id
+     * @param txt 비품현황 탭의 text
+     */
+    onClickTab(id,txt) {
+        this.setState({
+            currentID: id,
+            currentTit: txt,
+        });
+    }
+
+
     render() {
+
         return (
             <div className="main-wrap">
                 <section className="main-current">
                     <span>비품현황</span>
                     <ul className="cont-ul">
-                        <li><img src={deskImg}/><p>사무용품</p></li>
-                        <li><img src={deviceImg}/><p>전자기기</p></li>
-                        <li><img src={microImg}/><p>실험실비품</p></li>
-                        <li><img src={bloodtubeImg}/><p>샘플관리</p></li>
+                        {this.state.tabNum.map(idx=>(
+                            <li onClick={() => this.onClickTab(idx,this.state.tabTitle[idx])}><img src={this.state.tabImg[idx]}/><p>{this.state.tabTitle[idx]}</p></li>
+                        ))}
                     </ul>
-                    <MainListContainer/>
+                    <div className="main current-cont">
+                        <div className="current-inner">
+                            <div className="tit-txt">
+                                <p>{this.state.currentTit}</p>
+                            </div>
+                            <div className="item">
+                                <ul>
+                                    <li><p>항목항목항목항목항목항목항목</p><p>n개</p></li>
+                                    <li><p>항목항목항목항목항목항목항목항목항목항목항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                    <li><p>항목</p><p>n개</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </section>
                 <section className="main-rental">
                     <RentalListContainer/>
                 </section>
                 <section>
-                    <p>여백</p>
                 </section>
             </div>
         );

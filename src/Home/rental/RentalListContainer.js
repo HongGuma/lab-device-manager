@@ -11,8 +11,8 @@ import React from "react";
 class RentalListContainer extends React.Component{
     render() {
         return (
-            <div className="rental container-wrap">
-                <section className="container-inner">
+            <div className="rental current-cont">
+                <section className="current-inner">
                     <div className="tit-txt">
                         <p>대여현황</p>
                     </div>
