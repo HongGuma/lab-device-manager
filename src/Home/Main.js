@@ -17,6 +17,7 @@ class Main extends React.Component{
     constructor(props) {
         super(props);
         this.state= {
+            list:[],
             tabNum: [0, 1, 2, 3],
             tabTitle: {
                 0: '사무용품',
@@ -36,6 +37,7 @@ class Main extends React.Component{
     }
 
     /**
+     * 메인화면 탭 기능
      * @param id 비품현황 탭의 id
      * @param txt 비품현황 탭의 text
      */
@@ -46,9 +48,17 @@ class Main extends React.Component{
         });
     }
 
+    UNSAFE_componentWillMount() {
+        fetch('/database.php')
+            .then(function (res){
+                return res.json();
+            })
+            .then(function (json){
+                console.log(json);
+            })
+    }
 
     render() {
-
         return (
             <div className="main-wrap">
                 <section className="main-current">

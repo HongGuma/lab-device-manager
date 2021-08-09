@@ -24,7 +24,7 @@ class Header extends React.Component{
                 </div>
                 <div className='header-menu'>
                     <div className="header-logo">
-                        <Link to="/"><img className="logo-img" src = {newlogoIMG} /></Link>
+                        <Link to="/"><img className="logo-img" src = {newlogoIMG}  alt="kogic logo"/></Link>
                     </div>
                     <ul>
                         <li>
