@@ -1,10 +1,9 @@
-var mysql = require('mysql');
-var db = {
+const mysql = require('mysql');
+const db = {
     host:'localhost',
     user:'root',
     password:'7890uiop',
     database:'device_manager',
-    port:'2306',
 }
 
 module.exports = function(){

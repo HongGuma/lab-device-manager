@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
     "mysql": "^2.18.1",
@@ -16,8 +17,9 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
   },
+  "proxy": "http://localhost:3102",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start | nodemon ./server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -41,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-router-dom": "^5.1.8",
+    "nodemon": "^2.0.12"
   }
 }

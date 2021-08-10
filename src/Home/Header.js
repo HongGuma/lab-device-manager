@@ -8,7 +8,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-import newlogoIMG from './images/new_logo.png';
+import newlogoIMG from '../images/new_logo.png';
 
 class Header extends React.Component{
     render() {
@@ -18,7 +18,7 @@ class Header extends React.Component{
                     <ul>
                         <li><Link to="/">홈으로</Link></li>
                         <li><a href="http://in.genomelab.org/Main_Page">Lab wiki</a></li>
-                        <li>로그인</li>
+                        <li><Link to="/login">로그인</Link></li>
                         <li style={{borderRight:"none"}}>English</li>
                     </ul>
                 </div>

@@ -49,12 +49,10 @@ class Main extends React.Component{
     }
 
     UNSAFE_componentWillMount() {
-        fetch('/database.php')
-            .then(function (res){
-                return res.json();
-            })
-            .then(function (json){
-                console.log(json);
+        fetch('/api/item')
+            .then((res)=> res.json())
+            .then((list)=>{
+                this.setState({list})
             })
     }
 
@@ -81,6 +79,11 @@ class Main extends React.Component{
                                     <li><p>항목</p><p>n개</p></li>
                                     <li><p>항목</p><p>n개</p></li>
                                     <li><p>항목</p><p>n개</p></li>
+                                    {this.state.list.map(item=>(
+                                        <li key={item.id}>
+                                            <p>{item.name}</p>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>

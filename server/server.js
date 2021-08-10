@@ -2,14 +2,14 @@ const express = require('express');
 const app = express();
 const db = require('./db.js')();
 const conn = db.init();
-const PROT = process.env.PORT || 3101;
+const PROT = process.env.PORT || 3102;
 
 db.connect(conn);
 
-app.get('/',(req,res)=>{
+app.get('/api',(req,res)=>{
     res.send({test:'this is test'})
 })
-app.get('/item',function (req,res){
+app.get('/api/item',function (req,res){
     const sql = 'select * from item';
     conn.query(sql,(err,rows)=>{
         if(err) {
