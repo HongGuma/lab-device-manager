@@ -1,26 +1,26 @@
-const express = require('express');
-const app = express();
-const db = require('./db.js')();
-const conn = db.init();
-const PROT = process.env.PORT || 3102;
-
-db.connect(conn);
-
-app.get('/api',(req,res)=>{
-    res.send({test:'this is test'})
-})
-app.get('/api/item',function (req,res){
-    const sql = 'select * from item';
-    conn.query(sql,(err,rows)=>{
-        if(err) {
-            console.log('query is not excuted. select fail...\n' + err);
-        }
-        else {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.send(rows);
-        }
-    });
-});
+// const express = require('express');
+// const app = express();
+// const db = require('./db.js')();
+// const conn = db.init();
+// const PROT = process.env.PORT || 3102;
+//
+// db.connect(conn);
+//
+// app.get('/api',(req,res)=>{
+//     res.send({test:'this is test'})
+// })
+// app.get('/api/item',function (req,res){
+//     const sql = 'select * from item';
+//     conn.query(sql,(err,rows)=>{
+//         if(err) {
+//             console.log('query is not excuted. select fail...\n' + err);
+//         }
+//         else {
+//             res.header("Access-Control-Allow-Origin", "*");
+//             res.send(rows);
+//         }
+//     });
+// });
 // app.get('/list',function(req,res){
 //     const sql = 'select * from item';
 //     conn.query(sql,(err,rows)=>{
@@ -46,7 +46,7 @@ app.get('/api/item',function (req,res){
 //         }
 //     })
 // })
-
-app.listen(PROT, ()=> {
-    console.log(`Server run : http://localhost:${PROT}/`)
-})
+//
+// app.listen(PROT, ()=> {
+//     console.log(`Server run : http://localhost:${PROT}/`)
+// })

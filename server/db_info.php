@@ -1,19 +1,12 @@
 <?php
 
-    $host = '127.0.0.1';
+    $host = 'localhost';
     $user = 'root';
-    $passwd = '7890uiop';
+    $pw = '7890uiop';
     $dbName = 'device_manager';
-    $port = 2306;
-//    try{
-        $conn = mysqli_connect($host,$user,$passwd,$dbName,$port);
 
-        header('Content-Type: application/json; charset=UTF-8');
-        header('HTTP/1.1 200 OK');
-        header('Access-Control-Allow-Methods:OPTIONS,GET,POST,PUT,DELETE');
+    header("Access-Control-Allow-Origin: *");
 
-        $time = date("Y-m-d HH:MM");
-//    }catch (PDOException $e){
-//        echo $e;
-//    }
-//
+    $conn = mysqli_connect($host, $user, $pw, $dbName);
+
+?>
