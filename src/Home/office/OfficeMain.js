@@ -11,6 +11,16 @@ import SideBarContainer from "../container/SideBarContainer";
 import ContentContainer from "../container/ContentContainer";
 
 class OfficeMain extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state={
+            officeEntry:[],
+            officeList:[],
+        }
+    }
+
+
+
     render() {
         return (
             <div className="office-wrap">

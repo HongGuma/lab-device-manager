@@ -20,6 +20,15 @@ body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 .header-menu ul {flex:1 1 0; list-style: none; display: flex; justify-content: space-evenly; }
 .header-menu li {font-size:1.5rem; font-weight: 400; color:#393536; padding-top:5px;}
 .header-menu a {text-decoration: none; color:#393536;}
+/*======Login======*/
+.login-wrap {padding-top:222px; min-height: 800px;}
+.login-width {width:1100px; margin:32px auto;}
+.login-inner {width: 400px; padding:28px; margin:0 auto; border:1px solid #ddd; border-radius: 8px;}
+.login-input {display: flex; align-items: center;}
+.login-input p {flex:1 1 0; font-size: 20px; padding:0 16px; font-weight: 600;}
+.login-input input {flex:2 1 0; margin-right: 17px; font-size: 20px;}
+.login-btn {text-align: center; margin-top: 16px;}
+.login-btn button {width: 458px; border:none; border-radius: 12px; padding:20px 0; font-size: 18px; font-weight: bold; background-color: #393536; color:#fff;}
 
 /*===========Main===========*/
 /*-Main-*/
