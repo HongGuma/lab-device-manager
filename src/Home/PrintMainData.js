@@ -4,7 +4,7 @@ import axios from "axios";
 export default function PrintMainData({url}){
     let currentURL = '';
     if(url == null || url.length < 1){
-        currentURL = 'http://localhost:3103/api/getOfficeEntry.php';
+        currentURL = 'http://210.218.217.110:3103/api/getOfficeEntry.php';
     }else{
         currentURL = url;
     }

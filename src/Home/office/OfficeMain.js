@@ -29,10 +29,6 @@ class OfficeMain extends React.Component{
             officeList:[],
         }
     }
-    clickEvents(){
-        axios.get('http://localhost:3103/api/getOfficeEntry.php')
-            .then((res)=>{this.setState({officeEntry:res})});
-    }
 
     render() {
         return (
@@ -43,13 +39,10 @@ class OfficeMain extends React.Component{
                 <div className="office-width">
                     <section className="sidebar">
                         <div className="inner">
-                            {this.state.officeEntry.map(item=>(
-                                <li key={item.id}><p>{item.name}</p></li>
-                            ))}
-                            {/*<SideBarContainer list={this.state.officeEntry}/>*/}
+                            <SideBarContainer num={0}/>
                         </div>
                         <div className="add-btn">
-                            <p onClick={this.clickEvents}>+항목추가</p>
+                            <p>+항목추가</p>
                         </div>
                     </section>
                     <section className="content">

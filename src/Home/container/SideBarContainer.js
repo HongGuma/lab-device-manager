@@ -8,36 +8,45 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
-const SideBarContainer = ({list}) => {
-    // const [list,setList] = useState(null);
-    // const [loading,setLoading] = useState(false);
-    // const [error,setError] = useState(null);
-    //
-    // useEffect(()=>{
-    //     const fetchList = async () => {
-    //         try{
-    //             setError(null);
-    //             setList(null);
-    //             setLoading(null);
-    //             const res = await axios.get(url);
-    //             setList(res.data);
-    //         }catch (e){
-    //             setError(e);
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchList();
-    // },[url]);
-    //
-    // if(loading) return <div>로딩중...</div>
-    // if(error) return <div>error! 관리자에게 문의하세요</div>
-    // if(!list) return  null;
+const SideBarContainer = ({num}) => {
+    let url = '';
+    const [list,setList] = useState(null);
+    const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(null);
+
+    switch (num){
+        case 0:
+            url = 'http://210.218.217.110:3103/api/getOfficeEntry.php';
+            break;
+        default:
+            url = 'http://210.218.217.110:3103/api/getOfficeEntry.php';
+    }
+
+    useEffect(()=>{
+        const fetchList = async () => {
+            try{
+                setError(null);
+                setList(null);
+                setLoading(null);
+                const res = await axios.get(url);
+                setList(res.data);
+            }catch (e){
+                setError(e);
+            }
+            setLoading(false);
+        };
+        fetchList();
+    },[url]);
+
+    if(loading) return <div>로딩중...</div>
+    if(error) return <div>error! 관리자에게 문의하세요</div>
+    if(!list) return  null;
 
     return(
         <ul>
-            {/*{list.map((str,idx)=>(*/}
-            {/*    <li key={idx}><p>{str}</p></li>*/}
-            {/*))}*/}
+            {list.map((item)=>(
+                <li key={item.id}><p>{item.name}</p></li>
+            ))}
         </ul>
     )
 

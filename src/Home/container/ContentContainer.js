@@ -6,15 +6,39 @@
 *@etc(change)
 */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 import Select from 'react-select';
 
-const ContentContainer =() => {
+const ContentContainer =({num}) => {
     const tit = ['전체','번호','품명','사용자','상태','위치','품질','관리자','마지막 수정시간'];
     const option = [
         {value:0, label:'사용안함'},
         {value:1, label:'사용중'}
     ]
+    // const [list,setList] = useState(null);
+    // const [loading,setLoading] = useState(false);
+    // const [error,setError] = useState(null);
+    //
+    // useEffect(()=>{
+    //     const fetchList = async () => {
+    //         try{
+    //             setError(null);
+    //             setList(null);
+    //             setLoading(null);
+    //             const res = await axios.get(currentURL);
+    //             setList(res.data);
+    //         }catch (e){
+    //             setError(e);
+    //         }
+    //         setLoading(false);
+    //     };
+    //     fetchList();
+    // },[url]);
+    //
+    // if(loading) return <div>로딩중...</div>
+    // if(error) return <div>error! 관리자에게 문의하세요</div>
+    // if(!list) return  null;
 
     return (
         <div className="content-cont">
