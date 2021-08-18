@@ -8,19 +8,10 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
-const SideBarContainer = ({num}) => {
-    let url = '';
+const SideBarContainer = ({url}) => {
     const [list,setList] = useState(null);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
-
-    switch (num){
-        case 0:
-            url = 'http://210.218.217.110:3103/api/getOfficeEntry.php';
-            break;
-        default:
-            url = 'http://210.218.217.110:3103/api/getOfficeEntry.php';
-    }
 
     useEffect(()=>{
         const fetchList = async () => {

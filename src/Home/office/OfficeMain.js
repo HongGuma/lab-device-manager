@@ -1,13 +1,12 @@
 /**
 *@title 연구실 메인 화면
-*@date 21-08-04
+*@date 21-08-18
 *@author 홍수희
 *@desc 연구실 관련 컴포넌트 모아서 출력하는 화면
 *@etc(change)
 */
 
 import React from 'react';
-import axios from 'axios';
 import SideBarContainer from "../container/SideBarContainer";
 import ContentContainer from "../container/ContentContainer";
 
@@ -39,7 +38,7 @@ class OfficeMain extends React.Component{
                 <div className="office-width">
                     <section className="sidebar">
                         <div className="inner">
-                            <SideBarContainer num={0}/>
+                            <SideBarContainer url="http://210.218.217.110:3103/api/getOfficeEntry.php"/>
                         </div>
                         <div className="add-btn">
                             <p>+항목추가</p>
