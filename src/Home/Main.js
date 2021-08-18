@@ -13,7 +13,6 @@ import microImg from '../images/microscope_color.png';
 import bloodtubeImg from '../images/bloodtube_color.png';
 import RentalListContainer from "./rental/RentalListContainer";
 import PrintMainData from "./PrintMainData";
-import axios from "axios";
 
 
 class Main extends React.Component{
@@ -21,7 +20,6 @@ class Main extends React.Component{
         super(props);
         this.state= {
             isOpen: false,
-            currentList:[],
             tabNum: [0, 1, 2, 3],
             tabTitle: {
                 0: '사무용품',
@@ -36,10 +34,10 @@ class Main extends React.Component{
                 3: bloodtubeImg,
             },
             url:{
-                0:'http://localhost/api/getOfficeEntry.php',
-                1:'http://localhost/api/getDiskEntry.php',
-                2:'http://localhost/api/getLabEntry.php',
-                3:'http://localhost/api/getSampleEntry.php',
+                0:'http://localhost:3103/api/getOfficeEntry.php',
+                1:'http://localhost:3103/api/getDiskEntry.php',
+                2:'http://localhost:3103/api/getLabEntry.php',
+                3:'http://localhost:3103/api/getSampleEntry.php',
             },
             currentID: 0,
             currentTit: '사무용품',
@@ -71,23 +69,12 @@ class Main extends React.Component{
                             <li key={idx} onClick={() => this.onClickTab(idx,this.state.tabTitle[idx])}><img src={this.state.tabImg[idx]}/><p>{this.state.tabTitle[idx]}</p></li>
                         ))}
                     </ul>
-                    {/*<div onClick={()=>this.onClickOpen()}>열기</div>*/}
-                    {/*{this.state.isOpen && <printMainData currentTit = {this.state.currentTit} currentList = {this.state.currentList}/>}*/}
                     <div className="main current-cont">
                         <div className="current-inner">
                             <div className="tit-txt">
                                 <p>{this.state.currentTit}</p>
                             </div>
                             <PrintMainData url ={this.state.currentURL}/>
-                            {/*<div className="item">*/}
-                            {/*    <ul>*/}
-                            {/*        {this.state.currentList.map(item=>(*/}
-                            {/*            <li key={item.id}>*/}
-                            {/*                <p>{item.name}</p>*/}
-                            {/*            </li>*/}
-                            {/*        ))}*/}
-                            {/*    </ul>*/}
-                            {/*</div>*/}
                         </div>
                     </div>
                 </section>

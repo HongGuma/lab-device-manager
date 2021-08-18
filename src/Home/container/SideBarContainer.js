@@ -1,32 +1,47 @@
 /**
-*@title
-*@date 21-08-05
-*@author
+*@title 사이드바
+*@date 21-08-17
+*@author 홍수희
 *@desc
 *@etc(change)
 */
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 
-import React from 'react';
+const SideBarContainer = ({list}) => {
+    // const [list,setList] = useState(null);
+    // const [loading,setLoading] = useState(false);
+    // const [error,setError] = useState(null);
+    //
+    // useEffect(()=>{
+    //     const fetchList = async () => {
+    //         try{
+    //             setError(null);
+    //             setList(null);
+    //             setLoading(null);
+    //             const res = await axios.get(url);
+    //             setList(res.data);
+    //         }catch (e){
+    //             setError(e);
+    //         }
+    //         setLoading(false);
+    //     };
+    //     fetchList();
+    // },[url]);
+    //
+    // if(loading) return <div>로딩중...</div>
+    // if(error) return <div>error! 관리자에게 문의하세요</div>
+    // if(!list) return  null;
 
-class SideBarContainer extends React.Component{
-    render() {
-        return (
-            <section className="sidebar">
-                <div className="inner">
-                    <ul>
-                        <li><p>책상</p></li>
-                        <li><p>의자</p></li>
-                        <li><p>파티션</p></li>
-                        <li><p>멀티탭</p></li>
-                        <li><p>모니터</p></li>
-                    </ul>
-                </div>
-                <div className="add-btn">
-                    <p>+항목추가</p>
-                </div>
-            </section>
-        );
-    }
+    return(
+        <ul>
+            {/*{list.map((str,idx)=>(*/}
+            {/*    <li key={idx}><p>{str}</p></li>*/}
+            {/*))}*/}
+        </ul>
+    )
+
+
 }
 
 export default SideBarContainer;

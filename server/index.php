@@ -4,7 +4,7 @@
 
     global $conn;
 
-    $sql = "select * from item";
+    $sql = "select * from office_entry";
     $result = mysqli_query($conn, $sql);
     $data = array();
     if($result){

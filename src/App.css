@@ -71,6 +71,8 @@ body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 .content-tit p {margin:0;}
 .content-tit .tit-txt {font-size: 28px; font-weight: bold; margin: 0 6px;}
 .content-tit .cont-cnt {flex:1 1 0; display: flex; padding-left: 8px;}
+.content-tit .add-btn {display: flex;}
+.content-tit .add-btn p {padding:3px; margin:0 2px;}
 
 .content-cont {display: flex; flex-direction: column; max-height: 900px; overflow-y: auto; padding:0 20px; margin-bottom:30px;}
 .content-cont ul {list-style: none; display: flex; flex-direction: row; padding:0;}
