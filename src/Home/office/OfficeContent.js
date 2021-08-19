@@ -46,8 +46,8 @@ const OfficeContent = ({entryID,entryName}) => {
 
 
     return (
-        <section className="content">
-            <div className="content-tit">
+        <section className="container">
+            <div className="container-tit">
                 <div className="tit-txt">
                     <p>{entryName}</p>
                 </div>
@@ -62,31 +62,36 @@ const OfficeContent = ({entryID,entryName}) => {
                     <p >-삭제</p>
                 </div>
             </div>
-            <div className="content-cont">
-                <ul className="tit-ul">
-                    <li>
-                        <p>전체</p>
-                        <a><input type="checkbox"/></a>
-                    </li>
-                    {tit.map((name,idx) => (
-                        <li key ={idx}>
-                            <p>{name}</p>
+            <div className="container-cont">
+                <div className="cont-head">
+                    <ul className="head-ul">
+                        <li>
+                            <p>전체</p>
+                            <a><input type="checkbox"/></a>
                         </li>
-                    ))}
-                </ul>
-                {list.map((item) => (
-                    <ul className="cont-ul" key={item.id}>
-                        <li><input type="checkbox"/></li>
-                        <li>{item.id}</li>
-                        <li>{item.name}</li>
-                        <li>{item.user}</li>
-                        <li>{item.quality}</li>
-                        <li>{item.position}</li>
-                        <li>{item.state}</li>
-                        <li>{item.manager}</li>
-                        <li>{item.timestamp}</li>
+                        {tit.map((name,idx) => (
+                            <li key ={idx}>
+                                <p>{name}</p>
+                            </li>
+                        ))}
                     </ul>
-                ))}
+                </div>
+                <div className="cont-body">
+                    {list.map((item) => (
+                        <ul className="body-ul" key={item.id}>
+                            <li><input type="checkbox"/></li>
+                            <li>{item.id}</li>
+                            <li>{item.name}</li>
+                            <li>{item.user}</li>
+                            <li>{item.quality}</li>
+                            <li>{item.position}</li>
+                            <li>{item.state}</li>
+                            <li>{item.manager}</li>
+                            <li>{item.timestamp}</li>
+                        </ul>
+                    ))}
+                </div>
+
             </div>
         </section>
 
