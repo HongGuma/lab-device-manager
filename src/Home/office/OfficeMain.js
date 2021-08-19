@@ -26,7 +26,8 @@ class OfficeMain extends React.Component{
         this.state={
             officeEntry:[],
             officeList:[],
-            contTit:'',
+            contTitle:'모니터',
+            contId:1,
         }
     }
 
@@ -35,10 +36,18 @@ class OfficeMain extends React.Component{
             .then(r => {
                 this.setState({officeList: r.data});
             })
+        axios.get("http://210.218.217.110:3103/api/getOfficeData.php?parm=count&entry_id="+this.state.contId.toString())
+            .then(res => {
+                this.setState({contCount: res.data});
+            })
+
     }
 
     onClickEntry(item){
-        this.setState({contTit: item})
+        this.setState({
+            contTitle: item.name,
+            contId: item.id,
+        })
     }
 
     render() {
@@ -52,7 +61,7 @@ class OfficeMain extends React.Component{
                         <div className="inner">
                             <ul>
                                 {this.state.officeList.map((item)=>(
-                                    <li onClick={()=>this.onClickEntry(item.name)} key={item.id}><p>{item.name}</p></li>
+                                    <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>
                                 ))}
                             </ul>
                         </div>
@@ -60,33 +69,7 @@ class OfficeMain extends React.Component{
                             <p>+항목추가</p>
                         </div>
                     </section>
-                    <section className="content">
-                        <div className="content-tit">
-                            <div className="tit-txt">
-                                <p>{this.state.contTit}</p>
-                            </div>
-                            <div className="cont-cnt">
-                                <p>총</p>
-                                <p>n</p>
-                                <p>개</p>
-                            </div>
-                            <div className="add-btn">
-                                <p >+추가</p>
-                                <p >+수정</p>
-                                <p >-삭제</p>
-                            </div>
-                        </div>
-                        <div className="content-cont">
-                            <ul className="tit-ul">
-                                {/*{this.state.tit.map((name,idx) => (*/}
-                                {/*    <li key ={idx}>*/}
-                                {/*        <p>{name}</p>*/}
-                                {/*    </li>*/}
-                                {/*))}*/}
-                            </ul>
-                        </div>
-                    </section>
-
+                    <OfficeContent entryID={this.state.contId} entryName={this.state.contTitle}/>
                 </div>
             </div>
         );

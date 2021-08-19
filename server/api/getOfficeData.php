@@ -3,9 +3,7 @@
     global $conn;
 
     $parm = $_GET['parm'];
-    $table = $_GET['table'];
-    $item_id = $_GET['item_id'];
-
+    $entry_id = $_GET['entry_id'];
     switch ($parm){
         case 'entry':
             $sql = "select * from office_entry";
@@ -23,7 +21,7 @@
             }
             break;
         case 'equipment':
-            $sql = "select * from office_equipment as eq, office_entry as en where en.office_entry_id=".$item_id." and en.office_entry_id = eq.item_id";
+            $sql = "select * from office_equipment as eq, office_entry as en where en.office_entry_id=".$entry_id." and en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
@@ -36,7 +34,7 @@
                             'quality'=>$row[4],
                             'state'=>$row[5],
                             'manager'=>$row[6],
-                            'timestampe'=>$row[7],
+                            'timestamp'=>$row[7],
                             'item_num'=>$row[8],
                         ));
                 }
@@ -46,7 +44,7 @@
             }
             break;
         case 'count':
-            $sql = "select count(*) from office_equipment";
+            $sql = "select count(*) from office_equipment as eq, office_entry as en where en.office_entry_id=".$entry_id." and en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
