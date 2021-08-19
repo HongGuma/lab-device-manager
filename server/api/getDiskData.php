@@ -3,12 +3,10 @@
     global $conn;
 
     $parm = $_GET['parm'];
-    $table = $_GET['table'];
-    $item_id = $_GET['item_id'];
 
     switch ($parm){
         case 'entry':
-            $sql = "select * from office_entry";
+            $sql = "select * from disk_entry";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
@@ -23,7 +21,7 @@
             }
             break;
         case 'equipment':
-            $sql = "select * from office_equipment as eq, office_entry as en where en.office_entry_id=".$item_id." and en.office_entry_id = eq.item_id";
+            $sql = "select * from disk";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
@@ -46,7 +44,7 @@
             }
             break;
         case 'count':
-            $sql = "select count(*) from office_equipment";
+            $sql = "select count(*) from disk";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){

@@ -9,13 +9,6 @@
 import React from 'react';
 import axios from "axios";
 
-const changeTitle = ({tit}) => {
-    return (
-        <div className="tit-txt">
-            <p>tit</p>
-        </div>
-    );
-}
 
 class OfficeContent extends React.Component{
     constructor(props) {
