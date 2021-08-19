@@ -4,7 +4,7 @@ import axios from "axios";
 export default function PrintMainData({url}){
     let currentURL = '';
     if(url == null || url.length < 1){
-        currentURL = 'http://210.218.217.110:3103/api/getOfficeEntry.php';
+        currentURL = 'http://210.218.217.110:3103/api/getOfficeData.php';
     }else{
         currentURL = url;
     }
@@ -19,7 +19,7 @@ export default function PrintMainData({url}){
                 setError(null);
                 setList(null);
                 setLoading(null);
-                const res = await axios.get(currentURL);
+                const res = await axios.get(currentURL+'?parm=entry')
                 setList(res.data);
             }catch (e){
                 setError(e);

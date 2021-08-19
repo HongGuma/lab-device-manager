@@ -9,6 +9,7 @@
 import React from 'react';
 import SideBarContainer from "../container/SideBarContainer";
 import ContentContainer from "../container/ContentContainer";
+import OfficeContent from "./OfficeContent";
 
 function onClickInsert(){
     return alert("추가")
@@ -26,6 +27,8 @@ class OfficeMain extends React.Component{
         this.state={
             officeEntry:[],
             officeList:[],
+            url:'http://210.218.217.110:3103/api/getOfficeData.php',
+            parm:'entry',
         }
     }
 
@@ -38,31 +41,13 @@ class OfficeMain extends React.Component{
                 <div className="office-width">
                     <section className="sidebar">
                         <div className="inner">
-                            <SideBarContainer url="http://210.218.217.110:3103/api/getOfficeEntry.php"/>
+                            <SideBarContainer url="http://210.218.217.110:3103/api/getOfficeData.php?parm=entry"/>
                         </div>
                         <div className="add-btn">
                             <p>+항목추가</p>
                         </div>
                     </section>
-                    <section className="content">
-                        <div className="content-tit">
-                            <div className="tit-txt">
-                                <p>키보드</p>
-                            </div>
-                            <div className="cont-cnt">
-                                <p>총</p>
-                                <p>n</p>
-                                <p>개</p>
-                            </div>
-                            <div className="add-btn">
-                                <p onClick={onClickInsert}>+추가</p>
-                                <p onClick={onClickEdit}>+수정</p>
-                                <p onClick={onClickRemove}>-삭제</p>
-                            </div>
-                        </div>
-                        <ContentContainer/>
-                    </section>
-
+                    <OfficeContent/>
                 </div>
             </div>
         );

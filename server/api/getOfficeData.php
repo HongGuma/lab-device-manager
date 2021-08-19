@@ -27,7 +27,7 @@
             if($result){
                 while($row = mysqli_fetch_array($result)){
                     array_push($data,
-                        array('ofiice_id'=>$row[0],
+                        array('id'=>$row[0],
                             'name'=>$row[1],
                             'user'=>$row[2],
                             'position'=>$row[3],
