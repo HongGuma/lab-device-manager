@@ -37,7 +37,7 @@ class Main extends React.Component{
                 0:'http://210.218.217.110:3103/api/getOfficeData.php',
                 1:'http://210.218.217.110:3103/api/getDiskData.php',
                 2:'http://210.218.217.110:3103/api/getLabData.php',
-                3:'http://210.218.217.110:3103/api/getSampleData.php',
+                // 3:'http://210.218.217.110:3103/api/getSampleData.php',
             },
             currentID: 0,
             currentTit: '사무용품',

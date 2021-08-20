@@ -10,6 +10,7 @@ export default function PrintMainData({url}){
     }
 
     const [list,setList] = useState(null);
+    const [num,setNum] = useState(null);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
 
@@ -19,7 +20,7 @@ export default function PrintMainData({url}){
                 setError(null);
                 setList(null);
                 setLoading(null);
-                const res = await axios.get(currentURL+'?parm=entry')
+                const res = await axios.get(currentURL+'?parm=total_count');
                 setList(res.data);
             }catch (e){
                 setError(e);
@@ -38,7 +39,7 @@ export default function PrintMainData({url}){
             <ul>
                 {list.map(item2=>(
                     <li key={item2.id}>
-                        <p>{item2.name}</p>
+                        <p>{item2.entry_name} ({item2.item_count})</p>
                     </li>
                     )
                 )}
