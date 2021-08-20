@@ -97,8 +97,10 @@ body p {cursor:default;}
 .rental-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
 .rental-tit {height: 65px; margin-bottom:32px; background-color: rgba(57,53,54,0.3);}
 .rental-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0 ; color:#393536; border-bottom:1px solid rgba(57,53,54,0.3);}
-
 .rental-width {display: flex; width: 1600px; margin:0 auto;}
+
+.sidebar .rental-ul li:hover {background-color: rgba(57,53,54,0.3);}
+.sidebar .rental-ul li p:active {color:white;}
 
 /*====== Office =======*/
 .office-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
@@ -116,11 +118,13 @@ body p {cursor:default;}
 .sidebar .server-ul li p:active {color:white;}
 
 /*======LabMain.js======*/
-.Lab-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
-.Lab-tit {height: 65px; margin-bottom:32px; background-color: rgba(238,30,73,0.3);}
-.Lab-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536; border-bottom:1px solid rgba(238,30,73,0.3);}
+.lab-wrap {min-height: 900px; max-height: 1100px; padding-top:141px;}
+.lab-tit {height: 65px; margin-bottom:32px; background-color: rgba(238,30,73,0.3);}
+.lab-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536; border-bottom:1px solid rgba(238,30,73,0.3);}
+.lab-width {display: flex; width: 1600px; margin:0 auto 30px;}
 
-.Lab-width {display: flex; width: 1600px; margin:0 auto;}
+.sidebar .lab-ul li:hover {background-color: rgba(238,30,73,0.3);}
+.sidebar .lab-ul li p:active {color:white;}
 
 
 /*======Footer.js======*/
