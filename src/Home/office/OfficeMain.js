@@ -6,7 +6,7 @@
 *@etc(change)
 */
 
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import axios from "axios";
 import OfficeContent from "./OfficeContent";
 
@@ -36,11 +36,6 @@ class OfficeMain extends React.Component{
             .then(r => {
                 this.setState({officeList: r.data});
             })
-        axios.get("http://210.218.217.110:3103/api/getOfficeData.php?parm=count&entry_id="+this.state.contId.toString())
-            .then(res => {
-                this.setState({contCount: res.data});
-            })
-
     }
 
     onClickEntry(item){
@@ -59,7 +54,7 @@ class OfficeMain extends React.Component{
                 <div className="office-width">
                     <section className="sidebar">
                         <div className="inner">
-                            <ul>
+                            <ul className="office-ul">
                                 {this.state.officeList.map((item)=>(
                                     <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>
                                 ))}
@@ -67,6 +62,7 @@ class OfficeMain extends React.Component{
                         </div>
                         <div className="add-btn">
                             <p>+항목추가</p>
+                            <p>-항목삭제</p>
                         </div>
                     </section>
                     <OfficeContent entryID={this.state.contId} entryName={this.state.contTitle}/>

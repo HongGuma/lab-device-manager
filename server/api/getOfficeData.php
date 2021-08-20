@@ -46,13 +46,12 @@
         case 'count':
             $sql = "select count(*) from office_equipment as eq, office_entry as en where en.office_entry_id=".$entry_id." and en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
-            $data = array();
+            $data = '';
             if($result){
                 while($row = mysqli_fetch_array($result)){
-                    array_push($data,
-                        array('num'=>$row[0]));
+                    $data = $row[0];
                 }
-                echo json_encode($data);
+                echo $data;
             }else{
                 echo mysqli_error($conn);
             }
