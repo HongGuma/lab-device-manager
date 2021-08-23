@@ -43,6 +43,23 @@
                 echo mysqli_error($conn);
             }
             break;
+        case 'total_count':
+            $sql = "select office_entry_id, entry_name, ifnull(count,0) from office_entry as en left outer join( select item_id, count(*) as count from office_equipment group by item_id) as eq on en.office_entry_id = eq.item_id";
+            $result = mysqli_query($conn, $sql);
+            $data = array();
+            if($result){
+                while($row = mysqli_fetch_array($result)){
+                    array_push($data,
+                        array('entry_id'=>$row[0],
+                            'entry_name'=>$row[1],
+                            'item_count'=>$row[2],
+                        ));
+                }
+                echo json_encode($data);
+            }else{
+                echo mysqli_error($conn);
+            }
+            break;
         case 'count':
             $sql = "select count(*) from office_equipment as eq, office_entry as en where en.office_entry_id=".$entry_id." and en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);

@@ -26,22 +26,26 @@ class OfficeMain extends React.Component{
         this.state={
             officeEntry:[],
             officeList:[],
-            contTitle:'모니터',
-            contId:1,
+            entryName:'',
+            entryID:0,
         }
     }
 
     UNSAFE_componentWillMount() {
         axios.get("http://210.218.217.110:3103/api/getOfficeData.php?parm=entry")
             .then(r => {
-                this.setState({officeList: r.data});
+                this.setState({
+                    officeList: r.data,
+                    entryName:r.data[0].name,
+                    entryID:r.data[0].id,
+                });
             })
     }
 
     onClickEntry(item){
         this.setState({
-            contTitle: item.name,
-            contId: item.id,
+            entryName: item.name,
+            entryID: item.id,
         })
     }
 
@@ -65,7 +69,7 @@ class OfficeMain extends React.Component{
                             <p>-항목삭제</p>
                         </div>
                     </section>
-                    <OfficeContent entryID={this.state.contId} entryName={this.state.contTitle}/>
+                    <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName}/>
                 </div>
             </div>
         );
