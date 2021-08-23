@@ -20,6 +20,8 @@ function onClickRemove(){
     return alert("삭제")
 }
 
+
+
 class OfficeMain extends React.Component{
     constructor(props) {
         super(props);
@@ -49,6 +51,13 @@ class OfficeMain extends React.Component{
         })
     }
 
+    addEntry(){
+        console.log("항목추가!");
+    }
+    removeEntry(){
+        console.log("항목삭제!");
+    }
+
     render() {
         return (
             <div className="office-wrap">
@@ -65,8 +74,8 @@ class OfficeMain extends React.Component{
                             </ul>
                         </div>
                         <div className="add-btn">
-                            <p>+항목추가</p>
-                            <p>-항목삭제</p>
+                            <p onClick={this.addEntry}>+항목추가</p>
+                            <p onClick={this.removeEntry}>-항목삭제</p>
                         </div>
                     </section>
                     <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName}/>
