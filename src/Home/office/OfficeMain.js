@@ -9,42 +9,43 @@
 import React from 'react';
 import axios from "axios";
 import OfficeContent from "./OfficeContent";
+import SideBar from "../container/SideBar";
 
-function onClickInsert(){
-    return alert("추가")
-}
-function onClickEdit(){
-    return alert("수정")
-}
-function onClickRemove(){
-    return alert("삭제")
-}
-const ShowTextbox = () => {
-    return <li><input className="add-box" type="textbox"/></li>
-}
-
-const DefaultEntry = ({list,event}) => {
-    return(
-        <ul className="office-ul">
-            {list.map((item)=>(
-                <li onClick={()=>event(item)} key={item.id}><p>{item.name}</p></li>
-            ))}
-        </ul>
-    )
-}
-
-const CheckboxEntry = ({list,event}) => {
-    return(
-        <ul className="office-ul">
-            {list.map((item)=>(
-                <li onClick={()=>event(item)} key={item.id}>
-                    <input type="checkbox"/>
-                    <p>{item.name}</p>
-                </li>
-            ))}
-        </ul>
-    )
-}
+// function onClickInsert(){
+//     return alert("추가")
+// }
+// function onClickEdit(){
+//     return alert("수정")
+// }
+// function onClickRemove(){
+//     return alert("삭제")
+// }
+// const ShowTextbox = () => {
+//     return <li><input className="add-box" type="textbox"/></li>
+// }
+//
+// const DefaultEntry = ({list,event}) => {
+//     return(
+//         <ul className="office-ul">
+//             {list.map((item)=>(
+//                 <li onClick={()=>event(item)} key={item.id}><p>{item.name}</p></li>
+//             ))}
+//         </ul>
+//     )
+// }
+//
+// const CheckboxEntry = ({list,event}) => {
+//     return(
+//         <ul className="office-ul">
+//             {list.map((item)=>(
+//                 <li onClick={()=>event(item)} key={item.id}>
+//                     <input type="checkbox"/>
+//                     <p>{item.name}</p>
+//                 </li>
+//             ))}
+//         </ul>
+//     )
+// }
 
 class OfficeMain extends React.Component{
     constructor(props) {
@@ -54,40 +55,25 @@ class OfficeMain extends React.Component{
             officeList:[],
             entryName:'',
             entryID:0,
-            showTextbox:false,
-            showCheckbox:false,
-            showDefault:true,
+            url:'http://210.218.217.110:3103/api/getOfficeData.php?parm=entry',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
 
-    UNSAFE_componentWillMount() {
-        axios.get("http://210.218.217.110:3103/api/getOfficeData.php?parm=entry")
-            .then(r => {
-                this.setState({
-                    officeList: r.data,
-                    entryName:r.data[0].name,
-                    entryID:r.data[0].id,
-                });
-            })
-    }
+    // UNSAFE_componentWillMount() {
+    //     axios.get("http://210.218.217.110:3103/api/getOfficeData.php?parm=entry")
+    //         .then(r => {
+    //             this.setState({
+    //                 officeList: r.data,
+    //                 entryName:r.data[0].name,
+    //                 entryID:r.data[0].id,
+    //             });
+    //         })
+    // }
     onClickEntry(item) {
         this.setState({
             entryName: item.name,
             entryID: item.id,
-        })
-    }
-    onClickAdd(){
-        console.log("항목추가!");
-        this.setState({
-            showTextbox: !this.state.showTextbox
-        })
-    }
-    onClickRemove(){
-        console.log("항목삭제!");
-        this.setState({
-            showCheckbox: !this.state.showCheckbox,
-            showDefault: !this.state.showDefault
         })
     }
 
@@ -98,19 +84,7 @@ class OfficeMain extends React.Component{
                     <p>연구실 비품 관리</p>
                 </div>
                 <div className="office-width">
-                    <section className="sidebar">
-                        <div className="inner">
-                            {this.state.showDefault&&<DefaultEntry list={this.state.officeList} event = {this.onClickEntry}/>}
-                            {this.state.showCheckbox&&<CheckboxEntry list={this.state.officeList} event = {this.onClickEntry}/>}
-                            <ul className="office-ul">
-                                {this.state.showTextbox && <ShowTextbox/>}
-                            </ul>
-                        </div>
-                        <div className="add-btn">
-                            <p onClick={()=>this.onClickAdd()}>+항목추가</p>
-                            <p onClick={()=>this.onClickRemove()}>-항목삭제</p>
-                        </div>
-                    </section>
+                    <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry}/>
                     <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName}/>
                 </div>
             </div>

@@ -9,6 +9,7 @@
 import React from 'react';
 import axios from "axios";
 import ServerContent from "./ServerContent";
+import SideBar from "../container/SideBar";
 
 
 class ServerMain extends React.Component{
@@ -20,19 +21,21 @@ class ServerMain extends React.Component{
             entryId:1,
             entryName:'디스크',
             entryItem:[],
+            url: 'http://210.218.217.110:3103/api/getDiskData.php?parm=entry',
         }
+        this.onClickEntry = this.onClickEntry.bind(this);
     }
 
-    UNSAFE_componentWillMount() {
-        axios.get("http://210.218.217.110:3103/api/getDiskData.php?parm=entry")
-            .then(r => {
-                this.setState({diskEntry: r.data});
-            })
-        // axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=count&entry_id='+this.state.entryId)
-        //     .then(res => {
-        //         console.log(res.data);
-        //     })
-    }
+    // UNSAFE_componentWillMount() {
+    //     axios.get("http://210.218.217.110:3103/api/getDiskData.php?parm=entry")
+    //         .then(r => {
+    //             this.setState({diskEntry: r.data});
+    //         })
+    //     // axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=count&entry_id='+this.state.entryId)
+    //     //     .then(res => {
+    //     //         console.log(res.data);
+    //     //     })
+    // }
 
     onClickEntry(selectItem){
         this.setState({
@@ -48,19 +51,20 @@ class ServerMain extends React.Component{
                     <p>서버 비품 관리</p>
                 </div>
                 <div className="server-width">
-                    <section className="sidebar">
-                        <div className="inner">
-                            <ul className="server-ul">
-                                {this.state.diskEntry.map((item)=>(
-                                    <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="add-btn">
-                            <p>+항목추가</p>
-                            <p>-항목삭제</p>
-                        </div>
-                    </section>
+                    <SideBar currentURL = {this.state.url} clickEvent={this.onClickEntry}/>
+                    {/*<section className="sidebar">*/}
+                    {/*    <div className="inner">*/}
+                    {/*        <ul className="server-ul">*/}
+                    {/*            {this.state.diskEntry.map((item)=>(*/}
+                    {/*                <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>*/}
+                    {/*            ))}*/}
+                    {/*        </ul>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="add-btn">*/}
+                    {/*        <p>+항목추가</p>*/}
+                    {/*        <p>-항목삭제</p>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
                     <ServerContent entryId={this.state.entryId} entryName={this.state.entryName}/>
                 </div>
             </div>
