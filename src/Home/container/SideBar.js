@@ -8,7 +8,7 @@ const ShowTextbox = () => {
 
 const DefaultEntry = ({list,event}) => {
     return(
-        <ul className="office-ul">
+        <ul className="sidebar-ul">
             {list.map((item)=>(
                 <li onClick={()=>event(item)} key={item.id}><p>{item.name}</p></li>
             ))}
@@ -18,7 +18,7 @@ const DefaultEntry = ({list,event}) => {
 
 const CheckboxEntry = ({list,event}) => {
     return(
-        <ul className="office-ul">
+        <ul className="sidebar-ul-chk">
             {list.map((item)=>(
                 <li onClick={()=>event(item)} key={item.id}>
                     <input type="checkbox"/>

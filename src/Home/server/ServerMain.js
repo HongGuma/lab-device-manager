@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import axios from "axios";
 import ServerContent from "./ServerContent";
 import SideBar from "../container/SideBar";
 
@@ -26,17 +25,6 @@ class ServerMain extends React.Component{
         this.onClickEntry = this.onClickEntry.bind(this);
     }
 
-    // UNSAFE_componentWillMount() {
-    //     axios.get("http://210.218.217.110:3103/api/getDiskData.php?parm=entry")
-    //         .then(r => {
-    //             this.setState({diskEntry: r.data});
-    //         })
-    //     // axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=count&entry_id='+this.state.entryId)
-    //     //     .then(res => {
-    //     //         console.log(res.data);
-    //     //     })
-    // }
-
     onClickEntry(selectItem){
         this.setState({
             entryId:selectItem.id,
@@ -52,19 +40,6 @@ class ServerMain extends React.Component{
                 </div>
                 <div className="server-width">
                     <SideBar currentURL = {this.state.url} clickEvent={this.onClickEntry}/>
-                    {/*<section className="sidebar">*/}
-                    {/*    <div className="inner">*/}
-                    {/*        <ul className="server-ul">*/}
-                    {/*            {this.state.diskEntry.map((item)=>(*/}
-                    {/*                <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>*/}
-                    {/*            ))}*/}
-                    {/*        </ul>*/}
-                    {/*    </div>*/}
-                    {/*    <div className="add-btn">*/}
-                    {/*        <p>+항목추가</p>*/}
-                    {/*        <p>-항목삭제</p>*/}
-                    {/*    </div>*/}
-                    {/*</section>*/}
                     <ServerContent entryId={this.state.entryId} entryName={this.state.entryName}/>
                 </div>
             </div>

@@ -62,11 +62,12 @@ body p {cursor:default;}
 /*-SideBarContainer-*/
 .sidebar .inner {border-top:1px solid; border-bottom:1px solid; border-color:#ddd; width: 180px; margin:0 13px;}
 .sidebar ul {list-style: none; padding:0;}
-.sidebar .office-ul li:hover {background-color: rgba(102,196,48,0.3);}
 .sidebar li p {color:#393536; text-align: center; font-size:20px; line-height: 40px; height: 40px; font-weight: 600; cursor:Pointer; margin:0; padding:12px;}
-.sidebar .office-ul li p:active {color:white;}
+.sidebar-ul-chk li{display: flex; align-items: center;}
+.sidebar-ul-chk li p{padding:3px;}
 .sidebar .add-btn {margin-top:8px;}
 .sidebar .add-btn p{ text-align: center; color:#393536;}
+.sidebar .add-box {height: 40px; text-align: center; line-height: 40px; font-weight: 600; width: 170px; font-size: 20px;}
 
 /*-ContentContainer.js-*/
 .container {width: 100%; padding:0 20px;}
@@ -98,9 +99,9 @@ body p {cursor:default;}
 .rental-width {display: flex; width: 1600px; margin:0 auto;}
 .rental-width .add-btn p:hover {color:#ee1e49;}
 .rental-width .add-btn p:active {color:#fff;}
+.rental-width .rental-ul li:hover {background-color: rgba(57,53,54,0.3);}
+.rental-width .rental-ul li p:active {color:white;}
 
-.sidebar .rental-ul li:hover {background-color: rgba(57,53,54,0.3);}
-.sidebar .rental-ul li p:active {color:white;}
 
 /*====== Office =======*/
 .office-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}
@@ -109,7 +110,8 @@ body p {cursor:default;}
 .office-width {display: flex; width: 1600px; margin:0 auto;}
 .office-width .add-btn p:hover {color:#66c430;}
 .office-width .add-btn p:active {color:#fff;}
-.office-ul .add-box {height: 40px; text-align: center; line-height: 40px; font-weight: 600; width: 170px; font-size: 20px;}
+.office-width .sidebar-ul li:hover {background-color: rgba(102,196,48,0.3);}
+.office-width .sidebar-ul li p:active {color:white;}
 
 /*====== Server ======*/
 .server-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}
@@ -118,20 +120,18 @@ body p {cursor:default;}
 .server-width {display: flex; width: 1600px; margin:0 auto;}
 .server-width .add-btn p:hover {color:#2f67b6;}
 .server-width .add-btn p:active {color:#fff;}
-
-.sidebar .server-ul li:hover {background-color: rgba(47,103,182,0.3);}
-.sidebar .server-ul li p:active {color:white;}
+.server-width .sidebar-ul li:hover {background-color: rgba(47,103,182,0.3);}
+.server-width .sidebar-ul li p:active {color:white;}
 
 /*======LabMain.js======*/
-.lab-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}
+.lab-wrap {min-height: 900px; max-height: 2000px; padding-top:141px; user-select: none;}
 .lab-tit {height: 65px; margin-bottom:32px; background-color: rgba(238,30,73,0.3);}
 .lab-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536; border-bottom:1px solid rgba(238,30,73,0.3);}
 .lab-width {display: flex; width: 1600px; margin:0 auto 30px;}
 .lab-width .add-btn p:hover {color:#ee1e49; }
 .lab-width .add-btn p:active {color:#fff;}
-
-.sidebar .lab-ul li:hover {background-color: rgba(238,30,73,0.3);}
-.sidebar .lab-ul li p:active {color:white;}
+.lab-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.3);}
+.lab-width .sidebar-ul li p:active {color:white;}
 
 
 /*======Footer.js======*/
