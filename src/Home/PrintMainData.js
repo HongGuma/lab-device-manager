@@ -10,7 +10,6 @@ export default function PrintMainData({url}){
     }
 
     const [list,setList] = useState(null);
-    const [num,setNum] = useState(null);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
 
@@ -28,7 +27,7 @@ export default function PrintMainData({url}){
             setLoading(false);
         };
         fetchList();
-    },[url]);
+    },[currentURL, url]);
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
@@ -37,9 +36,9 @@ export default function PrintMainData({url}){
     return(
         <div className="item">
             <ul>
-                {list.map(item2=>(
-                    <li key={item2.id}>
-                        <p>{item2.entry_name} ({item2.item_count})</p>
+                {list.map(item=>(
+                    <li key={item.id}>
+                        <p>{item.entry_name} ({item.item_count})</p>
                     </li>
                     )
                 )}

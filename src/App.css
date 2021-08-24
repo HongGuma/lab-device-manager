@@ -109,6 +109,7 @@ body p {cursor:default;}
 .office-width {display: flex; width: 1600px; margin:0 auto;}
 .office-width .add-btn p:hover {color:#66c430;}
 .office-width .add-btn p:active {color:#fff;}
+.office-ul .add-box {height: 40px; text-align: center; line-height: 40px; font-weight: 600; width: 170px; font-size: 20px;}
 
 /*====== Server ======*/
 .server-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}

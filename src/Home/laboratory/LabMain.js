@@ -1,9 +1,6 @@
 
 
 import React from 'react';
-import SideBarContainer from "../container/SideBarContainer";
-import ContentContainer from "../container/ContentContainer";
-import OfficeContent from "../office/OfficeContent";
 import LabContent from "./LabContent";
 import axios from "axios";
 

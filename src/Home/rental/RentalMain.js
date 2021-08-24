@@ -7,10 +7,7 @@
 */
 
 import React from 'react';
-import SideBarContainer from "../container/SideBarContainer";
-import ContentContainer from "../container/ContentContainer";
 import axios from "axios";
-import LabContent from "../laboratory/LabContent";
 import RentalContent from "./RentalContent";
 
 class RentalMain extends React.Component{

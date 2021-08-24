@@ -19,8 +19,32 @@ function onClickEdit(){
 function onClickRemove(){
     return alert("삭제")
 }
+const ShowTextbox = () => {
+    return <li><input className="add-box" type="textbox"/></li>
+}
 
+const DefaultEntry = ({list,event}) => {
+    return(
+        <ul className="office-ul">
+            {list.map((item)=>(
+                <li onClick={()=>event(item)} key={item.id}><p>{item.name}</p></li>
+            ))}
+        </ul>
+    )
+}
 
+const CheckboxEntry = ({list,event}) => {
+    return(
+        <ul className="office-ul">
+            {list.map((item)=>(
+                <li onClick={()=>event(item)} key={item.id}>
+                    <input type="checkbox"/>
+                    <p>{item.name}</p>
+                </li>
+            ))}
+        </ul>
+    )
+}
 
 class OfficeMain extends React.Component{
     constructor(props) {
@@ -30,7 +54,11 @@ class OfficeMain extends React.Component{
             officeList:[],
             entryName:'',
             entryID:0,
+            showTextbox:false,
+            showCheckbox:false,
+            showDefault:true,
         }
+        this.onClickEntry = this.onClickEntry.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -43,18 +71,20 @@ class OfficeMain extends React.Component{
                 });
             })
     }
-
-    onClickEntry(item){
+    onClickEntry(item) {
         this.setState({
             entryName: item.name,
             entryID: item.id,
         })
     }
-
-    addEntry(){
+    onClickAdd(){
         console.log("항목추가!");
+        this.setState({
+            showCheckbox: !this.state.showCheckbox,
+            showDefault: !this.state.showDefault
+        })
     }
-    removeEntry(){
+    onClickRemove(){
         console.log("항목삭제!");
     }
 
@@ -67,15 +97,15 @@ class OfficeMain extends React.Component{
                 <div className="office-width">
                     <section className="sidebar">
                         <div className="inner">
+                            {this.state.showDefault&&<DefaultEntry list={this.state.officeList} event = {this.onClickEntry}/>}
+                            {this.state.showCheckbox&&<CheckboxEntry list={this.state.officeList} event = {this.onClickEntry}/>}
                             <ul className="office-ul">
-                                {this.state.officeList.map((item)=>(
-                                    <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>
-                                ))}
+                                {this.state.showTextbox && <ShowTextbox/>}
                             </ul>
                         </div>
                         <div className="add-btn">
-                            <p onClick={this.addEntry}>+항목추가</p>
-                            <p onClick={this.removeEntry}>-항목삭제</p>
+                            <p onClick={()=>this.onClickAdd()}>+항목추가</p>
+                            <p onClick={this.onClickRemove}>-항목삭제</p>
                         </div>
                     </section>
                     <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName}/>
@@ -86,3 +116,4 @@ class OfficeMain extends React.Component{
 }
 
 export default OfficeMain;
+
