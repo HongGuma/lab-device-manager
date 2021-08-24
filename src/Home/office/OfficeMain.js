@@ -80,12 +80,15 @@ class OfficeMain extends React.Component{
     onClickAdd(){
         console.log("항목추가!");
         this.setState({
-            showCheckbox: !this.state.showCheckbox,
-            showDefault: !this.state.showDefault
+            showTextbox: !this.state.showTextbox
         })
     }
     onClickRemove(){
         console.log("항목삭제!");
+        this.setState({
+            showCheckbox: !this.state.showCheckbox,
+            showDefault: !this.state.showDefault
+        })
     }
 
     render() {
@@ -105,7 +108,7 @@ class OfficeMain extends React.Component{
                         </div>
                         <div className="add-btn">
                             <p onClick={()=>this.onClickAdd()}>+항목추가</p>
-                            <p onClick={this.onClickRemove}>-항목삭제</p>
+                            <p onClick={()=>this.onClickRemove()}>-항목삭제</p>
                         </div>
                     </section>
                     <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName}/>
