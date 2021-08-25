@@ -6,7 +6,7 @@
     $entry_id = $_GET['entry_id'];
     $equip_id = $_GET['equip_id'];
     switch ($parm){
-        case 'entry':
+        case '1':
             $sql = "select * from lab_entry";
             $result = mysqli_query($conn, $sql);
             $data = array();
@@ -21,7 +21,7 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'equipment':
+        case '2':
             $sql = "select * from lab_equipment as eq, lab_entry as en where eq.item_id = en.lab_entry_id and en.lab_entry_id = ".$entry_id;
             $result = mysqli_query($conn, $sql);
             $data = array();
@@ -40,7 +40,37 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'logbook':
+        case '3':
+            $sql = "select lab_entry_id, entry_name, ifnull(count,0) from lab_entry as en left outer join( select item_id, count(*) as count from lab_equipment group by item_id) as eq on en.lab_entry_id = eq.item_id";
+            $result = mysqli_query($conn, $sql);
+            $data = array();
+            if($result){
+                while($row = mysqli_fetch_array($result)){
+                    array_push($data,
+                        array('entry_id'=>$row[0],
+                            'entry_name'=>$row[1],
+                            'item_count'=>$row[2],
+                        ));
+                }
+                echo json_encode($data);
+            }else{
+                echo mysqli_error($conn);
+            }
+            break;
+        case '4':
+            $sql = "select count(*) lab_equipment as eq, lab_entry as en where eq.item_id = en.lab_entry_id and en.lab_entry_id = ".$entry_id;
+            $result = mysqli_query($conn, $sql);
+            $data = '';
+            if($result){
+                while($row = mysqli_fetch_array($result)){
+                    $data = $row[0];
+                }
+                echo $data;
+            }else{
+                echo mysqli_error($conn);
+            }
+            break;
+        case '5':
             $sql = "select * from lab_equipment as eq, lab_logbook as lo where eq.lab_equipment_id = lo.equipment_id and lo.equipment_id = ".$equip_id;
             $result = mysqli_query($conn, $sql);
             $data = array();
@@ -64,35 +94,5 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'total_count':
-            $sql = "select lab_entry_id, entry_name, ifnull(count,0) from lab_entry as en left outer join( select item_id, count(*) as count from lab_equipment group by item_id) as eq on en.lab_entry_id = eq.item_id";
-            $result = mysqli_query($conn, $sql);
-            $data = array();
-            if($result){
-                while($row = mysqli_fetch_array($result)){
-                    array_push($data,
-                        array('entry_id'=>$row[0],
-                            'entry_name'=>$row[1],
-                            'item_count'=>$row[2],
-                        ));
-                }
-                echo json_encode($data);
-            }else{
-                echo mysqli_error($conn);
-            }
-            break;
-        case 'count':
-            $sql = "select count(*) lab_equipment as eq, lab_entry as en where eq.item_id = en.lab_entry_id and en.lab_entry_id = ".$entry_id;
-            $result = mysqli_query($conn, $sql);
-            $data = '';
-            if($result){
-                while($row = mysqli_fetch_array($result)){
-                    $data = $row[0];
-                }
-                echo $data;
-            }else{
-                echo mysqli_error($conn);
-            }
-
     }
     mysqli_close($conn);

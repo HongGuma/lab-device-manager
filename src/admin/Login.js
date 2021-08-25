@@ -10,6 +10,22 @@ import React from 'react';
 import axios from 'axios';
 
 class Login extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            adminID:'',
+            adminPW:'',
+        }
+    }
+    inputID = (e) => {
+        this.setState({adminID:e.target.value})
+    }
+    inputPW = (e) => {
+        this.setState({adminPW:e.target.value})
+    }
+    login = () =>{
+        console.log(this.state.adminID+", "+this.state.adminPW);
+    }
     render() {
         return (
             <div className="login-wrap">
@@ -17,15 +33,15 @@ class Login extends React.Component{
                     <div className="login-inner">
                         <div className="login-input">
                             <p>아이디</p>
-                            <input type="text"/>
+                            <input type="text" id="adminID" onChange={this.inputID}/>
                         </div>
                         <div className="login-input">
                             <p>비밀번호</p>
-                            <input type="password"/>
+                            <input type="password" id="adminPW" onChange={this.inputPW}/>
                         </div>
                     </div>
                     <div className="login-btn">
-                        <button>로그인</button>
+                        <button onClick={this.login}>로그인</button>
                     </div>
                 </div>
             </div>

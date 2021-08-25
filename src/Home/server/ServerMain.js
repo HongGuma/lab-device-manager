@@ -17,10 +17,10 @@ class ServerMain extends React.Component{
         this.state={
             diskList:[],
             diskEntry:[],
-            entryId:1,
-            entryName:'디스크',
+            entryId:0,
+            entryName:'',
             entryItem:[],
-            url: 'http://210.218.217.110:3103/api/getDiskData.php?parm=entry',
+            url: 'http://210.218.217.110:3103/api/getDiskData.php?parm=1',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }

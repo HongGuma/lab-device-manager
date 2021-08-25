@@ -18,7 +18,7 @@ class OfficeMain extends React.Component{
             officeList:[],
             entryName:'',
             entryID:0,
-            url:'http://210.218.217.110:3103/api/getOfficeData.php?parm=entry',
+            url:'http://210.218.217.110:3103/api/getOfficeData.php?parm=1',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }

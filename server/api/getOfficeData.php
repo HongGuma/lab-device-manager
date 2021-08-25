@@ -4,8 +4,9 @@
 
     $parm = $_GET['parm'];
     $entry_id = $_GET['entry_id'];
+    $entry_name = $_GET['entry_name'];
     switch ($parm){
-        case 'entry':
+        case '1': /* entry */
             $sql = "select * from office_entry";
             $result = mysqli_query($conn, $sql);
             $data = array();
@@ -20,7 +21,7 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'equipment':
+        case '2': /* equipment */
             $sql = "select * from office_equipment as eq, office_entry as en where en.office_entry_id=".$entry_id." and en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
             $data = array();
@@ -43,7 +44,7 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'total_count':
+        case '3': /* total_count */
             $sql = "select office_entry_id, entry_name, ifnull(count,0) from office_entry as en left outer join( select item_id, count(*) as count from office_equipment group by item_id) as eq on en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
             $data = array();
@@ -60,7 +61,7 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'count':
+        case '4': /* count */
             $sql = "select count(*) from office_equipment as eq, office_entry as en where en.office_entry_id=".$entry_id." and en.office_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
             $data = '';
@@ -72,6 +73,12 @@
             }else{
                 echo mysqli_error($conn);
             }
+            break;
+        case '10': /* insert_entry */
+            $sql = "Insert Into office_entry (entry_name) values (".$entry_name.")";
+            break;
+
+
 
     }
     mysqli_close($conn);

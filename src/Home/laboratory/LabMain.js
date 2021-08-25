@@ -13,10 +13,10 @@ class LabMain extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            entryId:1,
-            entryName:'냉장고',
+            entryId:0,
+            entryName:'',
             labEntry:[],
-            url:'http://210.218.217.110:3103/api/getLabData.php?parm=entry',
+            url:'http://210.218.217.110:3103/api/getLabData.php?parm=1',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }

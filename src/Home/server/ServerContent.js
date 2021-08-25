@@ -22,8 +22,8 @@ const ServerContent = ({entryId,entryName}) => {
                 setError(null);
                 setList(null);
                 setLoading(null);
-                const res = await axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=equipment&entry_id='+currentId);
-                const res2 = await axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=count&entry_id='+currentId);
+                const res = await axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=2&entry_id='+currentId);
+                const res2 = await axios.get('http://210.218.217.110:3103/api/getDiskData.php?parm=4&entry_id='+currentId);
                 setList(res.data);
                 setNum(res2.data);
             }catch (e){

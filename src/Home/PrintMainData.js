@@ -19,7 +19,7 @@ export default function PrintMainData({url}){
                 setError(null);
                 setList(null);
                 setLoading(null);
-                const res = await axios.get(currentURL+'?parm=total_count');
+                const res = await axios.get(currentURL+'?parm=3');
                 setList(res.data);
             }catch (e){
                 setError(e);

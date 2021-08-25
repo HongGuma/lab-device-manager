@@ -50,10 +50,6 @@ class RentalMain extends React.Component{
                                 <li><p>비품반납</p></li>
                             </ul>
                         </div>
-                        <div className="add-btn">
-                            <p>+항목추가</p>
-                            <p>-항목삭제</p>
-                        </div>
                     </section>
                     <RentalContent />
                 </div>

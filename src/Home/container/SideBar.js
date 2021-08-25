@@ -1,11 +1,32 @@
-
+/**
+*@title 사이드바 모듈
+*@date 2021-08-25
+*@author 홍수희
+*@desc 각 페이지에 공통부분인 사이드바 기능
+*@etc(change)
+*/
 import React,{useEffect, useState} from 'react';
 import axios from "axios";
 
-const ShowTextbox = () => {
-    return <li><input className="add-box" type="textbox"/></li>
+const InsertEntry = () => {
+    let text = '';
+    const inputText = (e) => {
+        text = e.target.value;
+    }
+    function enter(event){
+        if(event.key === "Enter"){
+            console.log("enter : "+text);
+        }
+    }
+    return <li><input className="add-box" type="textbox" onKeyPress={enter} onChange={inputText}/></li>
 }
-
+/**
+ *
+ * @param list
+ * @param event
+ * @returns {JSX.Element}
+ * @constructor : 기본으로 출력하는 비품 항목 리스트, list = entry list, event = 아이템 클릭 이벤트
+ */
 const DefaultEntry = ({list,event}) => {
     return(
         <ul className="sidebar-ul">
@@ -15,7 +36,13 @@ const DefaultEntry = ({list,event}) => {
         </ul>
     )
 }
-
+/**
+ *
+ * @param list
+ * @param event
+ * @returns {JSX.Element}
+ * @constructor : 항목삭제 버튼 클릭시 출력하는 비품 항목 리스트
+ */
 const CheckboxEntry = ({list,event}) => {
     return(
         <ul className="sidebar-ul-chk">
@@ -28,7 +55,13 @@ const CheckboxEntry = ({list,event}) => {
         </ul>
     )
 }
-
+/**
+ *
+ * @param currentURL :상단바 버튼 클릭시 각 페이지에 맞는 db url
+ * @param clickEvent :항목 클릭 이벤트
+ * @returns {JSX.Element|null}
+ * @constructor 사이드바 출력하는 기능
+ */
 const SideBar = ({currentURL,clickEvent}) => {
     const [showTextbox,setShowTextbox] = useState(null);
     const [showDefault,setShowDefault] = useState(true);
@@ -60,12 +93,14 @@ const SideBar = ({currentURL,clickEvent}) => {
     function onClickAdd(){
         console.log("항목추가!");
         setShowTextbox(!showTextbox);
-
+        setShowDefault(true);
+        setShowCheckbox(false);
     }
     function onClickRemove(){
         console.log("항목삭제!");
         setShowCheckbox(!showCheckbox);
         setShowDefault(!showDefault);
+        setShowTextbox(false);
     }
 
     return (
@@ -74,7 +109,7 @@ const SideBar = ({currentURL,clickEvent}) => {
                 {showDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
                 {showCheckbox && <CheckboxEntry list={entryList} event = {clickEvent}/>}
                 <ul className="sidebar-ul">
-                    {showTextbox && <ShowTextbox/>}
+                    {showTextbox && <InsertEntry/>}
                 </ul>
             </div>
             <div className="add-btn">
