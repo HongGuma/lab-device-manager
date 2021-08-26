@@ -6,8 +6,8 @@
  *@etc(change)
  */
 
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
+import React from 'react';
+
 
 
 const RentalContent = ({entryID,entryName}) => {
@@ -21,7 +21,7 @@ const RentalContent = ({entryID,entryName}) => {
     // const [num,setNum] = useState(null);
     // const [loading,setLoading] = useState(false);
     // const [error,setError] = useState(null);
-    //
+    //exe
     // useEffect(()=>{
     //     const fetchList = async () => {
     //         try{

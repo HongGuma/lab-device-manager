@@ -18,7 +18,8 @@ class OfficeMain extends React.Component{
             officeList:[],
             entryName:'',
             entryID:0,
-            url:'http://210.218.217.110:3103/api/getOfficeData.php?parm=1',
+            url:'http://210.218.217.110:3103/api/getOfficeData.php?',
+            tableName:'office',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
@@ -38,7 +39,7 @@ class OfficeMain extends React.Component{
                 </div>
                 <div className="office-width">
                     <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry}/>
-                    <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName}/>
+                    <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName} tableName={this.state.tableName}/>
                 </div>
             </div>
         );

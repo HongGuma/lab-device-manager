@@ -16,7 +16,8 @@ class LabMain extends React.Component{
             entryId:0,
             entryName:'',
             labEntry:[],
-            url:'http://210.218.217.110:3103/api/getLabData.php?parm=1',
+            url:'http://210.218.217.110:3103/api/getLabData.php?',
+            tableName:'lab',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
@@ -34,7 +35,7 @@ class LabMain extends React.Component{
                     <p>실험실 비품 관리</p>
                 </div>
                 <div className="lab-width">
-                    <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry}/>
+                    <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry} tableName={this.state.tableName}/>
                     <LabContent entryID={this.state.entryId} entryName={this.state.entryName}/>
                 </div>
             </div>

@@ -8,17 +8,12 @@
 import React,{useEffect, useState} from 'react';
 import axios from "axios";
 
-const InsertEntry = () => {
-    let text = '';
-    const inputText = (e) => {
-        text = e.target.value;
-    }
-    function enter(event){
-        if(event.key === "Enter"){
-            console.log("enter : "+text);
-        }
-    }
-    return <li><input className="add-box" type="textbox" onKeyPress={enter} onChange={inputText}/></li>
+const InsertEntry = ({enterEvent,inText}) => {
+    return (
+
+            <li><input className="add-box" type="textbox" onKeyPress={enterEvent} onChange={inText}/></li>
+
+    )
 }
 /**
  *
@@ -48,27 +43,34 @@ const CheckboxEntry = ({list,event}) => {
         <ul className="sidebar-ul-chk">
             {list.map((item)=>(
                 <li onClick={()=>event(item)} key={item.id}>
-                    <input type="checkbox"/>
+                    <input type="checkbox" name={item.id}/>
                     <p>{item.name}</p>
                 </li>
             ))}
+            <li>
+                <input type="checkbox" name="total"/>
+                <p>전체</p>
+            </li>
         </ul>
     )
 }
 /**
  *
- * @param currentURL :상단바 버튼 클릭시 각 페이지에 맞는 db url
+ * @param currentURL :상단바 버튼 클릭시 각 페이지에 맞는 api
  * @param clickEvent :항목 클릭 이벤트
+ * @param tableName :각 페이지 entry 테이블 이름
  * @returns {JSX.Element|null}
  * @constructor 사이드바 출력하는 기능
  */
-const SideBar = ({currentURL,clickEvent}) => {
+const SideBar = ({currentURL,clickEvent,tableName}) => {
     const [showTextbox,setShowTextbox] = useState(null);
     const [showDefault,setShowDefault] = useState(true);
     const [showCheckbox,setShowCheckbox] = useState(false);
     const [entryList,setList] = useState(null);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
+    const [entryName,setName] = useState(null);
+    const insertURL = 'http://210.218.217.110:3103/api/getInsertData.php';
 
     useEffect(()=>{
         const fetchList = async () => {
@@ -76,7 +78,7 @@ const SideBar = ({currentURL,clickEvent}) => {
                 setError(null);
                 setList(null);
                 setLoading(null);
-                const res = await axios.get(currentURL);
+                const res = await axios.get(currentURL+'parm=1');
                 setList(res.data);
             }catch (e){
                 setError(e);
@@ -91,17 +93,28 @@ const SideBar = ({currentURL,clickEvent}) => {
     if(!entryList) return  null;
 
     function onClickAdd(){
-        console.log("항목추가!");
         setShowTextbox(!showTextbox);
         setShowDefault(true);
         setShowCheckbox(false);
     }
     function onClickRemove(){
-        console.log("항목삭제!");
         setShowCheckbox(!showCheckbox);
         setShowDefault(!showDefault);
         setShowTextbox(false);
     }
+    const inputText = (e) => {
+        setName(e.target.value);
+    }
+    function inputEnter(event){
+        if(event.key === "Enter"){
+            console.log("enter : "+entryName);
+            axios.post(insertURL+'?table='+tableName+'&entry_name='+entryName)
+                .then((res)=>console.log(res));
+            setShowTextbox(false);
+            window.location.reload()
+        }
+    }
+
 
     return (
         <section className="sidebar">
@@ -109,7 +122,7 @@ const SideBar = ({currentURL,clickEvent}) => {
                 {showDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
                 {showCheckbox && <CheckboxEntry list={entryList} event = {clickEvent}/>}
                 <ul className="sidebar-ul">
-                    {showTextbox && <InsertEntry/>}
+                    {showTextbox && <InsertEntry enterEvent={inputEnter} inText={inputText}/>}
                 </ul>
             </div>
             <div className="add-btn">

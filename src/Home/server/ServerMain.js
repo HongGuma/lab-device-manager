@@ -20,7 +20,8 @@ class ServerMain extends React.Component{
             entryId:0,
             entryName:'',
             entryItem:[],
-            url: 'http://210.218.217.110:3103/api/getDiskData.php?parm=1',
+            url: 'http://210.218.217.110:3103/api/getDiskData.php?',
+            tableName:'disk',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
@@ -39,7 +40,7 @@ class ServerMain extends React.Component{
                     <p>서버 비품 관리</p>
                 </div>
                 <div className="server-width">
-                    <SideBar currentURL = {this.state.url} clickEvent={this.onClickEntry}/>
+                    <SideBar currentURL = {this.state.url} clickEvent={this.onClickEntry} tableName={this.state.tableName}/>
                     <ServerContent entryId={this.state.entryId} entryName={this.state.entryName}/>
                 </div>
             </div>

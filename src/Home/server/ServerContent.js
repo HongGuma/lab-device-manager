@@ -7,10 +7,6 @@ import axios from "axios";
 const ServerContent = ({entryId,entryName}) => {
     let currentId = entryId.toString();
     const tit = ['번호','품명','용량','교체 날짜','A/S 날짜','기타','마지막 수정시간'];
-    const option = [
-        {value:0, label:'사용안함'},
-        {value:1, label:'사용중'}
-    ];
     const [list,setList] = useState(null);
     const [num,setNum] = useState(null);
     const [loading,setLoading] = useState(false);
