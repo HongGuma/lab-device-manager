@@ -63,7 +63,7 @@ body p {cursor:default;}
 .sidebar .inner {border-top:1px solid; border-bottom:1px solid; border-color:#ddd; width: 180px; margin:0 13px;}
 .sidebar ul {list-style: none; padding:0;}
 .sidebar li p {color:#393536; text-align: center; font-size:20px; line-height: 40px; height: 40px; font-weight: 600; cursor:Pointer; margin:0; padding:12px;}
-.sidebar-ul-chk li{display: flex; align-items: center;}
+.sidebar-ul-chk li label{display: flex; align-items: center;}
 .sidebar-ul-chk li p{padding:3px;}
 .sidebar .add-btn {margin-top:8px; margin-bottom:30px;}
 .sidebar .add-btn p{ text-align: center; color:#393536;}

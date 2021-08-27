@@ -38,8 +38,8 @@ class OfficeMain extends React.Component{
                     <p>연구실 비품 관리</p>
                 </div>
                 <div className="office-width">
-                    <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry}/>
-                    <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName} tableName={this.state.tableName}/>
+                    <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry} tableName={this.state.tableName}/>
+                    <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName} />
                 </div>
             </div>
         );

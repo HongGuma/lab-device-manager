@@ -8,13 +8,17 @@
 import React,{useEffect, useState} from 'react';
 import axios from "axios";
 
+/**
+ *
+ * @param enterEvent
+ * @param inText
+ * @returns {JSX.Element}
+ * @constructor 항목추가 버튼 클릭시 나오는 textbox, enterEvent = 키 입력 이벤트, inText = textbox에 텍스트 입력 이벤트
+ */
 const InsertEntry = ({enterEvent,inText}) => {
-    return (
-
-            <li><input className="add-box" type="textbox" onKeyPress={enterEvent} onChange={inText}/></li>
-
-    )
+    return <li><input className="add-box" type="textbox" onKeyPress={enterEvent} onChange={inText}/></li>
 }
+
 /**
  *
  * @param list
@@ -31,6 +35,7 @@ const DefaultEntry = ({list,event}) => {
         </ul>
     )
 }
+
 /**
  *
  * @param list
@@ -38,22 +43,28 @@ const DefaultEntry = ({list,event}) => {
  * @returns {JSX.Element}
  * @constructor : 항목삭제 버튼 클릭시 출력하는 비품 항목 리스트
  */
-const CheckboxEntry = ({list,event}) => {
+const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent}) => {
     return(
         <ul className="sidebar-ul-chk">
+            <li>
+                <label>
+                    <label htmlFor="total"><input type="checkbox" name="total" onChange={onCheckedAll }/></label>
+                    <p>전체</p>
+                </label>
+            </li>
             {list.map((item)=>(
-                <li onClick={()=>event(item)} key={item.id}>
-                    <input type="checkbox" name={item.id}/>
-                    <p>{item.name}</p>
+                <li key={item.id}>
+                    <label>
+                        <label htmlFor={item.id}> <input type="checkbox" onChange={(e)=> onCheckedSingle(e.target.checked,item.id)}/> </label>
+                        <p>{item.name}</p>
+                    </label>
                 </li>
             ))}
-            <li>
-                <input type="checkbox" name="total"/>
-                <p>전체</p>
-            </li>
+            <li onClick={removeEvent}><p>삭제</p></li>
         </ul>
     )
 }
+
 /**
  *
  * @param currentURL :상단바 버튼 클릭시 각 페이지에 맞는 api
@@ -63,15 +74,18 @@ const CheckboxEntry = ({list,event}) => {
  * @constructor 사이드바 출력하는 기능
  */
 const SideBar = ({currentURL,clickEvent,tableName}) => {
-    const [showTextbox,setShowTextbox] = useState(null);
-    const [showDefault,setShowDefault] = useState(true);
-    const [showCheckbox,setShowCheckbox] = useState(false);
-    const [entryList,setList] = useState(null);
-    const [loading,setLoading] = useState(false);
-    const [error,setError] = useState(null);
-    const [entryName,setName] = useState(null);
-    const insertURL = 'http://210.218.217.110:3103/api/getInsertData.php';
-
+    const [isInsert,setInsert] = useState(null); // 항목 추가 버튼 클릭 여부
+    const [isDefault,setDefault] = useState(true); // 기본 entry list 출력 여부
+    const [isRemove,setRemove] = useState(false); // 항목 삭제 버튼 클릭 여부
+    const [entryList,setList] = useState(null); //항목 리스트
+    const [loading,setLoading] = useState(false); // 로딩 여부
+    const [error,setError] = useState(null); // 에러 여부
+    const [entryName,setName] = useState(null); //항목 이름 리스트
+    const [checkedItems,setCheckedItems] = useState(new Set()); //체크박스 체크 여부 set
+    const [isAllChecked,setAllChecked] = useState(false); //체크박스 체크 여부 set
+    const insertURL = 'http://210.218.217.110:3103/api/getInsertEntry.php';
+    const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEntry.php';
+    //초기 항목 데이터 불러오기
     useEffect(()=>{
         const fetchList = async () => {
             try{
@@ -87,31 +101,69 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         };
         fetchList();
     },[currentURL]);
-
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!entryList) return  null;
 
-    function onClickAdd(){
-        setShowTextbox(!showTextbox);
-        setShowDefault(true);
-        setShowCheckbox(false);
+    //항목추가 버튼 클릭시
+    function openAdd(){
+        setInsert(!isInsert);
+        setDefault(true);
+        setRemove(false);
     }
-    function onClickRemove(){
-        setShowCheckbox(!showCheckbox);
-        setShowDefault(!showDefault);
-        setShowTextbox(false);
-    }
-    const inputText = (e) => {
-        setName(e.target.value);
-    }
+    //항목추가 후 엔터 누를시
     function inputEnter(event){
         if(event.key === "Enter"){
             console.log("enter : "+entryName);
-            axios.post(insertURL+'?table='+tableName+'&entry_name='+entryName)
-                .then((res)=>console.log(res));
-            setShowTextbox(false);
-            window.location.reload()
+            if(entryName.length > 0){
+                axios.get(insertURL+'?table='+tableName+'&entry_name='+entryName)
+                    .then((res)=>console.log(res));
+                window.location.reload()
+            }
+            setInsert(false);
+        }
+    }
+    //항목삭제 버튼 클릭시
+    function openRemove(){
+        setRemove(!isRemove);
+        setDefault(!isDefault);
+        setInsert(false);
+    }
+    //삭제 버튼 누를시
+    async function onClickRemove(){
+        console.log(checkedItems);
+        for(let id of checkedItems){    //checkedItems에 있는 id를 하나씩 꺼낸다.
+            const cnt = await axios.get(currentURL+'parm=4&entry_id='+id);  //선택한 entry_id와 이어진 equipment가 있는지 확인한다.
+            if(cnt.data <= 0) { //없으면 삭제 진행
+                await axios.get(deleteURL + '?table=' + tableName + '&item_id=' + id)
+                    .then((res) => console.log(res));
+            }
+        }
+        window.location.reload();
+        alert('삭제 완료');
+    }
+    //항목추가 컴포넌트 textbox에 입력한 텍스트 entryName변수에 저장
+    const inputText = (e) => {
+        setName(e.target.value);
+    }
+    //항목삭제 컴포넌트 checkbox 클릭 여부, true면 id를 checkedItems에 저장 (하나씩 클릭할때)
+    const oneClickCheck = (isChecked, id) => {
+        if(isChecked){
+            checkedItems.add(id);
+            setCheckedItems(checkedItems);
+        }else if(!isChecked && checkedItems.has(id)){
+            checkedItems.delete(id);
+            setCheckedItems(checkedItems);
+        }
+    }
+    const allClickCheck = (isChecked) => {
+        if(isChecked){
+            setCheckedItems(new Set(entryList.map(item=>item.id)));
+            setAllChecked(true);
+        }else{
+            checkedItems.clear();
+            setCheckedItems(checkedItems);
+            setAllChecked(false);
         }
     }
 
@@ -119,15 +171,15 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     return (
         <section className="sidebar">
             <div className="inner">
-                {showDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
-                {showCheckbox && <CheckboxEntry list={entryList} event = {clickEvent}/>}
+                {isDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
+                {isRemove && <RemoveEntry list={entryList} onCheckedSingle={oneClickCheck} removeEvent={onClickRemove} onCheckedAll={allClickCheck}/>}
                 <ul className="sidebar-ul">
-                    {showTextbox && <InsertEntry enterEvent={inputEnter} inText={inputText}/>}
+                    {isInsert && <InsertEntry enterEvent={inputEnter} inText={inputText}/>}
                 </ul>
             </div>
             <div className="add-btn">
-                <p onClick={()=>onClickAdd()}>+항목추가</p>
-                <p onClick={()=>onClickRemove()}>-항목삭제</p>
+                <p onClick={()=>openAdd()}>+항목추가</p>
+                <p onClick={()=>openRemove()}>-항목삭제</p>
             </div>
         </section>
     );
