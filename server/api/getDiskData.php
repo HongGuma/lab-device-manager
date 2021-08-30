@@ -21,7 +21,7 @@
             }
             break;
         case '2': //'equipment':
-            $sql = "select * from disk, disk_entry as en where en.disk_entry_id =".$entry_id." and disk.item_id = en.disk_entry_id";
+            $sql = "select * from disk_equipment, disk_entry as en where en.disk_entry_id =".$entry_id." and disk_equipment.item_id = en.disk_entry_id";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
@@ -43,7 +43,7 @@
             }
             break;
         case '3': //'total_count':
-            $sql = "select disk_entry_id, entry_name, ifnull(count,0) from disk_entry as en left outer join( select item_id, count(*) as count from disk group by item_id) as eq on en.disk_entry_id = eq.item_id";
+            $sql = "select disk_entry_id, entry_name, ifnull(count,0) from disk_entry as en left outer join( select item_id, count(*) as count from disk_equipment group by item_id) as eq on en.disk_entry_id = eq.item_id";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
@@ -60,7 +60,7 @@
             }
             break;
         case '4'://'count':
-            $sql = "select count(*) from disk, disk_entry as en where en.disk_entry_id =".$entry_id." and disk.item_id = en.disk_entry_id";
+            $sql = "select count(*) from disk_equipment, disk_entry as en where en.disk_entry_id =".$entry_id." and disk_equipment.item_id = en.disk_entry_id";
             $result = mysqli_query($conn, $sql);
             $data = '';
             if($result){

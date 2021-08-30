@@ -10,10 +10,10 @@ import axios from "axios";
 
 /**
  *
- * @param enterEvent
- * @param inText
+ * @param enterEvent :키 입력 이벤트
+ * @param inText :textbox 텍스트 입력 이벤트
  * @returns {JSX.Element}
- * @constructor 항목추가 버튼 클릭시 나오는 textbox, enterEvent = 키 입력 이벤트, inText = textbox에 텍스트 입력 이벤트
+ * @constructor 항목추가 버튼 클릭시 나오는 input
  */
 const InsertEntry = ({enterEvent,inText}) => {
     return <li><input className="add-box" type="textbox" onKeyPress={enterEvent} onChange={inText}/></li>
@@ -21,10 +21,10 @@ const InsertEntry = ({enterEvent,inText}) => {
 
 /**
  *
- * @param list
- * @param event
+ * @param list :entry list
+ * @param event :아이템 클릭 이벤트
  * @returns {JSX.Element}
- * @constructor : 기본으로 출력하는 비품 항목 리스트, list = entry list, event = 아이템 클릭 이벤트
+ * @constructor : 기본으로 출력하는 비품 항목 리스트
  */
 const DefaultEntry = ({list,event}) => {
     return(
@@ -38,24 +38,29 @@ const DefaultEntry = ({list,event}) => {
 
 /**
  *
- * @param list
- * @param event
+ * @param list :항목 리스트
+ * @param onCheckedSingle :체크박스 개별 클릭 이벤트
+ * @param onCheckedAll :체크박스 전체 클릭 이벤트
+ * @param removeEvent :삭제 버튼 클릭 이벤트
+ * @param checkedItems
  * @returns {JSX.Element}
- * @constructor : 항목삭제 버튼 클릭시 출력하는 비품 항목 리스트
+ * @constructor :-항목삭제 버튼 클릭시 출력되는 ul
  */
-const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent}) => {
+const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedItems}) => {
     return(
         <ul className="sidebar-ul-chk">
             <li>
                 <label>
-                    <label htmlFor="total"><input type="checkbox" name="total" onChange={onCheckedAll }/></label>
+                    <label htmlFor="total"><input type="checkbox" name="total" onChange={(e) => onCheckedAll(e.target.checked) }/></label>
                     <p>전체</p>
                 </label>
             </li>
             {list.map((item)=>(
                 <li key={item.id}>
                     <label>
-                        <label htmlFor={item.id}> <input type="checkbox" onChange={(e)=> onCheckedSingle(e.target.checked,item.id)}/> </label>
+                        <label htmlFor={item.id}>
+                            <input type="checkbox" onChange={(e)=> onCheckedSingle(e.target.checked,item.id)} />
+                        </label>
                         <p>{item.name}</p>
                     </label>
                 </li>
@@ -146,7 +151,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     const inputText = (e) => {
         setName(e.target.value);
     }
-    //항목삭제 컴포넌트 checkbox 클릭 여부, true면 id를 checkedItems에 저장 (하나씩 클릭할때)
+    //항목삭제 컴포넌트 checkbox 클릭 여부, true면 id를 checkedItems에 저장 (하나씩 클릭할때) *(isChecked : checkbox에서 받아온 checked, id : checkbox에서 받아온 item.id)
     const oneClickCheck = (isChecked, id) => {
         if(isChecked){
             checkedItems.add(id);
@@ -156,7 +161,9 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
             setCheckedItems(checkedItems);
         }
     }
+    //체크박스 전체 선택
     const allClickCheck = (isChecked) => {
+        console.log(isChecked);
         if(isChecked){
             setCheckedItems(new Set(entryList.map(item=>item.id)));
             setAllChecked(true);
@@ -167,12 +174,11 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         }
     }
 
-
     return (
         <section className="sidebar">
             <div className="inner">
                 {isDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
-                {isRemove && <RemoveEntry list={entryList} onCheckedSingle={oneClickCheck} removeEvent={onClickRemove} onCheckedAll={allClickCheck}/>}
+                {isRemove && <RemoveEntry list={entryList} onCheckedSingle={oneClickCheck} removeEvent={onClickRemove} onCheckedAll={allClickCheck} checkedItems={checkedItems}/>}
                 <ul className="sidebar-ul">
                     {isInsert && <InsertEntry enterEvent={inputEnter} inText={inputText}/>}
                 </ul>
