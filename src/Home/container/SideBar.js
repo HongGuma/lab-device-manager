@@ -47,11 +47,12 @@ const DefaultEntry = ({list,event}) => {
  * @constructor :-항목삭제 버튼 클릭시 출력되는 ul
  */
 const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedItems}) => {
+
     return(
         <ul className="sidebar-ul-chk">
             <li>
                 <label>
-                    <label htmlFor="total"><input type="checkbox" name="total" onChange={(e) => onCheckedAll(e.target.checked) }/></label>
+                    <label htmlFor="total"><input type="checkbox" name="total" onChange={(e) => onCheckedAll(e.target.checked) } checked={checkedItems.size === list.size}/></label>
                     <p>전체</p>
                 </label>
             </li>
@@ -59,7 +60,7 @@ const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedI
                 <li key={item.id}>
                     <label>
                         <label htmlFor={item.id}>
-                            <input type="checkbox" onChange={(e)=> onCheckedSingle(e.target.checked,item.id)} />
+                            <input type="checkbox" onChange={(e)=> onCheckedSingle(e,item.id)}/>
                         </label>
                         <p>{item.name}</p>
                     </label>
@@ -106,6 +107,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         };
         fetchList();
     },[currentURL]);
+
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!entryList) return  null;
@@ -133,12 +135,14 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         setRemove(!isRemove);
         setDefault(!isDefault);
         setInsert(false);
+        checkedItems.clear();
+        setCheckedItems(checkedItems);
     }
     //삭제 버튼 누를시
     async function onClickRemove(){
         console.log(checkedItems);
         for(let id of checkedItems){    //checkedItems에 있는 id를 하나씩 꺼낸다.
-            const cnt = await axios.get(currentURL+'parm=4&entry_id='+id);  //선택한 entry_id와 이어진 equipment가 있는지 확인한다.
+            const cnt = await axios.get(deleteURL+'?table='+tableName+'&entry_id='+id);  //선택한 entry_id와 이어진 equipment가 있는지 확인한다.
             if(cnt.data <= 0) { //없으면 삭제 진행
                 await axios.get(deleteURL + '?table=' + tableName + '&item_id=' + id)
                     .then((res) => console.log(res));
@@ -151,28 +155,33 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     const inputText = (e) => {
         setName(e.target.value);
     }
-    //항목삭제 컴포넌트 checkbox 클릭 여부, true면 id를 checkedItems에 저장 (하나씩 클릭할때) *(isChecked : checkbox에서 받아온 checked, id : checkbox에서 받아온 item.id)
+    //체크박스 개별 선택, true면 id를 checkedItems에 저장 (하나씩 클릭할때) *(isChecked : checkbox에서 받아온 checked, id : checkbox에서 받아온 item.id)
     const oneClickCheck = (isChecked, id) => {
-        if(isChecked){
+        if(isChecked.target.checked){
             checkedItems.add(id);
             setCheckedItems(checkedItems);
-        }else if(!isChecked && checkedItems.has(id)){
+        }else if(!isChecked.target.checked && checkedItems.has(id)){
             checkedItems.delete(id);
             setCheckedItems(checkedItems);
         }
+        // console.log(checkedItems);
     }
     //체크박스 전체 선택
     const allClickCheck = (isChecked) => {
         console.log(isChecked);
         if(isChecked){
-            setCheckedItems(new Set(entryList.map(item=>item.id)));
-            setAllChecked(true);
-        }else{
-            checkedItems.clear();
-            setCheckedItems(checkedItems);
-            setAllChecked(false);
+
         }
+        // if(isChecked){
+        //     setCheckedItems(new Set(entryList.map(item=>item.id)));
+        //     setAllChecked(true);
+        // }else{
+        //     checkedItems.clear();
+        //     setCheckedItems(checkedItems);
+        //     setAllChecked(false);
+        // }
     }
+
 
     return (
         <section className="sidebar">

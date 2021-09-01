@@ -87,6 +87,8 @@ body p {cursor:default;}
 .container-cont li {flex:1 1 0; font-size:18px; text-align: center; font-weight: 600;}
 .container-cont .body-ul li {font-weight: normal;}
 
+.update {}
+
 /*======Rental======*/
 .rental .current-inner .tit-txt::before {background-color: #2f67b6}
 .rental .current-inner {width: 1100px; margin:0 auto;}
@@ -112,6 +114,8 @@ body p {cursor:default;}
 .office-width .add-btn p:active {color:#fff;}
 .office-width .sidebar-ul li:hover {background-color: rgba(102,196,48,0.3);}
 .office-width .sidebar-ul li p:active {color:white;}
+
+
 
 /*====== Server ======*/
 .server-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}
