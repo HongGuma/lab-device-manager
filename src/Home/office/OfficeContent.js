@@ -38,7 +38,7 @@ const InsertItem = ({clickEvent, changeHandler}) => {
                         <option value="하">하</option>
                     </select>
                 </li>
-                <li><input name="manager" type="textbox" onChange={changeHandler}/></li>
+                <li>{sessionStorage.getItem('name')}</li>
                 <li>.</li>
             </ul>
             <ul>
@@ -168,7 +168,7 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
                                 <option value="하">하</option>
                             </select>
                         </li>
-                        <li><input name="manager" type="textbox" value={item.manager} onChange={changeHandler}/></li>
+                        <li><input name="manager" type="textbox" value={sessionStorage.getItem('name')} onChange={changeHandler}/></li>
                         <li>{item.timestamp}</li>
                         <li><button>수정하기</button></li>
                     </ul>
@@ -177,10 +177,19 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
         </section>
     )
 }
+const Btn = ({openIn,openUp,openDel}) => {
+    return(
+        <div className="add-btn">
+            <p onClick={openIn}>+추가</p>
+            <p onClick={openUp}>◎수정</p>
+            <p onClick={openDel}>-삭제</p>
+        </div>
+    )
+}
 
 const OfficeContent = ({entryID,entryName}) => {
     let currentId = entryID.toString();
-    const tit = ['자산번호','교비','모델','발행일자','위치','관리자','마지막 수정시간'];
+    const tit = ['자산번호','품명','상태','위치','발행일자','관리자','마지막 수정시간'];
     const [list,setList] = useState(null);
     const [num,setNum] = useState(null);
     const [loading,setLoading] = useState(false);
@@ -191,13 +200,14 @@ const OfficeContent = ({entryID,entryName}) => {
     const [isUpdate,setUpdate] = useState(false);
     const [upitem,setupitem] = useState(null);
     const [checkedItems,setCheckedItems] = useState(new Set());
+    const [btnToggle,setOpenBtn] = useState(false);
     const [inputItems,setItems] = useState({
         name:'',
         user:'',
         state:'사용중',
         position:'',
         quality:'상',
-        manager:'',
+        manager:sessionStorage.getItem('name'),
     })
     const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php';
     const insertURL = 'http://210.218.217.110:3103/api/getInsertEquipment.php';
@@ -221,6 +231,11 @@ const OfficeContent = ({entryID,entryName}) => {
         fetchList();
     },[currentId, entryID]);
 
+    useEffect(()=>{
+        if(sessionStorage.getItem('name')!==null){
+            setOpenBtn(true);
+        }
+    },[])
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!list) return  null;
@@ -296,11 +311,7 @@ const OfficeContent = ({entryID,entryName}) => {
                     <p>{num}</p>
                     <p>개</p>
                 </div>
-                <div className="add-btn">
-                    <p onClick={openInsert}>+추가</p>
-                    <p onClick={openUpdate}>◎수정</p>
-                    <p onClick={openDelete}>-삭제</p>
-                </div>
+                {btnToggle && <Btn openIn={openInsert} openDel={openDelete} openUp={openUpdate}/>}
             </div>
             <div className="container-cont">
                 {isDefault && <DefaultItem itemList={list} titleList={tit} onCheckSingle={oneClickCheck}/> }
