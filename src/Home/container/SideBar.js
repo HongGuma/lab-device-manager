@@ -15,8 +15,13 @@ import axios from "axios";
  * @returns {JSX.Element}
  * @constructor 항목추가 버튼 클릭시 나오는 input
  */
-const InsertEntry = ({enterEvent,inText}) => {
-    return <li><input className="add-box" type="textbox" onKeyPress={enterEvent} onChange={inText}/></li>
+const InsertEntry = ({enterEvent,inText,onClickEvent}) => {
+    return (
+        <li>
+            <input className="add-box" type="textbox" onKeyPress={enterEvent} onChange={inText}/>
+            <p onClick={onClickEvent}>추가</p>
+        </li>
+    )
 }
 
 /**
@@ -68,6 +73,15 @@ const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedI
             ))}
             <li onClick={removeEvent}><p>삭제</p></li>
         </ul>
+    )
+}
+
+const AddBtn = ({openAdd,openRemove}) => {
+    return (
+        <div className="add-btn">
+            <p onClick={()=>openAdd()}>+항목추가</p>
+            <p onClick={()=>openRemove()}>-항목삭제</p>
+        </div>
     )
 }
 
@@ -130,6 +144,15 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
             setInsert(false);
         }
     }
+    //항목추가 후 '추가' 버튼 누를시
+    function onClickInsert(){
+        if(entryName.length > 0){
+            axios.get(insertURL+'?table='+tableName+'&entry_name='+entryName)
+                .then((res)=>console.log(res));
+            window.location.reload()
+        }
+        setInsert(false);
+    }
     //항목삭제 버튼 클릭시
     function openRemove(){
         setRemove(!isRemove);
@@ -189,7 +212,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
                 {isDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
                 {isRemove && <RemoveEntry list={entryList} onCheckedSingle={oneClickCheck} removeEvent={onClickRemove} onCheckedAll={allClickCheck} checkedItems={checkedItems}/>}
                 <ul className="sidebar-ul">
-                    {isInsert && <InsertEntry enterEvent={inputEnter} inText={inputText}/>}
+                    {isInsert && <InsertEntry enterEvent={inputEnter} inText={inputText} onClickEvent={onClickInsert}/>}
                 </ul>
             </div>
             <div className="add-btn">

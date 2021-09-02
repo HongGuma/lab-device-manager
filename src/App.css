@@ -29,7 +29,14 @@ body p {cursor:default;}
 .login-input p {flex:1 1 0; font-size: 20px; padding:0 16px; font-weight: 600;}
 .login-input input {flex:2 1 0; margin-right: 17px; font-size: 20px;}
 .login-btn {text-align: center; margin-top: 16px;}
-.login-btn button {width: 458px; border:none; border-radius: 12px; padding:20px 0; font-size: 18px; font-weight: bold; background-color: #393536; color:#fff;}
+.login-btn button {width: 390px; border:none; border-radius: 12px; padding:20px 0; font-size: 18px; font-weight: bold; background-color: #393536; color:#fff;}
+.login-etc-btn {display: flex; justify-content: space-between}
+/*.login-etc-btn .p {flex: 1 1 0;}*/
+
+/*====== Admin ======*/
+.admin-wrap {padding-top:222px; min-height: 800px;}
+.admin-width {width: 1100px; margin:10px auto;}
+
 
 /*===========Main===========*/
 /*-Main-*/

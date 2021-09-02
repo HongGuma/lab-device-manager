@@ -1,7 +1,7 @@
 <?php
 
     $host = 'localhost';
-    $user = 'root';
+    $user = 'kogic';
     $pw = '7890uiop';
     $dbName = 'device_manager';
 
