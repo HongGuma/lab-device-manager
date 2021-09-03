@@ -47,8 +47,8 @@ const DefaultEntry = ({list,event}) => {
  * @param onCheckedSingle :체크박스 개별 클릭 이벤트
  * @param onCheckedAll :체크박스 전체 클릭 이벤트
  * @param removeEvent :삭제 버튼 클릭 이벤트
- * @param checkedItems
- * @param allChecked
+ * @param checkedItems :체크박스에 체크된 아이템 아이디 set
+ * @param allChecked :전체 클릭 여부
  * @returns {JSX.Element}
  * @constructor :-항목삭제 버튼 클릭시 출력되는 ul
  */

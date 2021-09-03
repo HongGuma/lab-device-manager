@@ -30,13 +30,12 @@
                     array_push($data,
                         array('id' => $row[0],
                             'name' => $row[1],
-                            'user' => $row[2],
+                            'state' => $row[2],
                             'position' => $row[3],
-                            'quality' => $row[4],
-                            'state' => $row[5],
-                            'manager' => $row[6],
-                            'timestamp' => $row[7],
-                            'item_num' => $row[8],
+                            'issue_date'=> $row[4],
+                            'manager' => $row[5],
+                            'timestamp' => $row[6],
+                            'item_num' => $row[7],
                         ));
                 }
                 echo json_encode($data);

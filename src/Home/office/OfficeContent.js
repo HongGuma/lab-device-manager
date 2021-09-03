@@ -23,7 +23,6 @@ const InsertItem = ({clickEvent, changeHandler}) => {
                 <li>.</li>
                 <li>.</li>
                 <li><input name="name" type="textbox" onChange={changeHandler}/></li>
-                <li><input name="user" type="textbox" onChange={changeHandler}/></li>
                 <li>
                     <select name="state" onChange={changeHandler}>
                         <option value="사용중">사용중</option>
@@ -31,13 +30,7 @@ const InsertItem = ({clickEvent, changeHandler}) => {
                     </select>
                 </li>
                 <li><input name="position" type="textbox" onChange={changeHandler}/></li>
-                <li>
-                    <select name="quality" onChange={changeHandler}>
-                        <option value="상">상</option>
-                        <option value="중">중</option>
-                        <option value="하">하</option>
-                    </select>
-                </li>
+                <li><input name="issueDate" type="textbox" onChange={changeHandler} placeholder="yyyy-mm-dd"/></li>
                 <li>{sessionStorage.getItem('name')}</li>
                 <li>.</li>
             </ul>
@@ -74,8 +67,8 @@ const DefaultItem = ({itemList,titleList, onCheckSingle, onCheckAll, checkedList
                 <div className="cont-head">
                     <ul className="head-ul">
                         <li>
-                            <p>전체</p>
                             <label>
+                                <p>전체</p>
                                 <label htmlFor="total">
                                     <input
                                         type="checkbox"
@@ -100,10 +93,9 @@ const DefaultItem = ({itemList,titleList, onCheckSingle, onCheckAll, checkedList
                                       /></li>
                             <li>{item.id}</li>
                             <li>{item.name}</li>
-                            <li>{item.user}</li>
                             <li>{item.state}</li>
                             <li>{item.position}</li>
-                            <li>{item.quality}</li>
+                            <li>{item.issue_date}</li>
                             <li>{item.manager}</li>
                             <li>{item.timestamp}</li>
                         </ul>
@@ -178,7 +170,6 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
                     <ul className="body-ul" key={item.id}>
                         <li>{item.id}</li>
                         <li><input name="name" type="textbox" value={item.name} onChange={(e)=>inputHandler(e)}/></li>
-                        <li><input name="user" type="textbox" value={item.user} onChange={(e)=>inputHandler(e)}/></li>
                         <li>
                             <select name="state" value={item.state} onChange={(e)=>inputHandler(e)}>
                                 <option value="사용중">사용중</option>
@@ -186,13 +177,7 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
                             </select>
                         </li>
                         <li><input name="position" type="textbox" value={item.position} onChange={(e)=>inputHandler(e)}/></li>
-                        <li>
-                            <select name="quality" value={item.quality} onChange={(e)=>inputHandler(e)}>
-                                <option value="상">상</option>
-                                <option value="중">중</option>
-                                <option value="하">하</option>
-                            </select>
-                        </li>
+                        <li><input name="issueDate" type="textbox" value={item.issue_date} onChange={(e)=>inputHandler(e)}/></li>
                         <li>{sessionStorage.getItem('name')}</li>
                         <li>{item.timestamp}</li>
                         <li><button>수정하기</button></li>
@@ -240,10 +225,9 @@ const OfficeContent = ({entryID,entryName}) => {
     const [btnToggle,setOpenBtn] = useState(false);//추가,수정,삭제 버튼 출력 여부
     const [inputItems,setItems] = useState({ //??
         name:'',
-        user:'',
         state:'사용중',
         position:'',
-        quality:'상',
+        issueDate:'',
         manager:sessionStorage.getItem('name'),
     })
     const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php'; //데이터 출력시 api url
@@ -279,7 +263,7 @@ const OfficeContent = ({entryID,entryName}) => {
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!list) return  null;
 
-    const {name,user,state,position,quality,manager} = inputItems;
+    const {name,state,position,issueDate,manager} = inputItems;
 
     //+추가 버튼 누를시
     function openInsert(){
@@ -297,8 +281,8 @@ const OfficeContent = ({entryID,entryName}) => {
                     });
             }
             setDelete(true);
+            setAllChecked(false);
             alert('삭제 완료');
-            // window.location.reload();
         }else{
             alert('체크박스를 체크해주세요.')
         }
@@ -317,7 +301,7 @@ const OfficeContent = ({entryID,entryName}) => {
     }
     //추가하기 버튼 누를시
     function onClickInsert(){
-        const parms = 'name='+name+'&user='+user+'&state='+state+'&position='+position+'&quality='+quality+'&manager='+manager;
+        const parms = 'name='+name+'&state='+state+'&position='+position+'&issue_date='+issueDate+'&manager='+manager;
         axios.get(insertURL+'?table=office&entry_id='+entryID+'&'+parms)
             .then((res)=> {
                 // console.log(res)
