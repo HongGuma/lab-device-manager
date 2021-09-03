@@ -1,6 +1,6 @@
 /**
 *@title 로그인 페이지
-*@date 21-08-10
+*@date 21-09-03
 *@author 홍수희
 *@desc 로그인 기능
 *@etc(change)
@@ -10,27 +10,38 @@ import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from "axios";
 
+/**
+ *
+ * @returns {JSX.Element}
+ * @constructor 로그인 화면
+ */
 const Login = () => {
     const [adminID,setID] = useState(null);
     const [adminPW,setPW] = useState(null);
     const loginURL = 'http://210.218.217.110:3103/api/login.php';
     const adminURL = 'http://210.218.217.110:3103/api/getAdmin.php';
-    const [result,setResult] = useState({
-        id:'',
-        name:'',
-        belong:'',
-        autority:'',
-    });
     const [loginToggle,setLogin] = useState(true);
     const [adminToggle,setAdmin] = useState(false);
     const history = useHistory();
 
+    /**
+     * 아이디 입력시 text 받아옴
+     * @param e :input에서 받아온 값
+     */
     const inputID = (e) => {
         setID(e.target.value);
     }
+    /**
+     * 비밀번호 입력시 text 받아옴
+     * @param e :input에서 받아온 값
+     */
     const inputPW = (e) => {
         setPW(e.target.value);
     }
+    /**
+     * 관리자 인증후 관리자 이름,아이디,소속,권한 불러옴
+     * 관리자 이름, 아이디만 세션에 저장
+     */
     function getAdminInfo(){
         axios.get(adminURL+'?id='+adminID).then((res)=>{
             sessionStorage.setItem('id',res.data[0].id);
@@ -42,7 +53,11 @@ const Login = () => {
             window.location.reload();
         })
     }
-
+    /**
+     * 로그인 버튼 클릭시 작동하는 함수
+     * axios.post 로 id,pw 전달
+     * @returns {Promise<void>}
+     */
     async function loginFunc(){
         if(adminID == null || adminPW == null){
             alert('아이디 또는 비밀번호를 입력해주세요.');

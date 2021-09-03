@@ -54,42 +54,61 @@ const InsertItem = ({clickEvent, changeHandler}) => {
  * @param itemList :비품 리스트
  * @param titleList :table head에 해당하는 부분
  * @param onCheckSingle
+ * @param onCheckAll
+ * @param checkedList
+ * @param allChecked
  * @returns {JSX.Element}
  * @constructor :비품리스트 기본으로 보여지는 section
  */
-const DefaultItem = ({itemList,titleList, onCheckSingle}) => {
+const DefaultItem = ({itemList,titleList, onCheckSingle, onCheckAll, checkedList, allChecked}) => {
+    const [bChecked,setChecked] = useState(false);
+    const allCheckHandler = () => setChecked(!allChecked);
+    const singleCheckHandler = (e,item) => {
+        setChecked(!bChecked);
+        onCheckSingle(e.target.checked,item)
+    }
+    useEffect(()=>allCheckHandler,[allChecked]);
+
     return(
         <section>
-            <div className="cont-head">
-                <ul className="head-ul">
-                    <li>
-                        <p>전체</p>
-                        <label>
-                            <label htmlFor="total"><input type="checkbox"/></label>
-                        </label>
-                    </li>
-                    {titleList.map((name,idx) => (
-                        <li key ={idx}>
-                            <p>{name}</p>
+                <div className="cont-head">
+                    <ul className="head-ul">
+                        <li>
+                            <p>전체</p>
+                            <label>
+                                <label htmlFor="total">
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e)=>onCheckAll(e.target.checked)}
+                                        />
+                                </label>
+                            </label>
                         </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="cont-body">
-                {itemList.map((item) => (
-                    <ul className="body-ul" key={item.id}>
-                        <li><input type="checkbox" onChange={(e)=>onCheckSingle(e.target.checked,item.id,item)}/></li>
-                        <li>{item.id}</li>
-                        <li>{item.name}</li>
-                        <li>{item.user}</li>
-                        <li>{item.state}</li>
-                        <li>{item.position}</li>
-                        <li>{item.quality}</li>
-                        <li>{item.manager}</li>
-                        <li>{item.timestamp}</li>
+                        {titleList.map((name,idx) => (
+                            <li key ={idx}>
+                                <p>{name}</p>
+                            </li>
+                        ))}
                     </ul>
-                ))}
-            </div>
+                </div>
+                <div className="cont-body">
+                    {itemList.map((item) => (
+                        <ul className="body-ul" key={item.id}>
+                            <li><input type="checkbox"
+                                       onChange={(e)=>singleCheckHandler(e,item)}
+                                       checked={checkedList.has(item.id)}
+                                      /></li>
+                            <li>{item.id}</li>
+                            <li>{item.name}</li>
+                            <li>{item.user}</li>
+                            <li>{item.state}</li>
+                            <li>{item.position}</li>
+                            <li>{item.quality}</li>
+                            <li>{item.manager}</li>
+                            <li>{item.timestamp}</li>
+                        </ul>
+                    ))}
+                </div>
         </section>
     )
 }
@@ -210,12 +229,14 @@ const OfficeContent = ({entryID,entryName}) => {
     const [error,setError] = useState(null);//에러여부
     const [isInsert,setInsert] = useState(false);//항목추가 버튼 클릭여부
     const [isDefault,setDefault] = useState(true);//아무것도 클릭 안했을때 제일 먼저 보이는 컴포넌트
-    const [isDelete,setDelete] = useState(false);//항목삭제 버튼 클릭여부
-
+    const [doneDelete,setDelete] = useState(false);//삭제 완료 여부
+    const [doneInsert,setDoneInsert] = useState(false);//추가 완료 여부
     const [isUpdate,setUpdate] = useState(false);//수정 버튼 클릭 여부
     const [upitem,setupitem] = useState(null);//..?
 
     const [checkedItems,setCheckedItems] = useState(new Set());//체크박스 체크한 아이템 id set
+    const [isAllChecked,setAllChecked] = useState(false);
+
     const [btnToggle,setOpenBtn] = useState(false);//추가,수정,삭제 버튼 출력 여부
     const [inputItems,setItems] = useState({ //??
         name:'',
@@ -228,7 +249,7 @@ const OfficeContent = ({entryID,entryName}) => {
     const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php'; //데이터 출력시 api url
     const insertURL = 'http://210.218.217.110:3103/api/getInsertEquipment.php'; //데이터 삽입시 api url
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
-
+    //entryId 바뀔때 마다 list 새로 가져오기
     useEffect(()=>{
         const fetchList = async () => {
             try{
@@ -243,14 +264,16 @@ const OfficeContent = ({entryID,entryName}) => {
                 setError(e);
             }
             setLoading(false);
+            setDelete(false);
+            setDoneInsert(false);
         };
         fetchList();
-    },[currentId, entryID]);
+    },[currentId, entryID, doneInsert,doneDelete]);
+    //랜더링 전 sesstion에서 name 받아오기
     useEffect(()=>{
-        if(sessionStorage.getItem('name')!==null){
+        if(sessionStorage.getItem('name')!==null)
             setOpenBtn(true);
-        }
-    },[sessionStorage.getItem('id')])
+    },[sessionStorage.getItem('id')!==null])
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
@@ -258,12 +281,10 @@ const OfficeContent = ({entryID,entryName}) => {
 
     const {name,user,state,position,quality,manager} = inputItems;
 
-
     //+추가 버튼 누를시
     function openInsert(){
         setInsert(!isInsert);
         setDefault(true);
-        setDelete(false);
         setUpdate(false);
     }
     //-삭제 버튼 누를시
@@ -271,10 +292,13 @@ const OfficeContent = ({entryID,entryName}) => {
         if(checkedItems.size > 0){
             for(let id of checkedItems){    //checkedItems에 있는 id를 하나씩 꺼낸다.
                 await axios.get(deleteURL + '?table=office&item_id=' + id)
-                    .then((res) => console.log(res));
+                    .then((res) => {
+                        // console.log(res)
+                    });
             }
-            window.location.reload();
+            setDelete(true);
             alert('삭제 완료');
+            // window.location.reload();
         }else{
             alert('체크박스를 체크해주세요.')
         }
@@ -284,33 +308,51 @@ const OfficeContent = ({entryID,entryName}) => {
         setUpdate(!isUpdate);
         setDefault(!isDefault);
         setInsert(false);
-        setDelete(false);
     }
     //input box에서 받아온 값 inpuItems 배열에 넣음
     function inputHandler(e){
         const {name,value} = e.target;
         setItems({...inputItems, [name]:value});
-        console.log(inputItems);
+        // console.log(inputItems);
     }
     //추가하기 버튼 누를시
     function onClickInsert(){
         const parms = 'name='+name+'&user='+user+'&state='+state+'&position='+position+'&quality='+quality+'&manager='+manager;
         axios.get(insertURL+'?table=office&entry_id='+entryID+'&'+parms)
-            .then((res)=>console.log(res));
-        setInsert(false);
-
+            .then((res)=> {
+                // console.log(res)
+            });
+        setDoneInsert(true);
+        // setInsert(false);
     }
     //체크박스 개별 클릭
-    const oneClickCheck = (isChecked, id, item) => {
+    const onCheckSingle = (isChecked,item) => {
         if(isChecked){
-            checkedItems.add(id);
+            checkedItems.add(item.id);
             setupitem(item);
             setCheckedItems(checkedItems);
-        }else if(!isChecked && checkedItems.has(id)){
-            checkedItems.delete(id);
+        }else if(!isChecked && checkedItems.has(item.id)){
+            checkedItems.delete(item.id);
             setCheckedItems(checkedItems);
         }
+        // console.log(checkedItems);
     }
+    //체크박스 전체 클릭
+    const onCheckAll = (isChecked) => {
+        if(isChecked){
+            list.map((item)=>(
+                checkedItems.add(item.id)
+            ));
+            setCheckedItems(checkedItems);
+            setAllChecked(true);
+        }else{
+            checkedItems.clear();
+            setCheckedItems(checkedItems);
+            setAllChecked(false);
+        }
+        // console.log(checkedItems);
+    }
+
     //수정하기 버튼 누를시
     function onClickUpdate(){
 
@@ -330,7 +372,7 @@ const OfficeContent = ({entryID,entryName}) => {
                 {btnToggle && <Btn openIn={openInsert} openDel={openDelete} openUp={openUpdate}/>}
             </div>
             <div className="container-cont">
-                {isDefault && <DefaultItem itemList={list} titleList={tit} onCheckSingle={oneClickCheck}/> }
+                {isDefault && <DefaultItem itemList={list} titleList={tit} onCheckSingle={onCheckSingle} onCheckAll={onCheckAll} checkedList={checkedItems} allChecked={isAllChecked}/> }
                 {isUpdate && <UpdateItem itemList={list} titleList={tit} changeHandler={inputHandler}/> }
                 {/*{isUpdate && <UpdateTest item={upitem} titleList={tit} changeHandler={inputHandler} clickEvnet={onClickUpdate}/> }*/}
                 {isInsert && <InsertItem list={list} changeHandler={inputHandler} clickEvent={onClickInsert}/> }

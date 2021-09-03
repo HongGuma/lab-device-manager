@@ -169,7 +169,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     }
     //삭제 버튼 누를시
     async function onClickRemove(){
-        console.log(checkedItems);
+        // console.log(checkedItems);
         for(let id of checkedItems){    //checkedItems에 있는 id를 하나씩 꺼낸다.
             const cnt = await axios.get(deleteURL+'?table='+tableName+'&entry_id='+id);  //선택한 entry_id와 이어진 equipment가 있는지 확인한다.
             if(cnt.data <= 0) { //없으면 삭제 진행
