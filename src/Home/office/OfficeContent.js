@@ -53,10 +53,10 @@ const InsertItem = ({clickEvent, changeHandler}) => {
  *
  * @param itemList :비품 리스트
  * @param titleList :table head에 해당하는 부분
- * @param onCheckSingle
- * @param onCheckAll
- * @param checkedList
- * @param allChecked
+ * @param onCheckSingle :체크박스 하나만 선택시
+ * @param onCheckAll :'전체' 체크박스 클릭시
+ * @param checkedList :체크박스에 체크된 아이템들의 아이디 set
+ * @param allChecked :전체선택 여부
  * @returns {JSX.Element}
  * @constructor :비품리스트 기본으로 보여지는 section
  */

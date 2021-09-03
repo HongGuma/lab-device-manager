@@ -48,16 +48,27 @@ const DefaultEntry = ({list,event}) => {
  * @param onCheckedAll :체크박스 전체 클릭 이벤트
  * @param removeEvent :삭제 버튼 클릭 이벤트
  * @param checkedItems
+ * @param allChecked
  * @returns {JSX.Element}
  * @constructor :-항목삭제 버튼 클릭시 출력되는 ul
  */
-const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedItems}) => {
-
+const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedItems, allChecked}) => {
+    const [bCheck,setChecked] = useState(false);
+    const allCheckHandler = () => setChecked(!allChecked);
+    const singleCheckHandler = (e,item) =>{
+        setChecked(!bCheck);
+        onCheckedSingle(e.target.checked,item);
+    }
+    useEffect(()=>allCheckHandler,[allChecked]);
     return(
         <ul className="sidebar-ul-chk">
             <li>
                 <label>
-                    <label htmlFor="total"><input type="checkbox" name="total" onChange={(e) => onCheckedAll(e.target.checked) } checked={checkedItems.size === list.size}/></label>
+                    <label htmlFor="total">
+                        <input type="checkbox"
+                               name="total"
+                               onChange={(e) => onCheckedAll(e.target.checked) }/>
+                    </label>
                     <p>전체</p>
                 </label>
             </li>
@@ -65,7 +76,9 @@ const RemoveEntry = ({list, onCheckedSingle, onCheckedAll, removeEvent, checkedI
                 <li key={item.id}>
                     <label>
                         <label htmlFor={item.id}>
-                            <input type="checkbox" onChange={(e)=> onCheckedSingle(e,item.id)}/>
+                            <input type="checkbox"
+                                   onChange={(e)=> singleCheckHandler(e,item.id)}
+                                   checked={checkedItems.has(item.id)}/>
                         </label>
                         <p>{item.name}</p>
                     </label>
@@ -97,6 +110,8 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     const [isInsert,setInsert] = useState(null); // 항목 추가 버튼 클릭 여부
     const [isDefault,setDefault] = useState(true); // 기본 entry list 출력 여부
     const [isRemove,setRemove] = useState(false); // 항목 삭제 버튼 클릭 여부
+    const [doneInsert,setDoneInsert] = useState(false); //항목 추가 완료 여부
+    const [doneRemove,setDoneRemove] = useState(false); //항목 삭제 완료 여부
     const [entryList,setList] = useState(null); //항목 리스트
     const [loading,setLoading] = useState(false); // 로딩 여부
     const [error,setError] = useState(null); // 에러 여부
@@ -119,9 +134,11 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
                 setError(e);
             }
             setLoading(false);
+            setDoneInsert(false);
+            setDoneRemove(false);
         };
         fetchList();
-    },[currentURL]);
+    },[currentURL, doneInsert, doneRemove]);
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null){
             setOpenBtn(true);
@@ -138,27 +155,6 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         setDefault(true);
         setRemove(false);
     }
-    //항목추가 후 엔터 누를시
-    function inputEnter(event){
-        if(event.key === "Enter"){
-            console.log("enter : "+entryName);
-            if(entryName.length > 0){
-                axios.get(insertURL+'?table='+tableName+'&entry_name='+entryName)
-                    .then((res)=>console.log(res));
-                window.location.reload()
-            }
-            setInsert(false);
-        }
-    }
-    //항목추가 후 '추가' 버튼 누를시
-    function onClickInsert(){
-        if(entryName.length > 0){
-            axios.get(insertURL+'?table='+tableName+'&entry_name='+entryName)
-                .then((res)=>console.log(res));
-            window.location.reload()
-        }
-        setInsert(false);
-    }
     //항목삭제 버튼 클릭시
     function openRemove(){
         setRemove(!isRemove);
@@ -167,6 +163,29 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         checkedItems.clear();
         setCheckedItems(checkedItems);
     }
+    //항목추가 후 엔터 누를시
+    function inputEnter(event){
+        if(event.key === "Enter"){
+            // console.log("enter : "+entryName);
+            if(entryName.length > 0){
+                axios.get(insertURL+'?table='+tableName+'&entry_name='+entryName)
+                    .then((res)=> {
+                        // console.log(res)
+                    });
+            }
+            setDoneInsert(true);
+        }
+    }
+    //항목추가 후 '추가' 버튼 누를시
+    function onClickInsert(){
+        if(entryName.length > 0){
+            axios.get(insertURL+'?table='+tableName+'&entry_name='+entryName)
+                .then((res)=> {
+                    // console.log(res)
+                });
+        }
+        setDoneInsert(true);
+    }
     //삭제 버튼 누를시
     async function onClickRemove(){
         // console.log(checkedItems);
@@ -174,11 +193,14 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
             const cnt = await axios.get(deleteURL+'?table='+tableName+'&entry_id='+id);  //선택한 entry_id와 이어진 equipment가 있는지 확인한다.
             if(cnt.data <= 0) { //없으면 삭제 진행
                 await axios.get(deleteURL + '?table=' + tableName + '&item_id=' + id)
-                    .then((res) => console.log(res));
+                    .then((res) => {
+                        // console.log(res)
+                    });
             }
         }
-        window.location.reload();
-        alert('삭제 완료');
+        setDoneRemove(true);
+        setRemove(false);
+        setDefault(true);
     }
     //항목추가 컴포넌트 textbox에 입력한 텍스트 entryName변수에 저장
     const inputText = (e) => {
@@ -186,10 +208,10 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     }
     //체크박스 개별 선택, true면 id를 checkedItems에 저장 (하나씩 클릭할때) *(isChecked : checkbox에서 받아온 checked, id : checkbox에서 받아온 item.id)
     const oneClickCheck = (isChecked, id) => {
-        if(isChecked.target.checked){
+        if(isChecked){
             checkedItems.add(id);
             setCheckedItems(checkedItems);
-        }else if(!isChecked.target.checked && checkedItems.has(id)){
+        }else if(!isChecked && checkedItems.has(id)){
             checkedItems.delete(id);
             setCheckedItems(checkedItems);
         }
@@ -197,18 +219,17 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     }
     //체크박스 전체 선택
     const allClickCheck = (isChecked) => {
-        console.log(isChecked);
         if(isChecked){
-
+            entryList.map((item)=>(
+                checkedItems.add(item.id)
+            ));
+            setCheckedItems(checkedItems);
+            setAllChecked(true);
+        }else{
+            checkedItems.clear();
+            setCheckedItems(checkedItems);
+            setAllChecked(false);
         }
-        // if(isChecked){
-        //     setCheckedItems(new Set(entryList.map(item=>item.id)));
-        //     setAllChecked(true);
-        // }else{
-        //     checkedItems.clear();
-        //     setCheckedItems(checkedItems);
-        //     setAllChecked(false);
-        // }
     }
 
 
