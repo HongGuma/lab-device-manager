@@ -103,6 +103,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     const [entryName,setName] = useState(null); //항목 이름 리스트
     const [checkedItems,setCheckedItems] = useState(new Set()); //체크박스 체크 여부 set
     const [isAllChecked,setAllChecked] = useState(false); //체크박스 체크 여부 set
+    const [btnToggle,setOpenBtn] = useState(false);//추가,삭제 버튼 출력 여부
     const insertURL = 'http://210.218.217.110:3103/api/getInsertEntry.php';
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEntry.php';
     //초기 항목 데이터 불러오기
@@ -121,6 +122,11 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         };
         fetchList();
     },[currentURL]);
+    useEffect(()=>{
+        if(sessionStorage.getItem('name')!==null){
+            setOpenBtn(true);
+        }
+    },[sessionStorage.getItem('id')])
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
@@ -215,10 +221,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
                     {isInsert && <InsertEntry enterEvent={inputEnter} inText={inputText} onClickEvent={onClickInsert}/>}
                 </ul>
             </div>
-            <div className="add-btn">
-                <p onClick={()=>openAdd()}>+항목추가</p>
-                <p onClick={()=>openRemove()}>-항목삭제</p>
-            </div>
+            {btnToggle && <AddBtn openAdd={openAdd} openRemove={openRemove}/>}
         </section>
     );
 

@@ -136,6 +136,12 @@ const UpdateTest = ({item, titleList, clickEvnet, changeHandler}) => {
     )
 }
 const UpdateItem = ({itemList,titleList, changeHandler}) => {
+    const [inValue,setValue] = useState(itemList);
+    function inputHandler(e){
+        const {name,value} = e.target;
+        setValue({...inValue, [name]:value});
+        console.log(inValue);
+    }
     return(
         <section className="update">
             <div className="cont-head">
@@ -149,26 +155,26 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
                 </ul>
             </div>
             <div className="cont-body">
-                {itemList.map((item) => (
+                {inValue.map((item) => (
                     <ul className="body-ul" key={item.id}>
                         <li>{item.id}</li>
-                        <li><input name="name" type="textbox" value={item.name} onChange={changeHandler}/></li>
-                        <li><input name="user" type="textbox" value={item.user} onChange={changeHandler}/></li>
+                        <li><input name="name" type="textbox" value={item.name} onChange={(e)=>inputHandler(e)}/></li>
+                        <li><input name="user" type="textbox" value={item.user} onChange={(e)=>inputHandler(e)}/></li>
                         <li>
-                            <select name="state" value={item.state} onChange={changeHandler}>
+                            <select name="state" value={item.state} onChange={(e)=>inputHandler(e)}>
                                 <option value="사용중">사용중</option>
                                 <option value="사용안함">사용안함</option>
                             </select>
                         </li>
-                        <li><input name="position" type="textbox" value={item.position} onChange={changeHandler}/></li>
+                        <li><input name="position" type="textbox" value={item.position} onChange={(e)=>inputHandler(e)}/></li>
                         <li>
-                            <select name="quality" value={item.quality} onChange={changeHandler}>
+                            <select name="quality" value={item.quality} onChange={(e)=>inputHandler(e)}>
                                 <option value="상">상</option>
                                 <option value="중">중</option>
                                 <option value="하">하</option>
                             </select>
                         </li>
-                        <li><input name="manager" type="textbox" value={sessionStorage.getItem('name')} onChange={changeHandler}/></li>
+                        <li>{sessionStorage.getItem('name')}</li>
                         <li>{item.timestamp}</li>
                         <li><button>수정하기</button></li>
                     </ul>
@@ -177,6 +183,14 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
         </section>
     )
 }
+/**
+ *
+ * @param openIn :추가하기 버튼 클릭이벤트
+ * @param openUp :업데이트 버튼 클릭이벤트
+ * @param openDel :삭제하기 버튼 클릭이벤트
+ * @returns {JSX.Element}
+ * @constructor 관리자 로그인시만 보이는 버튼 각 아이템 추가,수정,삭제 가능
+ */
 const Btn = ({openIn,openUp,openDel}) => {
     return(
         <div className="add-btn">
@@ -188,20 +202,22 @@ const Btn = ({openIn,openUp,openDel}) => {
 }
 
 const OfficeContent = ({entryID,entryName}) => {
-    let currentId = entryID.toString();
-    const tit = ['자산번호','품명','상태','위치','발행일자','관리자','마지막 수정시간'];
-    const [list,setList] = useState(null);
-    const [num,setNum] = useState(null);
-    const [loading,setLoading] = useState(false);
-    const [error,setError] = useState(null);
-    const [isInsert,setInsert] = useState(false);
-    const [isDefault,setDefault] = useState(true);
-    const [isDelete,setDelete] = useState(false);
-    const [isUpdate,setUpdate] = useState(false);
-    const [upitem,setupitem] = useState(null);
-    const [checkedItems,setCheckedItems] = useState(new Set());
-    const [btnToggle,setOpenBtn] = useState(false);
-    const [inputItems,setItems] = useState({
+    let currentId = entryID.toString(); //현재 사이드바에서 클릭한 항목 id
+    const tit = ['자산번호','품명','상태','위치','발행일자','관리자','마지막 수정시간']; //
+    const [list,setList] = useState(null); //클릭한 항목을 item_id로 가지고 있는 equipment list
+    const [num,setNum] = useState(null);//클릭한 항목을 item_id로 가지고 있는 equipment list의 개수
+    const [loading,setLoading] = useState(false);//로딩여부
+    const [error,setError] = useState(null);//에러여부
+    const [isInsert,setInsert] = useState(false);//항목추가 버튼 클릭여부
+    const [isDefault,setDefault] = useState(true);//아무것도 클릭 안했을때 제일 먼저 보이는 컴포넌트
+    const [isDelete,setDelete] = useState(false);//항목삭제 버튼 클릭여부
+
+    const [isUpdate,setUpdate] = useState(false);//수정 버튼 클릭 여부
+    const [upitem,setupitem] = useState(null);//..?
+
+    const [checkedItems,setCheckedItems] = useState(new Set());//체크박스 체크한 아이템 id set
+    const [btnToggle,setOpenBtn] = useState(false);//추가,수정,삭제 버튼 출력 여부
+    const [inputItems,setItems] = useState({ //??
         name:'',
         user:'',
         state:'사용중',
@@ -209,9 +225,9 @@ const OfficeContent = ({entryID,entryName}) => {
         quality:'상',
         manager:sessionStorage.getItem('name'),
     })
-    const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php';
-    const insertURL = 'http://210.218.217.110:3103/api/getInsertEquipment.php';
-    const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php';
+    const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php'; //데이터 출력시 api url
+    const insertURL = 'http://210.218.217.110:3103/api/getInsertEquipment.php'; //데이터 삽입시 api url
+    const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
 
     useEffect(()=>{
         const fetchList = async () => {
@@ -230,12 +246,12 @@ const OfficeContent = ({entryID,entryName}) => {
         };
         fetchList();
     },[currentId, entryID]);
-
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null){
             setOpenBtn(true);
         }
-    },[])
+    },[sessionStorage.getItem('id')])
+
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!list) return  null;
@@ -315,8 +331,8 @@ const OfficeContent = ({entryID,entryName}) => {
             </div>
             <div className="container-cont">
                 {isDefault && <DefaultItem itemList={list} titleList={tit} onCheckSingle={oneClickCheck}/> }
-                {/*{isUpdate && <UpdateItem itemList={list} titleList={tit} changeHandler={inputHandler}/> }*/}
-                {isUpdate && <UpdateTest item={upitem} titleList={tit} changeHandler={inputHandler} clickEvnet={onClickUpdate}/> }
+                {isUpdate && <UpdateItem itemList={list} titleList={tit} changeHandler={inputHandler}/> }
+                {/*{isUpdate && <UpdateTest item={upitem} titleList={tit} changeHandler={inputHandler} clickEvnet={onClickUpdate}/> }*/}
                 {isInsert && <InsertItem list={list} changeHandler={inputHandler} clickEvent={onClickInsert}/> }
             </div>
         </section>

@@ -9,14 +9,18 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from "axios";
-import admin from "./Admin";
 
 const Login = () => {
     const [adminID,setID] = useState(null);
     const [adminPW,setPW] = useState(null);
     const loginURL = 'http://210.218.217.110:3103/api/login.php';
     const adminURL = 'http://210.218.217.110:3103/api/getAdmin.php';
-    const [result,setResult] = useState(null);
+    const [result,setResult] = useState({
+        id:'',
+        name:'',
+        belong:'',
+        autority:'',
+    });
     const [loginToggle,setLogin] = useState(true);
     const [adminToggle,setAdmin] = useState(false);
     const history = useHistory();
@@ -27,23 +31,16 @@ const Login = () => {
     const inputPW = (e) => {
         setPW(e.target.value);
     }
-    async function getAdminInfo(num){
-        setResult(null);
-        if(num === 0){
-            const res= await axios.get(adminURL+'?id='+adminID);
-            setResult(res.data);
-            console.log(res.data);
-            console.log(result[0].id);
-            sessionStorage.setItem('id',result[0].id);
-            sessionStorage.setItem('name',result[0].name);
-            if(sessionStorage.getItem('id')!==null){
-                setLogin(!loginToggle);
-                setAdmin(!adminToggle);
-                alert("로그인 성공");
-                history.push('/admin');
-            }
-
-        }
+    function getAdminInfo(){
+        axios.get(adminURL+'?id='+adminID).then((res)=>{
+            sessionStorage.setItem('id',res.data[0].id);
+            sessionStorage.setItem('name',res.data[0].name);
+            setLogin(!loginToggle);
+            setAdmin(!adminToggle);
+            alert("로그인 성공");
+            history.push('/admin');
+            window.location.reload();
+        })
     }
 
     async function loginFunc(){
@@ -63,7 +60,7 @@ const Login = () => {
             }).then((res)=>{
                 switch (res.data){
                     case 0:
-                        getAdminInfo(res.data); break;
+                        getAdminInfo(); break;
                     case 1:
                         alert("아이디 또는 비밀번호가 일치하지 않습니다."); break;
                     case -1:
@@ -92,11 +89,6 @@ const Login = () => {
                             <button onClick={loginFunc}>로그인</button>
                         </div>
                     <form/>
-                    <div className="login-etc-btn">
-                        <p>계정생성</p>
-                        <p>아이디 찾기</p>
-                        <p>비밀번호 변경</p>
-                    </div>
                 </div>
             </div>
         </div>
