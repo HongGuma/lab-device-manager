@@ -8,11 +8,20 @@
 
 import React from 'react';
 
+const RentalRequest = () => {
+    return(
+        <section>
+            <div>
+
+            </div>
+        </section>
+    )
+}
 
 
 const RentalContent = ({entryID,entryName}) => {
     // let currentId = entryID.toString();
-    // const tit = ['번호','품명','사용자','상태','위치','품질','관리자','마지막 수정시간'];
+    const tit = ['번호','품명','대여자','소속','위치','대여 날짜','상태','관리자'];
     // const option = [
     //     {value:0, label:'사용안함'},
     //     {value:1, label:'사용중'}
@@ -49,31 +58,31 @@ const RentalContent = ({entryID,entryName}) => {
         <section className="container">
             <div className="container-tit">
                 <div className="tit-txt">
-                    <p>{entryName}</p>
+                    <p>대여현황</p>
                 </div>
                 <div className="cont-cnt">
                     <p>총</p>
                     {/*<p>{num}</p>*/}
-                    <p>개</p>
+                    <p>건</p>
                 </div>
                 <div className="add-btn">
-                    <p >+추가</p>
-                    <p >+수정</p>
-                    <p >-삭제</p>
+                    <p >+확인</p>
                 </div>
             </div>
             <div className="container-cont">
                 <div className="cont-head">
                     <ul className="head-ul">
-                        <li>
-                            <p>전체</p>
-                            <a><input type="checkbox"/></a>
-                        </li>
-                        {/*{tit.map((name,idx) => (*/}
-                        {/*    <li key ={idx}>*/}
-                        {/*        <p>{name}</p>*/}
-                        {/*    </li>*/}
-                        {/*))}*/}
+                        {/*<li>*/}
+                        {/*    <label>*/}
+                        {/*        <p>전체</p>*/}
+                        {/*        <label htmlFor="total"><input type="checkbox"/></label>*/}
+                        {/*    </label>*/}
+                        {/*</li>*/}
+                        {tit.map((name,idx) => (
+                            <li key ={idx}>
+                                <p>{name}</p>
+                            </li>
+                        ))}
                     </ul>
                 </div>
                 <div className="cont-body">

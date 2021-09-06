@@ -20,8 +20,8 @@ const InsertItem = ({clickEvent, changeHandler}) => {
     return(
         <form onSubmit={clickEvent}>
             <ul className="body-ul">
-                <li>.</li>
-                <li>.</li>
+                <li></li>
+                <li><input name="asset_num" type="textbox" onChange={changeHandler}/></li>
                 <li><input name="name" type="textbox" onChange={changeHandler}/></li>
                 <li>
                     <select name="state" onChange={changeHandler}>
@@ -30,7 +30,7 @@ const InsertItem = ({clickEvent, changeHandler}) => {
                     </select>
                 </li>
                 <li><input name="position" type="textbox" onChange={changeHandler}/></li>
-                <li><input name="issueDate" type="textbox" onChange={changeHandler} placeholder="yyyy-mm-dd"/></li>
+                <li><input name="issue_date" type="textbox" onChange={changeHandler} placeholder="yyyy-mm-dd"/></li>
                 <li>{sessionStorage.getItem('name')}</li>
                 <li>.</li>
             </ul>
@@ -91,7 +91,7 @@ const DefaultItem = ({itemList,titleList, onCheckSingle, onCheckAll, checkedList
                                        onChange={(e)=>singleCheckHandler(e,item)}
                                        checked={checkedList.has(item.id)}
                                       /></li>
-                            <li>{item.id}</li>
+                            <li>{item.asset_num}</li>
                             <li>{item.name}</li>
                             <li>{item.state}</li>
                             <li>{item.position}</li>
@@ -104,12 +104,31 @@ const DefaultItem = ({itemList,titleList, onCheckSingle, onCheckAll, checkedList
         </section>
     )
 }
-const UpdateTest = ({item, titleList, clickEvnet, changeHandler}) => {
-    const [inValue,setValue] = useState(item);
+const UpdateTest = ({item, titleList, setUpdate, setDefault, setDoneUpdate}) => {
+    const [inValue,setValue] = useState({
+        asset_num:item.asset_num,
+        name:item.name,
+        state:item.state,
+        position:item.position,
+        issue_date:item.issue_date,
+        manager:sessionStorage.getItem('name'),
+    });
+    const {asset_num, name,state,position,issue_date,manager} = inValue;
+
     function inputHandler(e){
         const {name,value} = e.target;
         setValue({...inValue, [name]:value});
-        console.log(inValue);
+        // console.log(inValue);
+    }
+    function onClickUpdate(){
+        const parms = 'asset_num='+asset_num+'&name='+name+'&state='+state+'&position='+position+'&issue_date='+issue_date+'&manager='+manager+'&column_id='+item.id;
+        axios.get('http://210.218.217.110:3103/api/getUpdateEquipment.php?table=office&'+parms)
+            .then((res)=> {
+                console.log(res)
+            });
+        setUpdate(false);
+        setDefault(true);
+        setDoneUpdate(true);
     }
     return(
         <section>
@@ -122,9 +141,8 @@ const UpdateTest = ({item, titleList, clickEvnet, changeHandler}) => {
                 <li> </li>
             </ul>
             <ul>
-                <li>{item.id} </li>
+                <li><input type="textbox" name="asset_num" value={inValue.asset_num} onChange={(e)=>inputHandler(e)}/> </li>
                 <li><input type="textbox" name="name" value={inValue.name} onChange={(e)=>inputHandler(e)}/></li>
-                <li><input type="textbox" name="user" value={inValue.user} onChange={(e)=>inputHandler(e)}/></li>
                 <li>
                     <select name="state" value={inValue.state} onChange={(e)=>inputHandler(e)}>
                         <option value="사용중">사용중</option>
@@ -132,26 +150,33 @@ const UpdateTest = ({item, titleList, clickEvnet, changeHandler}) => {
                     </select>
                 </li>
                 <li><input type="textbox" name="position" value={inValue.position} onChange={(e)=>inputHandler(e)}/></li>
-                <li>
-                    <select name="quality" value={inValue.quality} onChange={(e)=>inputHandler(e)}>
-                        <option value="상">상</option>
-                        <option value="중">중</option>
-                        <option value="하">하</option>
-                    </select>
-                </li>
+                <li><input type="textbox" name="issue_date" value={inValue.issue_date} onChange={(e)=>inputHandler(e)}/> </li>
                 <li><input type="textbox" name="manager" value={inValue.manager} onChange={(e)=>inputHandler(e)}/></li>
                 <li>{item.timestamp}</li>
             </ul>
-            <ul><li>수정하기</li></ul>
+            <ul><li onClick={onClickUpdate}>수정하기</li></ul>
         </section>
     )
 }
 const UpdateItem = ({itemList,titleList, changeHandler}) => {
     const [inValue,setValue] = useState(itemList);
+    const [inputItems,setItems] = useState({ //??
+        name:'',
+        state:'사용중',
+        position:'',
+        issue_date:'',
+        manager:sessionStorage.getItem('name'),
+    })
+    const {name, state, position, issue_date, manager} = inputItems;
+    const selenum = 137;
     function inputHandler(e){
         const {name,value} = e.target;
-        setValue({...inValue, [name]:value});
-        console.log(inValue);
+        setItems({...inputItems, [name]:value});
+        console.log(inputItems);
+    }
+    const testBtn = () => {
+        let param = 'name='+name+', state='+state+', position='+position+', issue_date='+issue_date+', manager='+manager;
+        console.log(param);
     }
     return(
         <section className="update">
@@ -166,27 +191,30 @@ const UpdateItem = ({itemList,titleList, changeHandler}) => {
                 </ul>
             </div>
             <div className="cont-body">
-                {inValue.map((item) => (
-                    <ul className="body-ul" key={item.id}>
-                        <li>{item.id}</li>
-                        <li><input name="name" type="textbox" value={item.name} onChange={(e)=>inputHandler(e)}/></li>
-                        <li>
-                            <select name="state" value={item.state} onChange={(e)=>inputHandler(e)}>
-                                <option value="사용중">사용중</option>
-                                <option value="사용안함">사용안함</option>
-                            </select>
-                        </li>
-                        <li><input name="position" type="textbox" value={item.position} onChange={(e)=>inputHandler(e)}/></li>
-                        <li><input name="issueDate" type="textbox" value={item.issue_date} onChange={(e)=>inputHandler(e)}/></li>
-                        <li>{sessionStorage.getItem('name')}</li>
-                        <li>{item.timestamp}</li>
-                        <li><button>수정하기</button></li>
-                    </ul>
+                {itemList.map((item) =>(
+                    <form>
+                        <ul className="body-ul" key={item.id}>
+                            <li>{item.id}</li>
+                            <li><input name="name" type="textbox" value={item.name} onChange={(e)=>inputHandler(e)}/></li>
+                            <li>
+                                <select name="state" value={item.state} onChange={(e)=>inputHandler(e)}>
+                                    <option value="사용중">사용중</option>
+                                    <option value="사용안함">사용안함</option>
+                                </select>
+                            </li>
+                            <li><input name="position" type="textbox" value={item.position} onChange={(e)=>inputHandler(e)}/></li>
+                            <li><input name="issue_date" type="textbox" value={item.issue_date} onChange={(e)=>inputHandler(e)}/></li>
+                            <li>{sessionStorage.getItem('name')}</li>
+                            <li>{item.timestamp}</li>
+                            <li><button onClick={testBtn}>수정하기</button></li>
+                        </ul>
+                    </form>
                 ))}
             </div>
         </section>
     )
 }
+
 /**
  *
  * @param openIn :추가하기 버튼 클릭이벤트
@@ -216,6 +244,7 @@ const OfficeContent = ({entryID,entryName}) => {
     const [isDefault,setDefault] = useState(true);//아무것도 클릭 안했을때 제일 먼저 보이는 컴포넌트
     const [doneDelete,setDelete] = useState(false);//삭제 완료 여부
     const [doneInsert,setDoneInsert] = useState(false);//추가 완료 여부
+    const [doneUpdate,setDoneUpdate] = useState(false);//수정 완료 여부
     const [isUpdate,setUpdate] = useState(false);//수정 버튼 클릭 여부
     const [upitem,setupitem] = useState(null);//..?
 
@@ -223,16 +252,18 @@ const OfficeContent = ({entryID,entryName}) => {
     const [isAllChecked,setAllChecked] = useState(false);
 
     const [btnToggle,setOpenBtn] = useState(false);//추가,수정,삭제 버튼 출력 여부
-    const [inputItems,setItems] = useState({ //??
+    const [inputItems,setItems] = useState({ //데이터 입력시 사용하는 set
+        asset_num:0,
         name:'',
         state:'사용중',
         position:'',
-        issueDate:'',
+        issue_date:'',
         manager:sessionStorage.getItem('name'),
     })
     const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php'; //데이터 출력시 api url
     const insertURL = 'http://210.218.217.110:3103/api/getInsertEquipment.php'; //데이터 삽입시 api url
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
+    const updateURL = 'http://210.218.217.110:3103/api/getUpdateEquipment.php'; //데이터 수정시 api url
     //entryId 바뀔때 마다 list 새로 가져오기
     useEffect(()=>{
         const fetchList = async () => {
@@ -250,9 +281,10 @@ const OfficeContent = ({entryID,entryName}) => {
             setLoading(false);
             setDelete(false);
             setDoneInsert(false);
+            setDoneUpdate(false);
         };
         fetchList();
-    },[currentId, entryID, doneInsert,doneDelete]);
+    },[currentId, entryID, doneInsert,doneDelete, doneUpdate]);
     //랜더링 전 sesstion에서 name 받아오기
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null)
@@ -263,7 +295,7 @@ const OfficeContent = ({entryID,entryName}) => {
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!list) return  null;
 
-    const {name,state,position,issueDate,manager} = inputItems;
+    const {asset_num,name,state,position,issue_date,manager} = inputItems;
 
     //+추가 버튼 누를시
     function openInsert(){
@@ -289,9 +321,14 @@ const OfficeContent = ({entryID,entryName}) => {
     }
     //o수정 버튼 누를시
     function openUpdate(){
-        setUpdate(!isUpdate);
-        setDefault(!isDefault);
-        setInsert(false);
+        if(checkedItems.size>0){
+            setUpdate(!isUpdate);
+            setDefault(!isDefault);
+            setInsert(false);
+        }
+        else{
+          alert('체크박스를 체크해주세요.');
+        }
     }
     //input box에서 받아온 값 inpuItems 배열에 넣음
     function inputHandler(e){
@@ -301,7 +338,7 @@ const OfficeContent = ({entryID,entryName}) => {
     }
     //추가하기 버튼 누를시
     function onClickInsert(){
-        const parms = 'name='+name+'&state='+state+'&position='+position+'&issue_date='+issueDate+'&manager='+manager;
+        const parms = '&asset_num='+asset_num+'&name='+name+'&state='+state+'&position='+position+'&issue_date='+issue_date+'&manager='+manager;
         axios.get(insertURL+'?table=office&entry_id='+entryID+'&'+parms)
             .then((res)=> {
                 // console.log(res)
@@ -337,10 +374,18 @@ const OfficeContent = ({entryID,entryName}) => {
         // console.log(checkedItems);
     }
 
-    //수정하기 버튼 누를시
-    function onClickUpdate(){
-
-    }
+    // //수정하기 버튼 누를시
+    // function onClickUpdate(){
+    //     const parms = 'name='+name+'&state='+state+'&position='+position+'&issue_date='+issue_date+'&manager='+manager+'&column_id='+upitem.id;
+    //     axios.get(updateURL+'?table=office&'+parms)
+    //         .then((res)=> {
+    //             console.log(res)
+    //         });
+    //     setUpdate(false);
+    //     setDefault(true);
+    //     // setDoneInsert(true);
+    //     // setInsert(false);
+    // }
 
     return (
         <section className="container">
@@ -357,8 +402,8 @@ const OfficeContent = ({entryID,entryName}) => {
             </div>
             <div className="container-cont">
                 {isDefault && <DefaultItem itemList={list} titleList={tit} onCheckSingle={onCheckSingle} onCheckAll={onCheckAll} checkedList={checkedItems} allChecked={isAllChecked}/> }
-                {isUpdate && <UpdateItem itemList={list} titleList={tit} changeHandler={inputHandler}/> }
-                {/*{isUpdate && <UpdateTest item={upitem} titleList={tit} changeHandler={inputHandler} clickEvnet={onClickUpdate}/> }*/}
+                {/*{isUpdate && <UpdateItem itemList={list} titleList={tit} changeHandler={inputHandler}/> }*/}
+                {isUpdate && <UpdateTest item={upitem} titleList={tit} changeHandler={inputHandler} setUpdate={setUpdate} setDefault={setDefault} setDoneUpdate={setDoneUpdate}/> }
                 {isInsert && <InsertItem list={list} changeHandler={inputHandler} clickEvent={onClickInsert}/> }
             </div>
         </section>

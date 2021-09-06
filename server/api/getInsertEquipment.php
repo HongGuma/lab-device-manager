@@ -4,6 +4,7 @@
 
     $table = $_GET['table'];
     $entry_id = $_GET['entry_id'];
+    $asset_num = $_GET['asset_num'];
     $name = $_GET['name'];
     $state = $_GET['state'];
     $position = $_GET['position'];
@@ -12,7 +13,7 @@
 
     switch ($table){
         case 'office':
-            $sql="Insert Into ".$table."_equipment(name, state, position, issue_date, manager, item_id) value('$name','$state','$position','$issue_date','$manager',".$entry_id.")";
+            $sql="Insert Into ".$table."_equipment(asset_num, name, state, position, issue_date, manager, item_id) value(".$asset_num.",'$name','$state','$position','$issue_date','$manager',".$entry_id.")";
             $result = mysqli_query($conn,$sql);
             echo json_encode($result);
             break;

@@ -2,8 +2,10 @@
     include_once('../db_info.php');
     global $conn;
 
-    $id=$_POST['id'];
-    $pw=$_POST['pw'];
+    $POST=json_decode(file_get_contents('php://input'), true);
+
+    $id=$POST['id'];
+    $pw=$POST['pw'];
     $outcome = -1;
 
     $sql = "SELECT count(user_id) from admin where user_id = '$id' and password = SHA1('$pw')";

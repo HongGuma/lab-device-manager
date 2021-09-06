@@ -73,6 +73,7 @@ const Login = () => {
                     'Content-Type' : 'aplication/json'
                 }
             }).then((res)=>{
+                console.log(res);
                 switch (res.data){
                     case 0:
                         getAdminInfo(); break;
