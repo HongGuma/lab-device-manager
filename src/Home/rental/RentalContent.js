@@ -21,7 +21,7 @@ const RentalRequest = () => {
 
 const RentalContent = ({entryID,entryName}) => {
     // let currentId = entryID.toString();
-    const tit = ['번호','품명','대여자','소속','위치','대여 날짜','상태','관리자'];
+    const tit = ['번호','품명','대여자','소속','위치','대여 날짜','관리자','마지막 수정시간'];
     // const option = [
     //     {value:0, label:'사용안함'},
     //     {value:1, label:'사용중'}

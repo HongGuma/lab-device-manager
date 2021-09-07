@@ -111,6 +111,8 @@ body p {cursor:default;}
 .rental-width .rental-ul li:hover {background-color: rgba(57,53,54,0.3);}
 .rental-width .rental-ul li p:active {color:white;}
 
+.popup-wrap { z-index:10000; background-color: rgba(57,53,54,0.3); width: 100%; height: inherit; position: absolute;}
+.popup {background-color: white; width: 900px; min-height: 900px; max-height: 1100px; margin:0 auto;}
 
 /*====== Office =======*/
 .office-wrap {min-height: 900px; max-height: 2000px; padding-top:141px; user-select: none;}

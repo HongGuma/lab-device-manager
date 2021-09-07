@@ -20,8 +20,8 @@ class ServerMain extends React.Component{
             entryId:0,
             entryName:'',
             entryItem:[],
-            url: 'http://210.218.217.110:3103/api/getDiskData.php?',
-            tableName:'disk',
+            url: 'http://210.218.217.110:3103/api/getServerData.php?',
+            tableName:'server',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
