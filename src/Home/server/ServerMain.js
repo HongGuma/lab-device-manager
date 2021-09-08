@@ -19,7 +19,6 @@ class ServerMain extends React.Component{
             diskEntry:[],
             entryId:0,
             entryName:'',
-            entryItem:[],
             url: 'http://210.218.217.110:3103/api/getServerData.php?',
             tableName:'server',
         }

@@ -27,16 +27,16 @@
             if($result){
                 while($row = mysqli_fetch_array($result)){
                     array_push($data,
-                        array('server_id'=>$row[0],
+                        array('id'=>$row[0],
                             'server_name'=>$row[1],
                             'ip'=>$row[2],
                             'port'=>$row[3],
                             'cpu_core'=>$row[4],
                             'disk'=>$row[5],
-                            'memory'=>$row[7],
-                            'manager'=>$row[8],
-                            'timestamp'=>$row[9],
-                            'item_id'=>$row[10],
+                            'memory'=>$row[6],
+                            'manager'=>$row[7],
+                            'timestamp'=>$row[8],
+                            'item_id'=>$row[9],
                         ));
                 }
                 echo json_encode($data);
@@ -62,7 +62,7 @@
             }
             break;
         case '4'://'count':
-            $sql = "select count(*) from server_equipment, server_entry as en where en.server_entry_id =".$entry_id." and server_equipment.item_id = en.server_entry_id";
+            $sql = "select count(*) from server_equipment as eq, server_entry as en where en.server_entry_id =".$entry_id." and eq.item_id = en.server_entry_id";
             $result = mysqli_query($conn, $sql);
             $data = '';
             if($result){

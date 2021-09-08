@@ -130,13 +130,27 @@ const UpdateItem = ({item, titleList, setUpdate, setDefault, setDoneUpdate}) => 
         setValue({...inValue, [name]:value});
         // console.log(inValue);
     }
-    function onClickUpdate(){
-        const parms = 'asset_num='+asset_num+'&name='+name+'&state='+state+'&position='+position+'&issue_date='+issue_date+'&manager='+manager+'&column_id='+item.id;
-
-        axios.get('http://210.218.217.110:3103/api/getUpdateEquipment.php?table=office&'+parms)
-            .then((res)=> {
-                console.log(res)
-            });
+    async function onClickUpdate(){
+        const updateURL = 'http://210.218.217.110:3103/api/postUpdateEquipment.php';
+        await axios({
+            method: 'POST',
+            url: updateURL,
+            data: {
+                table:'office',
+                asset_num: asset_num,
+                name: name,
+                state: state,
+                position: position,
+                issue_date: issue_date,
+                manager: manager,
+                column_id:item.id,
+            },
+            header: {
+                'Content-Type': 'aplication/json'
+            }
+        }).then((res)=>{
+            console.log(res);
+        });
         setUpdate(false);
         setDefault(true);
         setDoneUpdate(true);
@@ -214,9 +228,8 @@ const OfficeContent = ({entryID,entryName}) => {
         issue_date:'-',
         manager:sessionStorage.getItem('name'),
     })
-    const inputRef = useRef();
     const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php'; //데이터 출력시 api url
-    const insertURL = 'http://210.218.217.110:3103/api/getInsertEquipment.php'; //데이터 삽입시 api url
+    const insertURL = 'http://210.218.217.110:3103/api/postInsertEquipment.php'; //데이터 삽입시 api url
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
     //entryId 바뀔때 마다 list 새로 가져오기
     useEffect(()=>{
@@ -298,6 +311,7 @@ const OfficeContent = ({entryID,entryName}) => {
             method: 'POST',
             url: insertURL,
             data: {
+
                 table:'office',
                 asset_num: asset_num,
                 name: name,

@@ -18,7 +18,7 @@ import axios from "axios";
 const Login = () => {
     const [adminID,setID] = useState(null);
     const [adminPW,setPW] = useState(null);
-    const loginURL = 'http://210.218.217.110:3103/api/login.php';
+    const loginURL = 'http://210.218.217.110:3103/api/postLogin.php';
     const adminURL = 'http://210.218.217.110:3103/api/getAdmin.php';
     const [loginToggle,setLogin] = useState(true);
     const [adminToggle,setAdmin] = useState(false);
@@ -73,7 +73,7 @@ const Login = () => {
                     'Content-Type' : 'aplication/json'
                 }
             }).then((res)=>{
-                console.log(res);
+                // console.log(res);
                 switch (res.data){
                     case 0:
                         getAdminInfo(); break;
