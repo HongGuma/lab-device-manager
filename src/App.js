@@ -2,7 +2,7 @@
 *@title main
 *@date 21-07-30
 *@author 홍수희
-*@desc 모든 컴포넌트 집합
+*@desc route
 *@etc(change)
 */
 import React from 'react'
@@ -16,7 +16,8 @@ import OfficeMain from './Home/office/OfficeMain';
 import ServerMain from "./Home/server/ServerMain";
 import LabMain from "./Home/laboratory/LabMain";
 import RentalMain from "./Home/rental/RentalMain";
-import Footer from "./Home/Footer";
+import Footer from "./Home/Footer"
+import Admin from "./admin/Admin";
 
 function App(){
     return(
@@ -28,6 +29,7 @@ function App(){
             <Route path="/server" component={ServerMain}/>
             <Route path="/laboratory" component={LabMain}/>
             <Route path="/rental" component={RentalMain}/>
+            <Route path="/admin" component={Admin}/>
             <Footer/>
         </div>
     )
