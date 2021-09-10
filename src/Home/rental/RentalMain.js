@@ -6,82 +6,281 @@
 *@etc(change)
 */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import RentalContent from "./RentalContent";
+import img from '../../images/cancel.png';
 
-const Popup = () => {
-    const tit = ['품명','대여자 이름','소속','위치','비밀번호'];
+const RequestPopup = ({closeRequest, URL, done}) => {
+    const [inValue,setValue] = useState({
+        equipment_name:'',
+        name:'',
+        belong:'',
+        position:'',
+        passwd:'',
+    });
+    const {equipment_name, name,belong,position,passwd} = inValue;
+
+    function inputHandler(e){
+        const {name,value} = e.target;
+        setValue({...inValue, [name]:value});
+        // console.log(inValue);
+    }
+
+    async function clickInsert(){
+        if(name === ''){
+            closeRequest();
+            done();
+            return;
+        }
+        if(passwd === ''){
+            alert('비밀번호는 비울 수 없습니다.')
+            return;
+        }
+        await axios({
+            method: 'POST',
+            url: URL,
+            data: {
+                param:'request',
+                equipment_name:equipment_name,
+                name:name,
+                belong:belong,
+                position:position,
+                passwd:passwd
+            },
+            header: {'Content-Type': 'aplication/json'}
+        }).then((res)=>{
+            setValue({
+                equipment_name:'',
+                name:'',
+                belong:'',
+                position:'',
+                passwd:'',
+            });
+        });
+
+        closeRequest();
+        done();
+    }
+
     return(
         <div className='popup-wrap'>
             <div className="popup">
-                <div>
-                    <a>닫기</a>
+                <div className="popup-header">
+                    <p>대여신청</p>
+                    <img className="popup-close-btn" src={img} onClick={closeRequest}/>
                 </div>
-                <div className="table-head">
-                    {tit.map((item)=>
-                        <p>{item}</p>
-                    )}
+                <div className="popup-body">
+                    <div className="sect-02">
+                        <div className="sect-02-item">
+                            <p>품명</p>
+                            <input name="equipment_name" type="text" onChange={(e)=>inputHandler(e)}/>
+                        </div>
+                        <div className="sect-02-item">
+                            <p>대여자</p>
+                            <input name="name" type="text" onChange={(e)=>inputHandler(e)}/>
+                        </div>
+                        <div className="sect-02-item">
+                            <p>소속</p>
+                            <input name="belong" type="text" onChange={(e)=>inputHandler(e)}/>
+                        </div>
+                        <div className="sect-02-item">
+                            <p>위치</p>
+                            <input name="position" type="text" onChange={(e)=>inputHandler(e)}/>
+                        </div>
+                        <div className="sect-02-item">
+                            <p>비밀번호</p>
+                            <input name="passwd" type="password" onChange={(e)=>inputHandler(e)}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="popup-tail">
+                    <p onClick={clickInsert}>완료</p>
                 </div>
             </div>
         </div>
     )
 }
 
+const ReturnPopup = ({URL, closeReturn}) => {
+    const [authToggle,setAuthToggle] = useState(true); //본인 확인 여부
+    const [rentalList,setRental] = useState(null); //본인 확인후 리스트 출력 여부
+    const [inAuth,setAuth] = useState({ //본인 확인시 입력받을 name,password
+        name:'',
+        passwd:'',
+    });
+    const {name,passwd} = inAuth;
+    const [checkedItems,setCheckedItems] = useState(new Set());
+    const [allChecked,setAllChecked] = useState(false);
+    const [bChecked, setChecked] = useState(false);
+
+    const tit = ['품명','위치','대여날짜'];
+
+    //input 입력 핸들러
+    function inputHandler(e){
+        const {name,value} = e.target;
+        setAuth({...inAuth, [name]:value});
+    }
+    //비품반납시 본인 확인 및 데이터 불러오기 함수
+    async function authChecking(){
+        await axios({
+            method:'POST',
+            url:URL,
+            data:{
+                param:'selectAuth',
+                name:name,
+                passwd:passwd,
+            },
+            header: {'Content-Type': 'aplication/json'}
+        }).then((res)=>{
+            console.log(res);
+            if(res.data == null || res.data ===''){
+                alert('성함이나 비밀번호가 맞지 않습니다.')
+            }else{
+                setRental(res.data);
+                setAuthToggle(!authToggle);
+            }
+        })
+    }
+    //체크박스 개별클릭
+    function onClickOneCheck(isChecked,id){
+        if(isChecked){
+            checkedItems.add(id);
+            setCheckedItems(checkedItems);
+        }else if(!isChecked && checkedItems.has(id)){
+            checkedItems.delete(id);
+            setCheckedItems(checkedItems);
+        }
+    }
+    //체크박스 전체클릭 (전체버튼 클릭)
+    function onClickAllCheck(isChecked){
+        if(isChecked){
+            rentalList.map((item)=>(
+                checkedItems.add(item.id)
+            ));
+            setCheckedItems(checkedItems);
+            setAllChecked(true);
+        }else{
+            checkedItems.clear();
+            setCheckedItems(checkedItems);
+            setAllChecked(false);
+        }
+    }
+
+
+    return(
+        <div className="popup-wrap">
+            <div className="popup">
+                <div className="popup-header">
+                    <p>비품반납</p>
+                    <img className="popup-close-btn" src={img} onClick={closeReturn}/>
+                </div>
+                {authToggle && <div>대여신청시 작성한 성함과 비밀번호를 입력해주세요.</div>}
+                <div className="popup-body">
+                    {authToggle ?
+                        <div className="sect-02">
+                            <div className="sect-02-item">
+                                <p>이름</p>
+                                <input name="name" type="text" onChange={(e)=>inputHandler(e)}/>
+                            </div>
+                            <div className="sect-02-item">
+                                <p>비밀번호</p>
+                                <input name="passwd" type="password" onChange={(e)=>inputHandler(e)}/>
+                            </div>
+                            <div className="popup-tail">
+                                <p onClick={authChecking}>다음</p>
+                            </div>
+                        </div>
+                        :
+                        <div className="sect-02 return">
+                            <div className="sect-02-item">
+                                <p className="message">{name} 님의 대여목록</p>
+                            </div>
+                            <div className="sect-02-list">
+                                <ul className="tit-ul">
+                                    <li>
+                                        <p style={{lineHeight:'0'}}>전체</p>
+                                        <input type="checkbox" onChange={(e)=>onClickAllCheck(e)}/>
+                                    </li>
+                                    {tit.map((name,idx) => (
+                                        <li key ={idx}>
+                                            <p>{name}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+                                {rentalList.map((item)=>(
+                                    <ul className="body-ul">
+                                        <li><input type="checkbox"
+                                                   onChange={(e)=>onClickOneCheck(e.target.checked,item.id)}
+                                                   checked={checkedItems.has(item.id)}
+                                        /></li>
+                                        <li>{item.equipment_name}</li>
+                                        <li>{item.position}</li>
+                                        <li>{item.borrow_date}</li>
+                                    </ul>
+                                ))}
+                            </div>
+                            <div className="popup-tail">
+                                <p>완료</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
 class RentalMain extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            open:false,
+            requestPopup:false,
+            returnPopup:false,
+            URL:'http://210.218.217.110:3103/api/postRental.php',
+            insertDone:false,
         }
-        this.popupEvent = this.popupEvent.bind(this);
-        // this.state={
-        //     labEntryId:1,
-        //     labEntryName:'냉장고',
-        //     labEntry:[],
-        // }
+        this.requestPopupEvent = this.requestPopupEvent.bind(this);
+        this.returnPopupEvent = this.returnPopupEvent.bind(this);
+        this.requestRentalDone = this.requestRentalDone.bind(this);
     }
 
-    // UNSAFE_componentWillMount() {
-    //     axios.get("http://210.218.217.110:3103/api/getLabData.php?parm=entry")
-    //         .then(r => {
-    //             this.setState({labEntry: r.data});
-    //         })
-    // }
-
-    // onClickEntry(selectItem){
-    //     this.setState({
-    //         labEntryId:selectItem.id,
-    //         labEntryName:selectItem.name,
-    //     })
-    // }
-
-    popupEvent(){
+    requestPopupEvent(){
         this.setState({
-            open:!this.state.open
+            requestPopup:!this.state.requestPopup
         })
     }
+    returnPopupEvent(){
+        this.setState({
+            returnPopup:!this.state.returnPopup
+        })
+    }
+    requestRentalDone(){
+        this.setState({
+            insertDone:!this.state.insertDone,
+        })
+    }
+
 
     render() {
         return (
             <div className="rental-wrap">
+                {this.state.requestPopup && <RequestPopup closeRequest={this.requestPopupEvent} URL={this.state.URL} done={this.requestRentalDone}/> }
+                {this.state.returnPopup && <ReturnPopup closeReturn={this.returnPopupEvent} URL={this.state.URL}/> }
                 <div className="rental-tit">
                     <p>비품 대여 관리</p>
                 </div>
-                {this.state.open &&<Popup/>}
                 <div className="rental-width">
                     <section className="sidebar">
                         <div className="inner">
                             <ul className="rental-ul">
-                                {/*{this.state.labEntry.map((item)=>(*/}
-                                {/*    <li onClick={()=>this.onClickEntry(item)} key={item.id}><p>{item.name}</p></li>*/}
-                                {/*))}*/}
-                                <li onClick={this.popupEvent}><p>대여신청</p></li>
-                                <li><p>비품반납</p></li>
+                                <li onClick={this.requestPopupEvent}><p>대여신청</p></li>
+                                <li onClick={this.returnPopupEvent}><p>비품반납</p></li>
                             </ul>
                         </div>
                     </section>
-                    <RentalContent />
+                    <RentalContent popupEvent={this.popupEvent} URL={this.state.URL} insertDone={this.state.insertDone} requestRentalDone={this.requestRentalDone}/>
                 </div>
             </div>
         );

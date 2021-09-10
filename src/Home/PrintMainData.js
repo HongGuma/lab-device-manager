@@ -3,9 +3,20 @@ import axios from "axios";
 
 export default function PrintMainData({url}){
     let currentURL = '';
-    if(url == null || url.length < 1){
+    let notyet = false;
+    let print = true;
+    if(url == null){
+        notyet = true;
+        print = false;
         currentURL = 'http://210.218.217.110:3103/api/getOfficeData.php';
-    }else{
+    }else if(url.length < 1 ){
+        notyet = false;
+        print = true;
+        currentURL = 'http://210.218.217.110:3103/api/getOfficeData.php';
+    }
+    else{
+        notyet = false;
+        print = true;
         currentURL = url;
     }
 
@@ -36,7 +47,8 @@ export default function PrintMainData({url}){
     return(
         <div className="item">
             <ul>
-                {list.map(item=>(
+                {notyet && <li><p>준비중 입니다.</p></li>}
+                {print && list.map(item=>(
                     <li key={item.id}>
                         <p>{item.entry_name} ({item.item_count})</p>
                     </li>

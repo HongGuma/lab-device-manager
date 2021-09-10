@@ -145,9 +145,7 @@ const UpdateItem = ({item, titleList, setUpdate, setDefault, setDoneUpdate}) => 
                 manager: manager,
                 column_id:item.id,
             },
-            header: {
-                'Content-Type': 'aplication/json'
-            }
+            header: {'Content-Type': 'aplication/json'}
         }).then((res)=>{
             console.log(res);
         });
@@ -184,7 +182,6 @@ const UpdateItem = ({item, titleList, setUpdate, setDefault, setDoneUpdate}) => 
         </section>
     )
 }
-
 /**
  *
  * @param openIn :추가하기 버튼 클릭이벤트
@@ -264,13 +261,13 @@ const OfficeContent = ({entryID,entryName}) => {
 
     const {asset_num,name,state,position,issue_date,manager} = inputItems;
 
-    //+추가 버튼 누를시
+    //+추가 버튼 누를시 (추가 input 출력)
     function openInsert(){
         setInsert(!isInsert);
         setDefault(true);
         setUpdate(false);
     }
-    //-삭제 버튼 누를시
+    //-삭제 버튼 누를시 (아이템 삭제)
     async function openDelete(){
         if(checkedItems.size > 0){
             for(let id of checkedItems){    //checkedItems에 있는 id를 하나씩 꺼낸다.
@@ -286,7 +283,7 @@ const OfficeContent = ({entryID,entryName}) => {
             alert('체크박스를 체크해주세요.')
         }
     }
-    //o수정 버튼 누를시
+    //o수정 버튼 누를시 (수정 input 출력)
     function openUpdate(){
         if(checkedItems.size>0 && checkedItems.size < 2){
             setUpdate(!isUpdate);
@@ -305,13 +302,12 @@ const OfficeContent = ({entryID,entryName}) => {
         setItems({...inputItems, [name]:value});
         // console.log(inputItems);
     }
-    //추가하기 버튼 누를시
+    //'추가하기' 버튼 누를시 (아이템 수정)
     async function onClickInsert(){
         await axios({
             method: 'POST',
             url: insertURL,
             data: {
-
                 table:'office',
                 asset_num: asset_num,
                 name: name,
