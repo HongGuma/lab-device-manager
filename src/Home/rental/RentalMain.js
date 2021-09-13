@@ -128,8 +128,8 @@ const RentalItemList = ({name,returnCom,rentalList,onCheckSingle,allChecked,chec
                         </li>
                     ))}
                 </ul>
-                {rentalList.map((item)=>(
-                    <ul className="body-ul">
+                {rentalList.map((item,idx)=>(
+                    <ul className="body-ul" key={idx}>
                         <li><input type="checkbox"
                                    onChange={(e)=>singleCheckHandler(e,item.id)}
                                    checked={checkedItems.has(item.id)}
@@ -147,7 +147,7 @@ const RentalItemList = ({name,returnCom,rentalList,onCheckSingle,allChecked,chec
     )
 }
 
-const ReturnPopup = ({URL, closeReturn}) => {
+const ReturnPopup = ({URL, closeReturn, done}) => {
     const [authToggle,setAuthToggle] = useState(true); //본인 확인 여부
     const [rentalList,setRental] = useState(null); //본인 확인후 리스트 출력 여부
     const [inAuth,setAuth] = useState({ //본인 확인시 입력받을 name,password
@@ -216,6 +216,7 @@ const ReturnPopup = ({URL, closeReturn}) => {
                     .then((res) => {
                         // console.log(res)
                         alert('반납이 완료되었습니다. ');
+                        window.location.reload();
                         closeReturn();
                     })
             }
@@ -283,7 +284,7 @@ class RentalMain extends React.Component{
     }
     requestRentalDone(){
         this.setState({
-            insertDone:!this.state.insertDone,
+            insertDone:!this.state.insertDone
         })
     }
 
@@ -292,7 +293,7 @@ class RentalMain extends React.Component{
         return (
             <div className="rental-wrap">
                 {this.state.requestPopup && <RequestPopup closeRequest={this.requestPopupEvent} URL={this.state.URL} done={this.requestRentalDone}/> }
-                {this.state.returnPopup && <ReturnPopup closeReturn={this.returnPopupEvent} URL={this.state.URL}/> }
+                {this.state.returnPopup && <ReturnPopup closeReturn={this.returnPopupEvent} URL={this.state.URL} done={this.returnRentalDone}/> }
                 <div className="rental-tit">
                     <p>비품 대여 관리</p>
                 </div>
