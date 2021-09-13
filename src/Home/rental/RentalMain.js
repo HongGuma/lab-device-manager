@@ -102,6 +102,51 @@ const RequestPopup = ({closeRequest, URL, done}) => {
     )
 }
 
+const RentalItemList = ({name,returnCom,rentalList,onCheckSingle,allChecked,checkedItems,onClickAllCheck}) =>{
+    const tit = ['품명','위치','대여날짜'];
+    const [bChecked,setChecked] = useState(false);
+    const allCheckHandler = () => setChecked(!allChecked);
+    const singleCheckHandler = (e,item) => {
+        setChecked(!bChecked);
+        onCheckSingle(e.target.checked,item)
+    }
+    useEffect(()=>allCheckHandler,[allChecked]);
+    return(
+        <div className="sect-02 return">
+            <div className="sect-02-item">
+                <p className="message">{name} 님의 대여목록</p>
+            </div>
+            <div className="sect-02-list">
+                <ul className="tit-ul">
+                    <li>
+                        <p style={{lineHeight:'0'}}>전체</p>
+                        <input type="checkbox" onChange={(e)=>onClickAllCheck(e.target.checked)}/>
+                    </li>
+                    {tit.map((name,idx) => (
+                        <li key ={idx}>
+                            <p>{name}</p>
+                        </li>
+                    ))}
+                </ul>
+                {rentalList.map((item)=>(
+                    <ul className="body-ul">
+                        <li><input type="checkbox"
+                                   onChange={(e)=>singleCheckHandler(e,item.id)}
+                                   checked={checkedItems.has(item.id)}
+                        /></li>
+                        <li>{item.equipment_name}</li>
+                        <li>{item.position}</li>
+                        <li>{item.borrow_date}</li>
+                    </ul>
+                ))}
+            </div>
+            <div className="popup-tail">
+                <p onClick={returnCom}>완료</p>
+            </div>
+        </div>
+    )
+}
+
 const ReturnPopup = ({URL, closeReturn}) => {
     const [authToggle,setAuthToggle] = useState(true); //본인 확인 여부
     const [rentalList,setRental] = useState(null); //본인 확인후 리스트 출력 여부
@@ -112,9 +157,7 @@ const ReturnPopup = ({URL, closeReturn}) => {
     const {name,passwd} = inAuth;
     const [checkedItems,setCheckedItems] = useState(new Set());
     const [allChecked,setAllChecked] = useState(false);
-    const [bChecked, setChecked] = useState(false);
-
-    const tit = ['품명','위치','대여날짜'];
+    const [doneReturn,setDoneReturn] = useState(false);
 
     //input 입력 핸들러
     function inputHandler(e){
@@ -133,7 +176,7 @@ const ReturnPopup = ({URL, closeReturn}) => {
             },
             header: {'Content-Type': 'aplication/json'}
         }).then((res)=>{
-            console.log(res);
+            // console.log(res);
             if(res.data == null || res.data ===''){
                 alert('성함이나 비밀번호가 맞지 않습니다.')
             }else{
@@ -167,6 +210,20 @@ const ReturnPopup = ({URL, closeReturn}) => {
         }
     }
 
+    async function retrunComplete() {
+        if(checkedItems.size > 0){
+            for(let checkedID of checkedItems) {
+                await axios.post(URL, {param: 'doneRental', id: checkedID})
+                    .then((res) => {
+                        // console.log(res)
+                        alert('반납이 완료되었습니다. ');
+                        closeReturn();
+                    })
+            }
+        }
+
+    }
+
 
     return(
         <div className="popup-wrap">
@@ -192,38 +249,7 @@ const ReturnPopup = ({URL, closeReturn}) => {
                             </div>
                         </div>
                         :
-                        <div className="sect-02 return">
-                            <div className="sect-02-item">
-                                <p className="message">{name} 님의 대여목록</p>
-                            </div>
-                            <div className="sect-02-list">
-                                <ul className="tit-ul">
-                                    <li>
-                                        <p style={{lineHeight:'0'}}>전체</p>
-                                        <input type="checkbox" onChange={(e)=>onClickAllCheck(e)}/>
-                                    </li>
-                                    {tit.map((name,idx) => (
-                                        <li key ={idx}>
-                                            <p>{name}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                                {rentalList.map((item)=>(
-                                    <ul className="body-ul">
-                                        <li><input type="checkbox"
-                                                   onChange={(e)=>onClickOneCheck(e.target.checked,item.id)}
-                                                   checked={checkedItems.has(item.id)}
-                                        /></li>
-                                        <li>{item.equipment_name}</li>
-                                        <li>{item.position}</li>
-                                        <li>{item.borrow_date}</li>
-                                    </ul>
-                                ))}
-                            </div>
-                            <div className="popup-tail">
-                                <p>완료</p>
-                            </div>
-                        </div>
+                        <RentalItemList name={name} returnCom = {retrunComplete} rentalList={rentalList} onCheckSingle={onClickOneCheck} onClickAllCheck={onClickAllCheck} checkedItems={checkedItems} allChecked={allChecked}/>
                     }
                 </div>
             </div>

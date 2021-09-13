@@ -47,7 +47,7 @@
             }
             break;
         case 'selectAuth': //개인 대여 확인용
-            $sql = "select rental_id, borrow_equipment_name, borrower_name, borrower_belong, position, borrow_date from rental where borrower_name='$name' and password = SHA1('$passwd')";
+            $sql = "select rental_id, borrow_equipment_name, borrower_name, borrower_belong, position, borrow_date from rental where borrower_name='$name' and password = SHA1('$passwd') and toggle is Null";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if ($result) {

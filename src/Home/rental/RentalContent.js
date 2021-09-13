@@ -218,6 +218,10 @@ const RentalContent = ({URL, insertDone}) => {
         }
     }
 
+    function doneReturn(){
+
+    }
+
     return (
         <section className="container">
             <div className="container-tit">
