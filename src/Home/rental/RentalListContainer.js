@@ -39,28 +39,29 @@ const RentalListContainer = () =>{
                 <div className="tit-txt">
                     <p>대여현황</p>
                 </div>
-                {/*<div className="item">*/}
-                {/*    <ul className="item-ul">*/}
-                {/*        {tit.map((name,idx) => (*/}
-                {/*            <li key ={idx}>*/}
-                {/*                <p>{name}</p>*/}
-                {/*            </li>*/}
-                {/*        ))}*/}
-                {/*    </ul>*/}
-                {/*</div>*/}
-                <div className="item">
-                    {list.map((item,idx)=> (
-                        <ul className="item-ul" key={item.id}>
-                            <li>{idx+1}</li>
-                            <li>{item.equipment_name}</li>
-                            <li>{item.name}</li>
-                            <li>{item.belong}</li>
-                            <li>{item.position}</li>
-                            <li>{item.borrow_date}</li>
+                <div className="current-body">
+                    <div className="item">
+                        <ul className="item-ul">
+                            {tit.map((name,idx) => (
+                                <li key ={idx}>
+                                    <p>{name}</p>
+                                </li>
+                            ))}
                         </ul>
-                    ))}
+                    </div>
+                    <div className="item">
+                        {list.map((item,idx)=> (
+                            <ul className="item-ul" key={item.id}>
+                                <li>{idx+1}</li>
+                                <li>{item.equipment_name}</li>
+                                <li>{item.name}</li>
+                                <li>{item.belong}</li>
+                                <li>{item.position}</li>
+                                <li>{item.borrow_date}</li>
+                            </ul>
+                        ))}
+                    </div>
                 </div>
-
             </section>
         </div>
     );
