@@ -219,7 +219,7 @@ const RentalContent = ({URL, insertDone}) => {
     }
 
     function doneReturn(){
-
+        
     }
 
     return (
