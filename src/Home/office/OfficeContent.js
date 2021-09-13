@@ -6,7 +6,7 @@
 *@etc(change)
 */
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
 /**
@@ -20,7 +20,7 @@ const InsertItem = ({clickEvent, changeHandler}) => {
     return(
         <form onSubmit={clickEvent}>
             <ul className="body-ul">
-                <li></li>
+                <li> </li>
                 <li><input name="asset_num" type="textbox" onChange={changeHandler}/></li>
                 <li><input name="name" type="textbox" onChange={changeHandler}/></li>
                 <li>
@@ -228,6 +228,7 @@ const OfficeContent = ({entryID,entryName}) => {
     const crrentURL = 'http://210.218.217.110:3103/api/getOfficeData.php'; //데이터 출력시 api url
     const insertURL = 'http://210.218.217.110:3103/api/postInsertEquipment.php'; //데이터 삽입시 api url
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
+    let session = sessionStorage.getItem('id');
     //entryId 바뀔때 마다 list 새로 가져오기
     useEffect(()=>{
         const fetchList = async () => {
@@ -247,13 +248,13 @@ const OfficeContent = ({entryID,entryName}) => {
             setDoneInsert(false);
             setDoneUpdate(false);
         };
-        fetchList();
+        fetchList().then(r=>{});
     },[currentId, entryID, doneInsert,doneDelete, doneUpdate]);
     //랜더링 전 sesstion에서 name 받아오기
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null)
             setOpenBtn(true);
-    },[sessionStorage.getItem('id')!==null])
+    },[session])
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>

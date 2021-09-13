@@ -13,6 +13,7 @@ import newlogoIMG from '../images/new_logo.png';
 const Header = () => {
     const [linkText,setText] = useState(null);
     const [linkPath,setPath] = useState(null);
+    let session = sessionStorage.getItem('id');
 
     useEffect(()=>{
         if(sessionStorage.getItem('id')==null){
@@ -22,7 +23,7 @@ const Header = () => {
             setText('관리자');
             setPath('/admin');
         }
-    },[sessionStorage.getItem('id')])
+    },[session])
 
     return(
         <div className='header-wrap'>

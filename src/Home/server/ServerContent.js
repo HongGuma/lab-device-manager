@@ -215,10 +215,10 @@ const ServerContent = ({entryId,entryName}) => {
         memory: '-',
         manager:sessionStorage.getItem('name'),
     })
-
     const currentURL = 'http://210.218.217.110:3103/api/getServerData.php'; //데이터 출력시 api url
     const insertURL = 'http://210.218.217.110:3103/api/postInsertEquipment.php'; //데이터 삽입시 api url
-    const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
+    const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url\
+    let session = sessionStorage.getItem('id');
     //entryId 바뀔때 마다 list 새로 가져오기
     useEffect(()=>{
         const fetchList = async () => {
@@ -238,18 +238,18 @@ const ServerContent = ({entryId,entryName}) => {
             setDelete(false);
             setDoneInsert(false);
             setDoneUpdate(false);
-            //체크박스 체크 초기화
-            checkedItems.clear();
-            setCheckedItems(checkedItems);
-            setAllChecked(false);
+            // //체크박스 체크 초기화
+            // checkedItems.clear();
+            // setCheckedItems(checkedItems);
+            // setAllChecked(false);
         };
-        fetchList();
+        fetchList().then(r=>{});
     },[currentId, entryId, doneInsert,doneDelete, doneUpdate]);
     //랜더링 전 sesstion에서 name 받아오기
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null)
             setOpenBtn(true);
-    },[sessionStorage.getItem('id')!==null])
+    },[session]);
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>

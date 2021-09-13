@@ -66,7 +66,7 @@ class Main extends React.Component{
                     <span>비품현황</span>
                     <ul className="cont-ul">
                         {this.state.tabNum.map(idx=>(
-                            <li key={idx} onClick={() => this.onClickTab(idx,this.state.tabTitle[idx])}><img src={this.state.tabImg[idx]}/><p>{this.state.tabTitle[idx]}</p></li>
+                            <li key={idx} onClick={() => this.onClickTab(idx,this.state.tabTitle[idx])}><img src={this.state.tabImg[idx]} alt="main-icon"/><p>{this.state.tabTitle[idx]}</p></li>
                         ))}
                     </ul>
                     <div className="main current-cont">

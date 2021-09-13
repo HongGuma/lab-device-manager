@@ -68,7 +68,7 @@ const RequestPopup = ({closeRequest, URL, done}) => {
             <div className="popup">
                 <div className="popup-header">
                     <p>대여신청</p>
-                    <img className="popup-close-btn" src={img} onClick={closeRequest}/>
+                    <img className="popup-close-btn" src={img} onClick={closeRequest} alt="close"/>
                 </div>
                 <div className="popup-body">
                     <div className="sect-02">
@@ -157,7 +157,6 @@ const ReturnPopup = ({URL, closeReturn}) => {
     const {name,passwd} = inAuth;
     const [checkedItems,setCheckedItems] = useState(new Set());
     const [allChecked,setAllChecked] = useState(false);
-    const [doneReturn,setDoneReturn] = useState(false);
 
     //input 입력 핸들러
     function inputHandler(e){
@@ -230,7 +229,7 @@ const ReturnPopup = ({URL, closeReturn}) => {
             <div className="popup">
                 <div className="popup-header">
                     <p>비품반납</p>
-                    <img className="popup-close-btn" src={img} onClick={closeReturn}/>
+                    <img className="popup-close-btn" src={img} onClick={closeReturn} alt="close"/>
                 </div>
                 {authToggle && <div>대여신청시 작성한 성함과 비밀번호를 입력해주세요.</div>}
                 <div className="popup-body">

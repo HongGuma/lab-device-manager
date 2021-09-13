@@ -12,6 +12,7 @@ import axios from "axios";
  *
  * @param enterEvent :키 입력 이벤트
  * @param inText :textbox 텍스트 입력 이벤트
+ * @param onClickEvent :추가 버튼 클릭 이벤트
  * @returns {JSX.Element}
  * @constructor 항목추가 버튼 클릭시 나오는 input
  */
@@ -121,6 +122,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
     const [btnToggle,setOpenBtn] = useState(false);//추가,삭제 버튼 출력 여부
     const insertURL = 'http://210.218.217.110:3103/api/getInsertEntry.php';
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEntry.php';
+    let session = sessionStorage.getItem('id');
     //초기 항목 데이터 불러오기
     useEffect(()=>{
         const fetchList = async () => {
@@ -137,13 +139,13 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
             setDoneInsert(false);
             setDoneRemove(false);
         };
-        fetchList();
+        fetchList().then(r => {});
     },[currentURL, doneInsert, doneRemove]);
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null){
             setOpenBtn(true);
         }
-    },[sessionStorage.getItem('id')])
+    },[session]);
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
@@ -237,7 +239,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         <section className="sidebar">
             <div className="inner">
                 {isDefault && <DefaultEntry list={entryList} event = {clickEvent}/>}
-                {isRemove && <RemoveEntry list={entryList} onCheckedSingle={oneClickCheck} removeEvent={onClickRemove} onCheckedAll={allClickCheck} checkedItems={checkedItems}/>}
+                {isRemove && <RemoveEntry list={entryList} onCheckedSingle={oneClickCheck} removeEvent={onClickRemove} onCheckedAll={allClickCheck} checkedItems={checkedItems} allChecked={isAllChecked}/>}
                 <ul className="sidebar-ul">
                     {isInsert && <InsertEntry enterEvent={inputEnter} inText={inputText} onClickEvent={onClickInsert}/>}
                 </ul>
