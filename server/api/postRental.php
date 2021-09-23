@@ -14,7 +14,7 @@
 
     switch ($param) {
         case 'select': //전체 출력용 (반납 완료된거 포함 x)
-            $sql = "select rental_id, borrow_equipment_name, borrower_name, borrower_belong, position, borrow_date from rental where toggle is NULL and not borrower_name = '' ";
+            $sql = "select rental_id, borrow_equipment_name, borrower_name, borrower_belong, position, borrow_date from rental where toggle is NULL and not borrower_name = '' order by borrow_date DESC";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if ($result) {
@@ -47,7 +47,7 @@
             }
             break;
         case 'selectAuth': //개인 대여 확인용
-            $sql = "select rental_id, borrow_equipment_name, borrower_name, borrower_belong, position, borrow_date from rental where borrower_name='$name' and password = SHA1('$passwd')";
+            $sql = "select rental_id, borrow_equipment_name, borrower_name, borrower_belong, position, borrow_date from rental where borrower_name='$name' and password = SHA1('$passwd') and toggle is Null order by borrow_date DESC";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if ($result) {
@@ -79,7 +79,7 @@
             echo json_encode($result);
             break;
         case 'allSelect': //모든 기록 출력 (관리자 전용), 비밀번호는 제외
-            $sql = "Select * from rental";
+            $sql = "Select * from rental order by borrow_date DESC";
             $result = mysqli_query($conn, $sql);
             $data = array();
             if ($result) {

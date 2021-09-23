@@ -23,12 +23,11 @@
     $sql = '';
 
     switch ($table){
-        case 'office':
+        case 'office' || 'lab':
             $sql="Update ".$table."_equipment SET asset_num='$asset_num', name='$name', state='$state', position='$position', manager='$manager', issue_date='$issue_date' where ".$table."_id = ".$column_id;
             break;
         case 'server':
             $sql="Update ".$table."_equipment SET server_name='$server_name', ip='$ip', cpu_core='$cpu_core', disk='$disk', memory='$memory' where ".$table."_id = ".$column_id;
-        case 'lab':
 
     }
 

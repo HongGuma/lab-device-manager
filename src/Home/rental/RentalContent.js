@@ -140,8 +140,8 @@ const RentalContent = ({URL, insertDone}) => {
     const [allToggle,setAllToggle] = useState(false); //모든 리스트 출력할 컴포넌트 여부
     const [checkedItems,setCheckedItems] = useState(new Set());//체크박스 체크한 아이템
     const [isAllChecked, setAllChecked] = useState(false);//전체 클릭 여부
-
     const [deleteDone,setDeleteDone] = useState(false);
+    let session = sessionStorage.getItem('id');
 
     useEffect(()=>{
         const fetchList = async () => {
@@ -163,12 +163,12 @@ const RentalContent = ({URL, insertDone}) => {
             }
             setLoading(false);
         };
-        fetchList();
-    },[insertDone,deleteDone]);
+        fetchList().then(r=>{});
+    },[insertDone, deleteDone, URL]);
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null)
             setAdminBtnToggle(true);
-    },[sessionStorage.getItem('id')!==null])
+    },[session]);
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>

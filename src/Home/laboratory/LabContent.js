@@ -227,6 +227,7 @@ const LabContent = ({entryID,entryName}) => {
     const crrentURL = 'http://210.218.217.110:3103/api/getLabData.php'; //데이터 출력시 api url
     const insertURL = 'http://210.218.217.110:3103/api/postInsertEquipment.php'; //데이터 삽입시 api url
     const deleteURL = 'http://210.218.217.110:3103/api/getDeleteEquipment.php'; //데이터 삭제시 api url
+    let session = sessionStorage.getItem('id');
     //entryId 바뀔때 마다 list 새로 가져오기
     useEffect(()=>{
         const fetchList = async () => {
@@ -252,7 +253,7 @@ const LabContent = ({entryID,entryName}) => {
     useEffect(()=>{
         if(sessionStorage.getItem('name')!==null)
             setOpenBtn(true);
-    },[sessionStorage.getItem('id')!==null])
+    },[session])
 
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>

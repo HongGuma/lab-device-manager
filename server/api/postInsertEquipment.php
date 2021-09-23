@@ -21,7 +21,7 @@
 
     $sql='';
     switch ($table){
-        case 'office':
+        case 'office' || 'lab':
             $sql="Insert Into ".$table."_equipment(asset_num, name, state, position, issue_date, manager, item_id) value('$asset_num','$name','$state','$position','$issue_date','$manager',".$entry_id.")";
             break;
         case 'server':
