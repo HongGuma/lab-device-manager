@@ -8,7 +8,8 @@
 body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 body p {cursor:default;}
 /*=======Header.js=======*/
-.header-wrap {z-index:9999; width: 100%; height: 140px; position: fixed;display: flex; flex-direction: column; box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(225,225,225,0.3); background-color: #fff;}
+.header-wrap {z-index:9999; width: 100%; min-height: 140px; position: fixed;display: flex; flex-direction: column; box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(225,225,225,0.3); background-color: #fff;}
+
 
 .header-top {width:1100px; font-size:12px; color:#666; margin:0 auto;}
 .header-top ul {list-style: none; display: flex; justify-content: flex-end;}
@@ -20,7 +21,13 @@ body p {cursor:default;}
 .header-menu .logo-img {width: 182px; height: 73px;}
 .header-menu ul {flex:1 1 0; list-style: none; display: flex; justify-content: space-evenly; }
 .header-menu li {font-size:1.5rem; font-weight: 400; color:#393536; padding-top:5px;}
+.header-menu li:hover{font-size: 1.6rem; font-weight: bold;}
 .header-menu a {text-decoration: none; color:#393536;}
+.header-menu ul > li:hover > .hide-ul {display: flex; flex-direction: column; padding-left: 0; margin-top: 20px; background-color: #ffffff}
+.header-menu .hide-ul {display: none; }
+.header-menu .hide-ul li {font-size: 1.2rem;}
+.header-menu .hide-ul li:hover { border-bottom:1px solid #ee1e49}
+
 /*======Login======*/
 .login-wrap {padding-top:222px; min-height: 800px;}
 .login-width {width:1100px; margin:32px auto;}
@@ -76,7 +83,7 @@ body p {cursor:default;}
 .sidebar .add-btn p{ text-align: center; color:#393536;}
 .sidebar .add-box {height: 40px; text-align: center; line-height: 40px; font-weight: 600; width: 170px; font-size: 20px;}
 
-/*-Content.js-*/
+/*-----content------*/
 .container {width: 100%; padding:0 20px;}
 .container-tit {display: flex; align-items: flex-end; border-bottom:1px solid #ddd; padding-bottom:6px;}
 .container-tit p {margin:0;}
@@ -170,3 +177,9 @@ body p {cursor:default;}
 /*======Footer.js======*/
 .footer-wrap {background-color: #424242; padding-top:25px; padding-bottom:200px;}
 .footer-width {width: 1100px; margin:0 auto; color:white}
+
+/*===== 반응형 =====*/
+
+@media all and (max-width: 1124px) {
+    .main-rental .footer-wrap { width: 100%; min-width: 69.9rem;}
+}

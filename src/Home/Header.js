@@ -6,11 +6,13 @@
 *@etc(change)
 */
 import React, {useEffect, useState} from 'react';
+import styled from "styled-components";
 import {Link} from "react-router-dom";
 
 import newlogoIMG from '../images/new_logo.png';
 
 const Header = () => {
+
     const [linkText,setText] = useState(null);
     const [linkPath,setPath] = useState(null);
     let session = sessionStorage.getItem('id');
@@ -24,6 +26,10 @@ const Header = () => {
             setPath('/admin');
         }
     },[session])
+
+    function hoverEvent(){
+
+    }
 
     return(
         <div className='header-wrap'>
@@ -48,12 +54,17 @@ const Header = () => {
                     </li>
                     <li>
                         <Link to="/laboratory">실험실</Link>
+                        <ul className="hide-ul">
+                            <li><Link to="/laboratory">- 실험실</Link></li>
+                            <li><Link to="/sample">- 샘플관리</Link></li>
+                        </ul>
                     </li>
                     <li style={{borderRight:"none"}}>
                         <Link to="/rental">비품대여</Link>
                     </li>
                 </ul>
             </div>
+
         </div>
     );
 

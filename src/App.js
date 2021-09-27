@@ -18,6 +18,7 @@ import LabMain from "./Home/laboratory/LabMain";
 import RentalMain from "./Home/rental/RentalMain";
 import Footer from "./Home/Footer"
 import Admin from "./admin/Admin";
+import SampleMain from "./Home/laboratory/SampleMain";
 
 function App(){
     return(
@@ -30,6 +31,7 @@ function App(){
             <Route path="/laboratory" component={LabMain}/>
             <Route path="/rental" component={RentalMain}/>
             <Route path="/admin" component={Admin}/>
+            <Route path="/sample" component={SampleMain}/>
             <Footer/>
         </div>
     )
