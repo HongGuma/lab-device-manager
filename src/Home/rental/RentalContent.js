@@ -166,7 +166,7 @@ const RentalContent = ({URL, insertDone}) => {
         fetchList().then(r=>{});
     },[insertDone, deleteDone, URL]);
     useEffect(()=>{
-        if(sessionStorage.getItem('name')!==null)
+        if(sessionStorage.getItem('name')!==null && sessionStorage.getItem('auth')==='10')
             setAdminBtnToggle(true);
     },[session]);
 

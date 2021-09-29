@@ -44,8 +44,10 @@ const Login = () => {
      */
     function getAdminInfo(){
         axios.get(adminURL+'?id='+adminID).then((res)=>{
+            // console.log(res.data)
             sessionStorage.setItem('id',res.data[0].id);
             sessionStorage.setItem('name',res.data[0].name);
+            sessionStorage.setItem('auth',res.data[0].authority);
             setLogin(!loginToggle);
             setAdmin(!adminToggle);
             alert("로그인 성공");
