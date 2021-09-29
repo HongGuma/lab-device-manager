@@ -34,11 +34,11 @@ class ServerMain extends React.Component{
 
     render() {
         return (
-            <div className="server-wrap">
-                <div className="server-tit">
+            <div className="server page-wrap">
+                <div className="server page-tit">
                     <p>서버 비품 관리</p>
                 </div>
-                <div className="server-width">
+                <div className="server page-width">
                     <SideBar currentURL = {this.state.url} clickEvent={this.onClickEntry} tableName={this.state.tableName}/>
                     <ServerContent entryId={this.state.entryId} entryName={this.state.entryName}/>
                 </div>

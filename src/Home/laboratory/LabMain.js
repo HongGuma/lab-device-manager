@@ -30,11 +30,11 @@ class LabMain extends React.Component{
     }
     render() {
         return (
-            <div className="lab-wrap">
-                <div className="lab-tit">
+            <div className="lab page-wrap">
+                <div className="lab page-tit">
                     <p>실험실 비품 관리</p>
                 </div>
-                <div className="lab-width">
+                <div className="lab page-width">
                     <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry} tableName={this.state.tableName}/>
                     <LabContent entryID={this.state.entryId} entryName={this.state.entryName}/>
                 </div>
