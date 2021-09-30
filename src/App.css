@@ -184,12 +184,12 @@ body p {cursor:default;}
 .sample .container-cont {width: 100%}
 .sample .container-cont section {overflow-x: auto; width: 3000px;}
 
-.sample .container-tit .tit-txt {display: flex;}
-.sample .container-tit .tit-txt p {font-size: 1.3rem; margin-right: 15px; color: #eeeeee;}
+.sample .container-tit .tit-txt {display: flex; align-items: flex-end;}
+.sample .container-tit .tit-txt p {font-size: 1.3rem; margin-left: 15px; color: #bbbbbb; line-height: 31px;}
 .sample .container-tit .tit-txt p:hover {color:#ee1e49; font-size: 1.5rem; font-weight: bold;}
 .sample .container-tit .tit-txt p:active {color:#000}
 
-
+.sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
 
 /*======Footer.js======*/
 .footer-wrap {background-color: #424242; padding-top:25px; padding-bottom:200px;}

@@ -18,9 +18,8 @@ class SampleMain extends React.Component{
         this.state={
             entryId:0,
             entryName:'',
-            labEntry:[],
-            url:'http://210.218.217.110:3103/api/getLabData.php?',
-            tableName:'lab',
+            sampleEntry:[],
+            url:'http://210.218.217.110:3103/api/postSampleData.php?',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
@@ -39,16 +38,16 @@ class SampleMain extends React.Component{
                     <section className="sidebar">
                         <div className="inner">
                             <ul className="sidebar-ul">
-                                <li onClick={()=>this.onClickEntry('프로젝트1')}>
-                                    <p>프로젝트1</p>
-                                    <ul className="sample hide-ul">
-                                        <li>하위 항목1</li>
-                                        <li>하위 항목2</li>
-                                        <li>하위 항목3</li>
-                                        <li>하위 항목4</li>
-                                    </ul>
+                                <li onClick={()=>this.onClickEntry('임상팀')}>
+                                    <p>임상팀</p>
+                                    {/*<ul className="sample hide-ul">*/}
+                                    {/*    <li>하위 항목1</li>*/}
+                                    {/*    <li>하위 항목2</li>*/}
+                                    {/*    <li>하위 항목3</li>*/}
+                                    {/*    <li>하위 항목4</li>*/}
+                                    {/*</ul>*/}
                                 </li>
-                                <li onClick={()=>this.onClickEntry('감염병DB')}><p>감염병DB</p></li>
+                                <li onClick={()=>this.onClickEntry('프로젝트2')}><p>프로젝트2</p></li>
                                 <li onClick={()=>this.onClickEntry('프로젝트3')}><p>프로젝트3</p></li>
                                 <li onClick={()=>this.onClickEntry('프로젝트4')}><p>프로젝트4</p></li>
                             </ul>
