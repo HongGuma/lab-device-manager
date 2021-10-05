@@ -185,9 +185,12 @@ body p {cursor:default;}
 .sample .container-cont section {overflow-x: auto; width: 3000px;}
 
 .sample .container-tit .tit-txt {display: flex; align-items: flex-end;}
-.sample .container-tit .tit-txt p {font-size: 1.3rem; margin-left: 15px; color: #bbbbbb; line-height: 31px;}
-.sample .container-tit .tit-txt p:hover {color:#ee1e49; font-size: 1.5rem; font-weight: bold;}
-.sample .container-tit .tit-txt p:active {color:#000}
+.sample .hidden-tab {display: flex; align-items: flex-end;}
+.sample .hidden-tab .tabs {display: flex;}
+.sample .hidden-tab .tabs p {font-size: 1.3rem; margin-left: 15px; color: #bbbbbb; line-height: 31px;}
+.sample .hidden-tab .tabs p:active {color:rgba(238,30,73,0.1); font-size: 1.5rem; font-weight: bold;}
+.sample .hidden-tab .tabs .active {color:#000; font-size: 1.5rem;}
+.sample .hidden-tab .cont-cnt {font-weight: normal; font-size: 17px; line-height: 30px}
 
 .sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
 

@@ -6,7 +6,6 @@
 *@etc(change)
 */
 import React, {useEffect, useState} from 'react';
-import styled from "styled-components";
 import {Link} from "react-router-dom";
 
 import newlogoIMG from '../images/new_logo.png';
@@ -26,10 +25,6 @@ const Header = () => {
             setPath('/admin');
         }
     },[session])
-
-    function hoverEvent(){
-
-    }
 
     return(
         <div className='header-wrap'>

@@ -14,22 +14,6 @@
     $parm = $_GET['parm'];
 
     switch ($parm){
-        case 'entry':
-            $sql = 'select * from sample_entry';
-            $result = mysqli_query($conn, $sql);
-            $data = array();
-            if ($result) {
-                while ($row = mysqli_fetch_array($result)) {
-                    array_push($data,
-                        array('id' => $row[0],
-                            'name' => $row[1]
-                        ));
-                }
-                echo json_encode($data);
-            } else {
-                echo mysqli_error($conn);
-            }
-            break;
         case 'consent':
             $sql = "select * from 10kG_consent";
             $result = mysqli_query($conn,$sql);
@@ -38,9 +22,9 @@
                 while ($row = mysqli_fetch_array($result)){
                     array_push($data,
                     array('id'=>$row[0],
-                        'unique_number'=>$row[1],
-                        'false_name'=>$row[2],
-                        'participation_date'=>$row[3],
+                        'unique_num'=>$row[1],
+                        'false_nm'=>$row[2],
+                        'parti_date'=>$row[3],
                         'sex'=>$row[4],
                         'age'=>$row[5],
                         'cancel_date'=>$row[6],
@@ -50,7 +34,7 @@
                         'type_quantity'=>$row[10],
                         'shelf_live'=>$row[11],
                         'secondary_offer'=>$row[12],
-                        'secondary_identification_info'=>$row[13],
+                        'secondary_id_info'=>$row[13],
                         'report'=>$row[14],
                         'report_id'=>$row[15],
                         'request_update'=>$row[16],
@@ -61,6 +45,40 @@
                         'family_code'=>$row[21],
                         'disease_classification'=>$row[22],
                         'etc2'=>$row[23]));
+                }
+                echo json_decode($data);
+            }else{
+                echo mysqli_error($conn);
+            }
+            break;
+        case 'survey':
+            break;
+        case 'checkupItem':
+            $sql = "select * from 10kG_medical_checkup_item";
+            $result = mysqli_query($conn,$sql);
+            $data = array();
+            if($result){
+                while ($row = mysqli_fetch_array($result)){
+                    array_push($data,
+                        array('id'=>$row[0],
+                            'question'=>$row[23]));
+                }
+                echo json_decode($data);
+            }else{
+                echo mysqli_error($conn);
+            }
+            break;
+        case 'checkupResult':
+            $sql = "select * from 10kG_medical_checkup_item";
+            $result = mysqli_query($conn,$sql);
+            $data = array();
+            if($result){
+                while ($row = mysqli_fetch_array($result)){
+                    array_push($data,
+                        array('id'=>$row[0],
+                            'r-1'=>$row[1],
+                            'r-2'=>$row[1],
+                            ));
                 }
                 echo json_decode($data);
             }else{

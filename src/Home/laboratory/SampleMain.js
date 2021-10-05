@@ -11,6 +11,7 @@ import SideBar from "../container/SideBar";
 import LabContent from "./LabContent";
 import RentalContent from "../rental/RentalContent";
 import SampleContent from "./SampleContent";
+import ClinicalContent from "./ClinicalContent";
 
 class SampleMain extends React.Component{
     constructor(props) {
@@ -53,7 +54,7 @@ class SampleMain extends React.Component{
                             </ul>
                         </div>
                     </section>
-                    <SampleContent entryName={this.state.entryName}/>
+                    {this.state.entryName==='임상팀' && <ClinicalContent entryName={this.state.entryName}/>}
                 </div>
             </div>
         );
