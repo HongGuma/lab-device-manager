@@ -17,7 +17,7 @@ const admin = () => {
         <div className="admin-wrap">
             <div className="admin-width">
                 <p>로그인 완료</p>
-                <p onClick={logout}>로그아웃</p>
+                <p className="logout" onClick={logout}>로그아웃</p>
                 <p>{sessionStorage.getItem('name')}</p>
             </div>
         </div>

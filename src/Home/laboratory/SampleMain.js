@@ -7,11 +7,8 @@
 */
 
 import React from 'react';
-import SideBar from "../container/SideBar";
-import LabContent from "./LabContent";
-import RentalContent from "../rental/RentalContent";
-import SampleContent from "./SampleContent";
 import ClinicalContent from "./ClinicalContent";
+import ProjectTwoContent from "./ProjectTwoContent";
 
 class SampleMain extends React.Component{
     constructor(props) {
@@ -19,8 +16,6 @@ class SampleMain extends React.Component{
         this.state={
             entryId:0,
             entryName:'',
-            sampleEntry:[],
-            url:'http://210.218.217.110:3103/api/postSampleData.php?',
         }
         this.onClickEntry = this.onClickEntry.bind(this);
     }
@@ -39,15 +34,7 @@ class SampleMain extends React.Component{
                     <section className="sidebar">
                         <div className="inner">
                             <ul className="sidebar-ul">
-                                <li onClick={()=>this.onClickEntry('임상팀')}>
-                                    <p>임상팀</p>
-                                    {/*<ul className="sample hide-ul">*/}
-                                    {/*    <li>하위 항목1</li>*/}
-                                    {/*    <li>하위 항목2</li>*/}
-                                    {/*    <li>하위 항목3</li>*/}
-                                    {/*    <li>하위 항목4</li>*/}
-                                    {/*</ul>*/}
-                                </li>
+                                <li onClick={()=>this.onClickEntry('임상팀')}><p>만게놈(임상팀)</p></li>
                                 <li onClick={()=>this.onClickEntry('프로젝트2')}><p>프로젝트2</p></li>
                                 <li onClick={()=>this.onClickEntry('프로젝트3')}><p>프로젝트3</p></li>
                                 <li onClick={()=>this.onClickEntry('프로젝트4')}><p>프로젝트4</p></li>
@@ -55,6 +42,7 @@ class SampleMain extends React.Component{
                         </div>
                     </section>
                     {this.state.entryName==='임상팀' && <ClinicalContent entryName={this.state.entryName}/>}
+                    {this.state.entryName==='프로젝트2' && <ProjectTwoContent entryName={this.state.entryName}/>}
                 </div>
             </div>
         );
