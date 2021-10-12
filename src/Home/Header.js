@@ -11,6 +11,23 @@ import {Link} from "react-router-dom";
 import newlogoIMG from '../images/new_logo.png';
 
 const Header = () => {
+    const [scrollY,setScrollY] = useState(0);
+    const handlerScroll = () => {
+        setScrollY(window.pageYOffset);
+    }
+
+    useEffect(()=>{
+        console.log("Y = ",scrollY);
+    },[scrollY])
+    useEffect(()=> {
+        const watch = () => {
+            window.addEventListener('scroll',handlerScroll);
+        }
+        watch();
+        // return () => {
+        //     window.removeEventListener('scroll',handlerScroll);
+        // }
+    })
 
     const [linkText,setText] = useState(null);
     const [linkPath,setPath] = useState(null);
@@ -27,7 +44,7 @@ const Header = () => {
     },[session])
 
     return(
-        <div className='header-wrap'>
+        <div className={scrollY > 150? 'header-wrap-chg':'header-wrap'}>
             <div className="header-top">
                 <ul>
                     <li><Link to="/">홈으로</Link></li>

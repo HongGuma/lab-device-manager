@@ -8,6 +8,8 @@
 body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 body p {cursor:default;}
 /*=======Header.js=======*/
+.chg .header-wrap{ display: none;}
+
 .header-wrap {z-index:9999; width: 100%; min-height: 140px; position: fixed;display: flex; flex-direction: column; box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(225,225,225,0.3); background-color: #fff;}
 
 .header-top {width:1100px; font-size:12px; color:#666; margin:0 auto;}
@@ -172,7 +174,7 @@ body p {cursor:default;}
 .lab .page-width .add-btn p:hover {color:#ee1e49; }
 
 /*====== sample ======*/
-.sample .page-tit { background-color: rgba(238,30,73,0.1); width: 100%; position: fixed;}
+.sample .page-tit { background-color: rgba(238,30,73,0.1); width: 100%;}
 .sample .page-tit p {border-bottom:1px solid rgba(238,30,73,0.1);}
 .sample .page-width {margin:110px auto;}
 .sample .page-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.1);}
