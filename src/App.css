@@ -135,7 +135,7 @@ body p {cursor:default;}
 .container-tit .add-btn {display: flex;}
 .container-tit .add-btn p {padding:3px; margin:0 2px;}
 
-.container-cont {display: flex; flex-direction: column; max-height: 900px; overflow-y: auto; padding:0; margin-bottom:30px;}
+.container-cont {display: flex; flex-direction: column; max-height: 900px; padding:0; margin-bottom:30px;}
 .container-cont .cont-head {border-bottom:1px solid #ddd;}
 .container-cont .cont-head li:nth-child(1) {line-height: 1px;}
 .container-cont .head-ul {margin:6px 0;}
@@ -145,7 +145,7 @@ body p {cursor:default;}
 
 
 /*- 각 페이지 메인 부분 -*/
-.page-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none; width: 100%}
+.page-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none; width: 100%; margin-bottom:40px}
 .page-tit {height: 65px; margin-bottom:32px; }
 .page-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536;}
 .page-width {display: flex; width: 1600px; margin:0 auto; padding-bottom: 40px;}
@@ -174,19 +174,25 @@ body p {cursor:default;}
 .lab .page-width .add-btn p:hover {color:#ee1e49; }
 
 /*====== sample ======*/
+.sample .page-wrap {margin-bottom:70px;}
 .sample .page-tit { background-color: rgba(238,30,73,0.1); width: 100%;}
 .sample .page-tit p {border-bottom:1px solid rgba(238,30,73,0.1);}
-.sample .page-width {margin:110px auto;}
+.sample .page-width {margin:60px auto;}
 .sample .page-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.1);}
+.sample .page-width .sidebar-ul li:hover > .hide-ul li{display: block;}
 .sample .page-width .add-btn p:hover {color:#ee1e49; }
 .sample .hide-ul {padding-bottom: 12px;}
 .sample .hide-ul li {display:none; text-align: center; padding:12px 0;}
-.sample .page-width .sidebar-ul li:hover > .hide-ul li{display: block;}
 
 .sample .container {width: 90%;}
-.sample .container-cont {width: 100%}
+.sample .container-cont {width: 100%; overflow-y: unset}
 .sample .container-cont .consent-section {width: 4500px;}
+.sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
 .sample .container-cont section {width: 12900px;}
+
+.sample .tab-table {overflow-y: auto}
+.sample .pagination .active p{border-bottom: 1px solid #ee1e49; width:35px; margin:18px auto;}
+.sample .pagination li:hover {color:#ee1e49}
 
 .sample .container-tit .tit-txt {display: flex; align-items: flex-end;}
 .sample .hidden-tab {display: flex; align-items: flex-end;}
@@ -196,7 +202,10 @@ body p {cursor:default;}
 .sample .hidden-tab .tabs .active {color:#000; font-size: 1.5rem;}
 .sample .hidden-tab .cont-cnt {font-weight: normal; font-size: 17px; line-height: 30px}
 
-.sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
+.consent-section  li:nth-child(18), .consent-section li:nth-child(19), .consent-section li:nth-child(20), .consent-section li:nth-child(25) {
+    flex:1 2 190px; padding: 0 12px
+}
+.consent-section .active .body-ul {background-color: #ee1e49}
 
 /*======Footer.js======*/
 .footer-wrap {background-color: #424242; padding-top:25px; padding-bottom:200px;}

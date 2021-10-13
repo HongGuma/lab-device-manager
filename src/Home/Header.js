@@ -16,17 +16,15 @@ const Header = () => {
         setScrollY(window.pageYOffset);
     }
 
-    useEffect(()=>{
-        console.log("Y = ",scrollY);
-    },[scrollY])
     useEffect(()=> {
         const watch = () => {
             window.addEventListener('scroll',handlerScroll);
         }
         watch();
-        // return () => {
-        //     window.removeEventListener('scroll',handlerScroll);
-        // }
+        //메모리 누수 방지용
+        return () => {
+            window.removeEventListener('scroll',handlerScroll);
+        }
     })
 
     const [linkText,setText] = useState(null);
