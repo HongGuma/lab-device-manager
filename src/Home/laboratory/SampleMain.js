@@ -26,25 +26,28 @@ class SampleMain extends React.Component{
     }
     render() {
         return (
-            <div className="sample page-wrap">
-                <div className="sample page-tit">
-                    <p>샘플 관리</p>
-                </div>
-                <div className="sample page-width">
-                    <section className="sidebar">
-                        <div className="inner">
-                            <ul className="sidebar-ul">
-                                <li onClick={()=>this.onClickEntry('임상팀')}><p>만게놈(임상팀)</p></li>
-                                <li onClick={()=>this.onClickEntry('프로젝트2')}><p>프로젝트2</p></li>
-                                <li onClick={()=>this.onClickEntry('프로젝트3')}><p>프로젝트3</p></li>
-                                <li onClick={()=>this.onClickEntry('프로젝트4')}><p>프로젝트4</p></li>
-                            </ul>
-                        </div>
-                    </section>
-                    {this.state.entryName==='임상팀' && <ClinicalContent entryName={this.state.entryName}/>}
-                    {this.state.entryName==='프로젝트2' && <ProjectTwoContent entryName={this.state.entryName}/>}
+            <div className="sample">
+                <div className="sample page-wrap">
+                    <div className="sample page-tit">
+                        <p>샘플 관리</p>
+                    </div>
+                    <div className="sample page-width">
+                        <section className="sidebar">
+                            <div className="inner">
+                                <ul className="sidebar-ul">
+                                    <li onClick={()=>this.onClickEntry('임상팀')}><p>만게놈(임상팀)</p></li>
+                                    <li onClick={()=>this.onClickEntry('프로젝트2')}><p>프로젝트2</p></li>
+                                    <li onClick={()=>this.onClickEntry('프로젝트3')}><p>프로젝트3</p></li>
+                                    <li onClick={()=>this.onClickEntry('프로젝트4')}><p>프로젝트4</p></li>
+                                </ul>
+                            </div>
+                        </section>
+                        {this.state.entryName==='임상팀' && <ClinicalContent entryName={this.state.entryName} />}
+                        {this.state.entryName==='프로젝트2' && <ProjectTwoContent entryName={this.state.entryName}/>}
+                    </div>
                 </div>
             </div>
+
         );
     }
 }

@@ -40,7 +40,6 @@ const SampleContent = ({entryName,tabNum}) => {
             <div className="container-tit">
                 <div className="tit-txt">
                     <a>{entryName}</a>
-
                 </div>
             </div>
         </section>

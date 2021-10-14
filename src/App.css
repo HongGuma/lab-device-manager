@@ -161,6 +161,7 @@ body p {cursor:default;}
 
 
 /*====== Server ======*/
+.server .page-wrap {margin-bottom: 50px}
 .server .page-tit { background-color: rgba(47,103,182,0.3);}
 .server .page-tit p {border-bottom:1px solid rgba(47,103,182,0.3);}
 .server .page-width .sidebar-ul li:hover {background-color: rgba(47,103,182,0.3);}
@@ -174,25 +175,25 @@ body p {cursor:default;}
 .lab .page-width .add-btn p:hover {color:#ee1e49; }
 
 /*====== sample ======*/
-.sample .page-wrap {margin-bottom:70px;}
+/*-----------------------------------main--------------------------------------*/
+.sample .page-wrap {margin-bottom:500px;}
 .sample .page-tit { background-color: rgba(238,30,73,0.1); width: 100%;}
 .sample .page-tit p {border-bottom:1px solid rgba(238,30,73,0.1);}
 .sample .page-width {margin:60px auto;}
 .sample .page-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.1);}
 .sample .page-width .sidebar-ul li:hover > .hide-ul li{display: block;}
 .sample .page-width .add-btn p:hover {color:#ee1e49; }
+
+/*------------------------------------content-------------------------------------*/
 .sample .hide-ul {padding-bottom: 12px;}
 .sample .hide-ul li {display:none; text-align: center; padding:12px 0;}
 
 .sample .container {width: 90%;}
 .sample .container-cont {width: 100%; overflow-y: unset}
-.sample .container-cont .consent-section {width: 4500px;}
+.sample .container-cont li {flex:1 1 100px; padding:0 6px;}
+.sample .container-cont .consent-section {width: 4400px;}
 .sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
-.sample .container-cont section {width: 12900px;}
-
-.sample .tab-table {overflow-y: auto}
-.sample .pagination .active p{border-bottom: 1px solid #ee1e49; width:35px; margin:18px auto;}
-.sample .pagination li:hover {color:#ee1e49}
+.sample .container-cont section {width: 14500px;}
 
 .sample .container-tit .tit-txt {display: flex; align-items: flex-end;}
 .sample .hidden-tab {display: flex; align-items: flex-end;}
@@ -201,11 +202,22 @@ body p {cursor:default;}
 .sample .hidden-tab .tabs p:active {color:rgba(238,30,73,0.1); font-size: 1.5rem; font-weight: bold;}
 .sample .hidden-tab .tabs .active {color:#000; font-size: 1.5rem;}
 .sample .hidden-tab .cont-cnt {font-weight: normal; font-size: 17px; line-height: 30px}
+.sample .hidden-tab .add-btn {font-size: 18px; font-weight: normal; padding:0 12px}
 
-.consent-section  li:nth-child(18), .consent-section li:nth-child(19), .consent-section li:nth-child(20), .consent-section li:nth-child(25) {
-    flex:1 2 190px; padding: 0 12px
-}
-.consent-section .active .body-ul {background-color: #ee1e49}
+.sample .tab-table {overflow-x: auto}
+.sample .pagination .active p{border-bottom: 1px solid #ee1e49; width:35px; margin:18px auto;}
+.sample .pagination li:hover {color:#ee1e49}
+
+.consent-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.consent-section .cont-body .active {background-color: rgba(102,196,48,0.2);}
+.consent-section .cont-body .active li{overflow: unset; text-overflow: unset; white-space:normal;}
+
+.medical-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.medical-section .head-ul li {white-space: normal}
+.medical-section .cont-body .active {background-color: rgba(238, 30, 73, 0.2)}
+
+
+
 
 /*======Footer.js======*/
 .footer-wrap {background-color: #424242; padding-top:25px; padding-bottom:200px;}

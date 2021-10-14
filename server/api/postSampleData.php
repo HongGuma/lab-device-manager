@@ -20,10 +20,8 @@
             $sql = "select * from 10kG_consent";
             $result = mysqli_query($conn,$sql);
             $data = array();
-            $num = 0;
             if($result){
                 while ($row = mysqli_fetch_array($result)){
-                    if($num == 12) break;
                     array_push($data,
                         array('id'=>$row[0],
                             'unique_num'=>$row[1],
@@ -50,23 +48,9 @@
                             'family_code'=>$row[22],
                             'disease_classification'=>$row[23],
                             'etc2'=>$row[24]));
-                    $num++;
                 }
                 echo json_encode($data);
             }else{
-                echo mysqli_error($conn);
-            }
-            break;
-        case 'consentCnt':
-            $sql = "select count(*) from 10kG_consent";
-            $result = mysqli_query($conn, $sql);
-            $data = '';
-            if ($result) {
-                while ($row = mysqli_fetch_array($result)) {
-                    $data = $row[0];
-                }
-                echo $data;
-            } else {
                 echo mysqli_error($conn);
             }
             break;
@@ -91,11 +75,8 @@
             $sql = "select * from 10kG_medical_checkup_result";
             $result = mysqli_query($conn,$sql);
             $data = array();
-            $cnt = 0;
             if($result){
                 while ($row = mysqli_fetch_array($result)){
-                    if( $cnt == 12)
-                        break;
                     array_push($data,
                         array('id'=>$row[0],
                             'r_1'=>$row[1], 'r_2'=>$row[2], 'r_3'=>$row[3], 'r_4'=>$row[4], 'r_5'=>$row[5],
@@ -120,26 +101,12 @@
                             'r_96'=>$row[96], 'r_97'=>$row[97], 'r_98'=>$row[98], 'r_99'=>$row[99], 'r_100'=>$row[100],
                             'r_101'=>$row[101], 'r_102'=>$row[102], 'r_103'=>$row[103], 'r_104'=>$row[104], 'r_105'=>$row[105],
                             'r_106'=>$row[106], 'r_107'=>$row[107], 'r_108'=>$row[108], 'r_109'=>$row[109], 'r_110'=>$row[110],
-                            'r_111'=>$row[111], 'r_112'=>$row[112], 'r_113'=>$row[113], 'r_114'=>$row[114], 'r_115'=>$row[115]
+                            'r_111'=>$row[111], 'r_112'=>$row[112], 'r_113'=>$row[113], 'r_114'=>$row[114], 'r_115'=>$row[115],
                         )
                     );
-                    $cnt++;
                 }
                 echo json_encode($data);
             }else{
-                echo mysqli_error($conn);
-            }
-            break;
-        case 'resultCnt':
-            $sql = "select count(*) from 10kG_medical_checkup_result";
-            $result = mysqli_query($conn, $sql);
-            $data = '';
-            if ($result) {
-                while ($row = mysqli_fetch_array($result)) {
-                    $data = $row[0];
-                }
-                echo $data;
-            } else {
                 echo mysqli_error($conn);
             }
             break;

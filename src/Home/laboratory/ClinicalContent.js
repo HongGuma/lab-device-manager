@@ -10,42 +10,39 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 const Pagination = ({totalPosts,postsPerPage,paginate})=>{
-    const pageNumber = [];
+    const numberPages = Math.ceil(totalPosts/postsPerPage); //하단 페이지네이션의 페이지 개수
+    const numbers = []; //하단 페이지네이션의 숫자 리스트
     for (let i = 1; i<=Math.ceil(totalPosts/postsPerPage);i++){
-        pageNumber.push(i);
+        numbers.push(i);
     }
 
-    const perNum = 10;
-    const [currentNum, setCurrentNum] = useState(1);
-    const [clickNum, setClickNum] = useState(1);
-    const indexOfLastNum = currentNum * perNum;
-    const indexOfFirstNum = indexOfLastNum - perNum;
-    const currentPageNum = pageNumber.slice(indexOfFirstNum,indexOfLastNum);
+    const perNum = 10; // 하단 페이지네이션 나눌 수 (10개씩 끊음)
+    const [currentNumPage, setCurrentNumPage] = useState(1); //페이지네이션의 페이지
+    const [clickNum, setClickNum] = useState(1); //클릭한 숫자
+    const indexOfLastNum = currentNumPage * perNum; //페이지네이션의 마지막 인덱스
+    const indexOfFirstNum = indexOfLastNum - perNum; //페이지네이션의 첫번째 인덱스
+    const currentNum = numbers.slice(indexOfFirstNum,indexOfLastNum); //하단에 출력할 숫자들
 
-    function nextNum(){
-        setCurrentNum(currentNum+1);
-    }
-    function preNum(){
-        setCurrentNum(currentNum-1);
-    }
-    useEffect(()=>{
-
-    })
+    function onClickMoveNext(){ setCurrentNumPage(currentNumPage+1); }
+    function onClickMovePre(){ setCurrentNumPage(currentNumPage-1); }
+    // function onClickMoveBeginning(){ setCurrentNumPage(1); }
+    // function onClickMoveEnd(){ setCurrentNumPage(numberPages/perNum - 1); }
     function onClickPaginate(num){
         paginate(num);
         setClickNum(num);
-        console.log(clickNum);
     }
 
     return(
         <ul className="pagination">
-            {currentNum > 1 && <li onClick={preNum}> <p> ◀ </p> </li>}
-            {currentPageNum.map((pageNum)=>(
+            {/*{currentNumPage > 1 && <li onClick={onClickMoveBeginning}><p> ◁ </p></li>}*/}
+            {currentNumPage > 1 && <li onClick={onClickMovePre}> <p> ◀ </p> </li>}
+            {currentNum.map((pageNum)=>(
                 <li className={clickNum === pageNum? 'active':''} key={pageNum} onClick={()=>onClickPaginate(pageNum)}>
                     <p>{pageNum}</p>
                 </li>
             ))}
-            <li onClick={nextNum}> <p> ▶ </p> </li>
+            {currentNumPage < (numberPages/perNum) && <li onClick={onClickMoveNext}> <p> ▶ </p> </li>}
+            {/*{currentNumPage < (numberPages/perNum) && <li onClick={onClickMoveEnd}><p> ▷ </p></li>}*/}
         </ul>
     )
 }
@@ -66,7 +63,7 @@ const Tab = ({posts, tabNum, itemList}) => {
                 {tabNum === 1 && <ConsentPosts consentPosts={currentPosts}/>}
                 {tabNum === 2 && <Survey posts={posts}/>}
                 {tabNum === 3 && <Survey posts={posts}/>}
-                {tabNum === 4 && <MedicalCheckupPosts checkupPosts={currentPosts} itemList={itemList}/>}
+                {tabNum === 4 && <MedicalCheckupPosts medicalPosts={currentPosts} itemList={itemList}/>}
             </div>
             <div className="tab-pagination">
                 <Pagination totalPosts={posts.length} postsPerPage={postsPerPage} paginate={paginate}/>
@@ -78,9 +75,11 @@ const Tab = ({posts, tabNum, itemList}) => {
 const ConsentPosts = ({consentPosts}) => {
     const titleList = ['고유번호', '가명', '참여일', '성별', '나이', '참여취소일', '구분','검체 2차적 사용','비고','종류 및 수량','보존기간','2차적 제공','2차 식별 정보','리포트','리포트ID','업데이트 신청자','질병명','질병코드','질병코드','임신주수','가족ID','가족관계','질환구분','비고'];
     const [clickedItem,setClickedItem] = useState(null);
-    function onClickItem(id){
-        console.log("click! => "+id)
+    const [changeToggle,setChangeToggle] = useState(false);
+    function onClickItem(id){ setClickedItem(id) }
+    function onDubleClickToggle(id){
         setClickedItem(id)
+        setChangeToggle(!changeToggle);
     }
     return(
         <section className="consent-section">
@@ -107,32 +106,33 @@ const ConsentPosts = ({consentPosts}) => {
                         <ul className={clickedItem === item.id ? "active body-ul":"body-ul"}
                             key={item.id}
                             onClick={()=>onClickItem(item.id)} >
-                            <li><input type="checkbox"/></li>
-                            <li>{item.unique_num}</li>
-                            <li>{item.false_nm}</li>
-                            <li>{item.parti_date}</li>
-                            <li>{item.sex}</li>
-                            <li>{item.age}</li>
-                            <li>{item.cancel_date}</li>
-                            <li>{item.sortation}</li>
-                            <li>{item.secondary_use}</li>
-                            <li>{item.etc}</li>
-                            <li>{item.type_quantity}</li>
-                            <li>{item.shelf_live}</li>
-                            <li>{item.secondary_offer}</li>
-                            <li>{item.secondary_id_info}</li>
-                            <li>{item.report}</li>
-                            <li>{item.report_id}</li>
-                            <li>{item.request_update}</li>
-                            <li>{item.disease_name}</li>
-                            <li>{item.disease_code_KR}</li>
-                            <li>{item.disease_code_EN}</li>
-                            <li>{item.pregnancy_week}</li>
-                            <li>{item.family_id}</li>
-                            <li>{item.family_code}</li>
-                            <li>{item.disease_classification}</li>
-                            <li>{item.etc2}</li>
+                                <li><input type="checkbox"/></li>
+                                <li>{item.unique_num}</li>
+                                <li>{item.false_nm}</li>
+                                <li>{item.parti_date}</li>
+                                <li>{item.sex}</li>
+                                <li>{item.age}</li>
+                                <li>{item.cancel_date}</li>
+                                <li>{item.sortation}</li>
+                                <li>{item.secondary_use}</li>
+                                <li>{item.etc}</li>
+                                <li>{item.type_quantity}</li>
+                                <li>{item.shelf_live}</li>
+                                <li>{item.secondary_offer}</li>
+                                <li>{item.secondary_id_info}</li>
+                                <li>{item.report}</li>
+                                <li>{item.report_id}</li>
+                                <li>{item.request_update}</li>
+                                <li>{item.disease_name}</li>
+                                <li>{item.disease_code_KR}</li>
+                                <li>{item.disease_code_EN}</li>
+                                <li>{item.pregnancy_week}</li>
+                                <li>{item.family_id}</li>
+                                <li>{item.family_code}</li>
+                                <li>{item.disease_classification}</li>
+                                <li>{item.etc2}</li>
                         </ul>
+                        
                     ))
                 }
             </div>
@@ -144,9 +144,13 @@ const Survey = ({posts}) => {
         <div>준비중</div>
     )
 }
-const MedicalCheckupPosts = ({checkupPosts,itemList}) => {
+const MedicalCheckupPosts = ({medicalPosts,itemList}) => {
+    const [clickedItem,setClickedItem] = useState(null);
+    function onClickItem(id){
+        setClickedItem(id)
+    }
     return(
-        <section className="checkup-section">
+        <section className="medical-section">
             <div className="cont-head">
                 <ul className="head-ul">
                     <li>
@@ -166,8 +170,10 @@ const MedicalCheckupPosts = ({checkupPosts,itemList}) => {
             </div>
             <div className="cont-body">
                 {
-                    checkupPosts.map((item)=>(
-                        <ul className="body-ul" key={item.id}>
+                    medicalPosts.map((item)=>(
+                        <ul className={clickedItem === item.id ? "active body-ul":"body-ul"}
+                            onClick={()=>onClickItem(item.id)}
+                            key={item.id}>
                             <li><input type="checkbox"/></li>
                             <li>{item.r_1}</li><li>{item.r_2}</li><li>{item.r_3}</li><li>{item.r_4}</li><li>{item.r_5}</li>
                             <li>{item.r_6}</li><li>{item.r_7}</li><li>{item.r_8}</li><li>{item.r_9}</li><li>{item.r_10}</li>
@@ -201,126 +207,16 @@ const MedicalCheckupPosts = ({checkupPosts,itemList}) => {
 }
 
 const Tab2 = () => {
-    const titleList = [' 순서','설문일','고유번호','8일 이상','초경 나이:__세', '폐경 나이:__세','전혀 없다','두통']
     return(
         <section>
-            <div className="cont-head">
-                <table>
-
-                </table>
-                <ul className="head-ul">
-                    <li>전체</li>
-                    <li>순서</li>
-                    <li>설문일</li>
-                    <li>고유번호</li>
-                    <li>(월경 주기)8일 이상</li>
-                    <li>초경 나이:__세</li>
-                    <li>폐경 나이:__세</li>
-                    <li>(월경 증상)전혀 없다</li>
-                    <li>두통</li>
-                    <li>허리 통증</li>
-                    <li>복통</li>
-                    <li>유방통</li>
-                    <li>메스꺼움, 구토 유발</li>
-                    <li>불안</li>
-                    <li>부종(붓기)</li>
-                    <li>기타(___)</li>
-                    <li>응답거부</li>
-                    <li>구분</li>
-                </ul>
-            </div>
-            <div className="cont-body">
-                <ul className="body-ul">
-                    <li><input type="checkbox"/></li>
-                    <li>1</li>
-                    <li>NA</li>
-                    <li>U10K-00000</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>2016만게놈_VIP_5건</li>
-
-                </ul>
-            </div>
+            <div>준비중</div>
         </section>
     )
 }
 const Tab3 = () => {
-    const titleList = ['순번','bCODE','고유번호','신장','체중','표준체중','비만도','신체계측검사','체지방율','BMI','허리둘레','수축기혈압','이완기혈압','맥박수'];
     return(
         <section>
-            <div className="cont-head">
-                <ul className="head-ul">
-                    <li>
-                        <label>
-                            <p>Tab2</p>
-                            <label htmlFor="total">
-                                <input type="checkbox"/>
-                            </label>
-                        </label>
-                    </li>
-                    {titleList.map((name,idx) => (
-                        <li key ={idx}>
-                            <p>{name}</p>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="cont-body">
-                <ul className="body-ul">
-                    <li><input type="checkbox"/></li>
-                    <li>U10K-00000</li>
-                    <li>김00</li>
-                    <li>2000-01-01</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li>NA</li>
-                    <li><select>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                    </select></li>
-                    <li>-</li>
-                    <li>NA</li>
-                    <li><select>
-                        <option value={'영구'}>영구</option>
-                        <option value={'5년'}>5년</option>
-                        <option value={'10년'}>10년</option>
-                    </select></li>
-                    <li><select>
-                        <option value={'유사'}>유사</option>
-                        <option value={'포괄'}>포괄</option>
-                    </select></li>
-                    <li><select>
-                        <option value={'포함'}>포함</option>
-                        <option value={'불포함'}>불포함</option>
-                    </select></li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                    <li>-</li>
-                </ul>
-            </div>
+            <div>준비중</div>
         </section>
     )
 }
@@ -339,11 +235,7 @@ const HiddenTab = ({clickEvent,count}) => {
     function clickTab(num){ setCurrentNum(num);}
     useEffect(()=>{
         clickEvent(currentNum)
-        if(count == null){
-            setNum(0)
-        }else{
-            setNum(count)
-        }
+        setNum(count)
     },[clickEvent, currentNum])
 
     return(
@@ -359,6 +251,10 @@ const HiddenTab = ({clickEvent,count}) => {
                 <p>{num}</p>
                 <p>개</p>
             </div>
+            <div className="add-btn">
+                <p>+추가</p>
+                <p>-삭제</p>
+            </div>
         </div>
     )
 }
@@ -368,10 +264,8 @@ const ClinicalContent = ({entryName}) => {
     const [clinical,setClinical] = useState(false);
     const [isTabOpen,setTabOpen] = useState(false);
     const [consentPosts,setConsentPosts] = useState(null); //동의서, 참여자 정보 리스트
-    const [consetnCnt, setConsentCnt] = useState(null); // 리스트 개수
-    const [chkListItem, setChkListItem] = useState(null); //건강검진 항목 리스트
-    const [results,setResultsList] = useState(null); // 건강검진 결과 리스트
-    const [resultsCnt,setResultsCnt] = useState(null); //리스트 개수
+    const [medicalItem, setMedicalItem] = useState(null); //건강검진 항목 리스트
+    const [medicalResPosts,setMedicalResPosts] = useState(null); // 건강검진 결과 리스트
     const [num,setNum] = useState(null); //hidden tab 에 보낼 숫자
     const [error,setError] = useState(null); //에러 여부
     const [loading,setLoading] = useState(null); //로딩 여부
@@ -396,13 +290,9 @@ const ClinicalContent = ({entryName}) => {
                 const res1 = await axios.post(URL,{parm:'consent'});
                 const res2 = await axios.post(URL,{parm:'medicalResult'});
                 const res3 = await axios.post(URL,{parm:'checkupItem'});
-                const cnt1 = await axios.post(URL,{parm:'consentCnt'});
-                const cnt2 = await axios.post(URL, {parm:'resultCnt'});
                 setConsentPosts(res1.data);
-                setResultsList(res2.data);
-                setChkListItem(res3.data);
-                setConsentCnt(cnt1.data);
-                setResultsCnt(cnt2.data);
+                setMedicalResPosts(res2.data);
+                setMedicalItem(res3.data);
             }catch (e){
                 setError(e);
             }
@@ -428,13 +318,13 @@ const ClinicalContent = ({entryName}) => {
         setCurrentTab(num);
         switch(num){
             case 1:
-                setNum(consetnCnt);
+                setNum(consentPosts.length);
                 break
             case 2:
             case 3:
                 break
             case 4:
-                setNum(resultsCnt);
+                setNum(medicalResPosts.length);
                 break
             default:
                 setNum(0)
@@ -446,14 +336,14 @@ const ClinicalContent = ({entryName}) => {
             <div className="container-tit">
                 <div className="tit-txt">
                     <a>{entryName}</a>
-                    {isTabOpen && <HiddenTab clickEvent = {onClickCurrentTab} count={num}/>}
+                    {isTabOpen ? <HiddenTab clickEvent = {onClickCurrentTab} count={num}/> : <div>: 열람 권한이 없습니다.</div>}
                 </div>
             </div>
             <div className="sample container-cont">
-                {currentTab===1 && <Tab posts={consentPosts} tabNum={currentTab} itemList={chkListItem}/>}
+                {currentTab===1 && <Tab posts={consentPosts} tabNum={currentTab} itemList={medicalItem}/>}
                 {currentTab===2 && <Tab2/>}
                 {currentTab===3 && <Tab3/>}
-                {currentTab===4 && <Tab posts={results} tabNum={currentTab} itemList={chkListItem}/>}
+                {currentTab===4 && <Tab posts={medicalResPosts} tabNum={currentTab} itemList={medicalItem}/>}
             </div>
         </section>
     )
