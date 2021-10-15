@@ -11,6 +11,22 @@ import {Link} from "react-router-dom";
 import newlogoIMG from '../images/new_logo.png';
 
 const Header = () => {
+    const [scrollY,setScrollY] = useState(0);
+    const handlerScroll = () => {
+        setScrollY(window.pageYOffset);
+    }
+
+    useEffect(()=> {
+        const watch = () => {
+            window.addEventListener('scroll',handlerScroll);
+        }
+        watch();
+        //메모리 누수 방지용
+        return () => {
+            window.removeEventListener('scroll',handlerScroll);
+        }
+    })
+
     const [linkText,setText] = useState(null);
     const [linkPath,setPath] = useState(null);
     let session = sessionStorage.getItem('id');
@@ -26,7 +42,7 @@ const Header = () => {
     },[session])
 
     return(
-        <div className='header-wrap'>
+        <div className={scrollY > 150? 'header-wrap-chg':'header-wrap'}>
             <div className="header-top">
                 <ul>
                     <li><Link to="/">홈으로</Link></li>
@@ -48,12 +64,17 @@ const Header = () => {
                     </li>
                     <li>
                         <Link to="/laboratory">실험실</Link>
+                        <ul className="hide-ul">
+                            <li><Link to="/laboratory">- 실험실</Link></li>
+                            <li><Link to="/sample">- 샘플관리</Link></li>
+                        </ul>
                     </li>
                     <li style={{borderRight:"none"}}>
                         <Link to="/rental">비품대여</Link>
                     </li>
                 </ul>
             </div>
+
         </div>
     );
 

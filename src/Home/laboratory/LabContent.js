@@ -251,7 +251,7 @@ const LabContent = ({entryID,entryName}) => {
     },[currentId, entryID, doneInsert,doneDelete, doneUpdate]);
     //랜더링 전 sesstion에서 name 받아오기
     useEffect(()=>{
-        if(sessionStorage.getItem('name')!==null)
+        if(sessionStorage.getItem('name')!==null && sessionStorage.getItem('auth')==='10')
             setOpenBtn(true);
     },[session])
 

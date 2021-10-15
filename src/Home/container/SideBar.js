@@ -142,7 +142,7 @@ const SideBar = ({currentURL,clickEvent,tableName}) => {
         fetchList().then(r => {});
     },[currentURL, doneInsert, doneRemove]);
     useEffect(()=>{
-        if(sessionStorage.getItem('name')!==null){
+        if(sessionStorage.getItem('name')!==null && sessionStorage.getItem('auth')==='10' ){
             setOpenBtn(true);
         }
     },[session]);

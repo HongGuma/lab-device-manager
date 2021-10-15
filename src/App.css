@@ -8,7 +8,9 @@
 body{margin:0; font-family: 'Nanum Barun Gothic', sans-serif}
 body p {cursor:default;}
 /*=======Header.js=======*/
-.header-wrap {z-index:9999; width: 100%; height: 140px; position: fixed;display: flex; flex-direction: column; box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(225,225,225,0.3); background-color: #fff;}
+.chg .header-wrap{ display: none;}
+
+.header-wrap {z-index:9999; width: 100%; min-height: 140px; position: fixed;display: flex; flex-direction: column; box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(225,225,225,0.3); background-color: #fff;}
 
 .header-top {width:1100px; font-size:12px; color:#666; margin:0 auto;}
 .header-top ul {list-style: none; display: flex; justify-content: flex-end;}
@@ -20,7 +22,13 @@ body p {cursor:default;}
 .header-menu .logo-img {width: 182px; height: 73px;}
 .header-menu ul {flex:1 1 0; list-style: none; display: flex; justify-content: space-evenly; }
 .header-menu li {font-size:1.5rem; font-weight: 400; color:#393536; padding-top:5px;}
+.header-menu li:hover{font-size: 1.6rem; font-weight: bold;}
 .header-menu a {text-decoration: none; color:#393536;}
+.header-menu ul > li:hover > .hide-ul {display: flex; flex-direction: column; padding-left: 0; margin-top: 20px; background-color: #ffffff}
+.header-menu .hide-ul {display: none; }
+.header-menu .hide-ul li {font-size: 1.2rem;}
+.header-menu .hide-ul li:hover { border-bottom:1px solid #ee1e49}
+
 /*======Login======*/
 .login-wrap {padding-top:222px; min-height: 800px;}
 .login-width {width:1100px; margin:32px auto;}
@@ -30,13 +38,14 @@ body p {cursor:default;}
 .login-input input {flex:2 1 0; margin-right: 17px; font-size: 20px;}
 .login-btn {text-align: center; margin-top: 16px;}
 .login-btn button {width: 390px; border:none; border-radius: 12px; padding:20px 0; font-size: 18px; font-weight: bold; background-color: #393536; color:#fff;}
+.login-btn button:active {background-color: #66c430}
 .login-etc-btn {display: flex; justify-content: space-between}
 /*.login-etc-btn .p {flex: 1 1 0;}*/
 
 /*====== Admin ======*/
 .admin-wrap {padding-top:222px; min-height: 800px;}
 .admin-width {width: 1100px; margin:10px auto;}
-
+.admin-width .logout:active, .logout:hover {color:#ee1e49}
 
 /*===========Main===========*/
 /*-Main-*/
@@ -64,35 +73,6 @@ body p {cursor:default;}
 .current-inner .item li p:nth-child(2){float:right;}
 
 .main-rental {background-color: rgba(57,53,54,0.1); margin-bottom: 200px;}
-
-/*======Container======*/
-/*-SideBar-*/
-.sidebar .inner {border-top:1px solid; border-bottom:1px solid; border-color:#ddd; width: 180px; margin:0 13px;}
-.sidebar ul {list-style: none; padding:0;}
-.sidebar li p {color:#393536; text-align: center; font-size:20px; line-height: 40px; height: 40px; font-weight: 600; cursor:Pointer; margin:0; padding:12px;}
-.sidebar-ul-chk li label{display: flex; align-items: center;}
-.sidebar-ul-chk li p{padding:3px;}
-.sidebar .add-btn {margin-top:8px; margin-bottom:30px;}
-.sidebar .add-btn p{ text-align: center; color:#393536;}
-.sidebar .add-box {height: 40px; text-align: center; line-height: 40px; font-weight: 600; width: 170px; font-size: 20px;}
-
-/*-Content.js-*/
-.container {width: 100%; padding:0 20px;}
-.container-tit {display: flex; align-items: flex-end; border-bottom:1px solid #ddd; padding-bottom:6px;}
-.container-tit p {margin:0;}
-.container-tit .tit-txt {font-size: 28px; font-weight: bold; margin: 0 6px;}
-.container-tit .cont-cnt {flex:1 1 0; display: flex; padding-left: 8px;}
-.container-tit .cont-cnt p {padding:0 3px;}
-.container-tit .add-btn {display: flex;}
-.container-tit .add-btn p {padding:3px; margin:0 2px;}
-
-.container-cont {display: flex; flex-direction: column; max-height: 900px; overflow-y: auto; padding:0; margin-bottom:30px;}
-.container-cont .cont-head {border-bottom:1px solid #ddd;}
-.container-cont .cont-head li:nth-child(1) {line-height: 1px;}
-.container-cont .head-ul {margin:6px 0;}
-.container-cont ul {list-style: none; display: flex; flex-direction: row; padding:0;}
-.container-cont li {flex:1 1 0; font-size:18px; text-align: center; font-weight: 600;}
-.container-cont .body-ul li {font-weight: normal;}
 
 /*======Rental======*/
 .rental .current-inner .tit-txt::before {background-color: #2f67b6}
@@ -134,39 +114,117 @@ body p {cursor:default;}
 .popup-tail p:hover {cursor: pointer}
 
 
-/*====== Office =======*/
-.office-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}
-.office-tit {height: 65px; margin-bottom:32px; background-color: rgba(102,196,48,0.3);}
-.office-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536; border-bottom:1px solid rgba(102,196,48,0.3);}
-.office-width {display: flex; width: 1600px; margin:0 auto;}
-.office-width .add-btn p:hover {color:#66c430;}
-.office-width .add-btn p:active {color:#fff;}
-.office-width .sidebar-ul li:hover {background-color: rgba(102,196,48,0.3);}
-.office-width .sidebar-ul li p:active {color:white;}
+/*====== 공통 css 부분 =======*/
+/*-SideBar-*/
+.sidebar .inner {border-top:1px solid; border-bottom:1px solid; border-color:#ddd; width: 180px; margin:0 13px;}
+.sidebar ul {list-style: none; padding:0;}
+.sidebar li p {color:#393536; text-align: center; font-size:20px; line-height: 40px; height: 40px; font-weight: 600; cursor:Pointer; margin:0; padding:12px;}
+.sidebar-ul-chk li label{display: flex; align-items: center;}
+.sidebar-ul-chk li p{padding:3px;}
+.sidebar .add-btn {margin-top:8px; margin-bottom:30px;}
+.sidebar .add-btn p{ text-align: center; color:#393536;}
+.sidebar .add-box {height: 40px; text-align: center; line-height: 40px; font-weight: 600; width: 170px; font-size: 20px;}
 
+/*-----content------*/
+.container {width: 100%; padding:0 20px;}
+.container-tit {display: flex; align-items: flex-end; border-bottom:1px solid #ddd; padding-bottom:6px;}
+.container-tit p {margin:0;}
+.container-tit .tit-txt {font-size: 28px; font-weight: bold; margin: 0 6px;}
+.container-tit .cont-cnt {flex:1 1 0; display: flex; padding-left: 8px;}
+.container-tit .cont-cnt p {padding:0 3px;}
+.container-tit .add-btn {display: flex;}
+.container-tit .add-btn p {padding:3px; margin:0 2px;}
+
+.container-cont {display: flex; flex-direction: column; max-height: 900px; padding:0; margin-bottom:30px;}
+.container-cont .cont-head {border-bottom:1px solid #ddd;}
+.container-cont .cont-head li:nth-child(1) {line-height: 1px;}
+.container-cont .head-ul {margin:6px 0;}
+.container-cont ul {list-style: none; display: flex; flex-direction: row; padding:0;}
+.container-cont li {flex:1 1 0; font-size:18px; text-align: center; font-weight: 600;}
+.container-cont .body-ul li {font-weight: normal;}
+
+
+/*- 각 페이지 메인 부분 -*/
+.page-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none; width: 100%; margin-bottom:40px}
+.page-tit {height: 65px; margin-bottom:32px; }
+.page-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536;}
+.page-width {display: flex; width: 1600px; margin:0 auto; padding-bottom: 40px;}
+.page-width .add-btn p:active {color:#fff;}
+.page-width .sidebar-ul li p:active {color:white;}
+
+
+/*====== Office =======*/
+.office .page-tit {background-color: rgba(102,196,48,0.3);}
+.office .page-tit p {border-bottom:1px solid rgba(102,196,48,0.3);}
+.office .page-width .sidebar-ul li:hover {background-color: rgba(102,196,48,0.3);}
+.office .page-width .add-btn p:hover {color:#66c430;}
 
 
 /*====== Server ======*/
-.server-wrap {min-height: 900px; max-height: 1100px; padding-top:141px; user-select: none;}
-.server-tit {height: 65px; margin-bottom:32px; background-color: rgba(47,103,182,0.3);}
-.server-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536; border-bottom:1px solid rgba(47,103,182,0.3);}
-.server-width {display: flex; width: 1600px; margin:0 auto;}
-.server-width .add-btn p:hover {color:#2f67b6;}
-.server-width .add-btn p:active {color:#fff;}
-.server-width .sidebar-ul li:hover {background-color: rgba(47,103,182,0.3);}
-.server-width .sidebar-ul li p:active {color:white;}
+.server .page-wrap {margin-bottom: 50px}
+.server .page-tit { background-color: rgba(47,103,182,0.3);}
+.server .page-tit p {border-bottom:1px solid rgba(47,103,182,0.3);}
+.server .page-width .sidebar-ul li:hover {background-color: rgba(47,103,182,0.3);}
+.server .page-width .add-btn p:hover {color:#2f67b6;}
+
 
 /*======LabMain.js======*/
-.lab-wrap {min-height: 900px; max-height: 2000px; padding-top:141px; user-select: none;}
-.lab-tit {height: 65px; margin-bottom:32px; background-color: rgba(238,30,73,0.3);}
-.lab-tit p {font-size:30px; font-weight: 500; text-align: center; line-height: 67px; margin:0; color:#393536; border-bottom:1px solid rgba(238,30,73,0.3);}
-.lab-width {display: flex; width: 1600px; margin:0 auto 30px;}
-.lab-width .add-btn p:hover {color:#ee1e49; }
-.lab-width .add-btn p:active {color:#fff;}
-.lab-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.3);}
-.lab-width .sidebar-ul li p:active {color:white;}
+.lab .page-tit {background-color: rgba(238,30,73,0.3);}
+.lab .page-tit p {border-bottom:1px solid rgba(238,30,73,0.3);}
+.lab .page-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.3);}
+.lab .page-width .add-btn p:hover {color:#ee1e49; }
+
+/*====== sample ======*/
+/*-----------------------------------main--------------------------------------*/
+.sample .page-wrap {margin-bottom:500px;}
+.sample .page-tit { background-color: rgba(238,30,73,0.1); width: 100%;}
+.sample .page-tit p {border-bottom:1px solid rgba(238,30,73,0.1);}
+.sample .page-width {margin:60px auto;}
+.sample .page-width .sidebar-ul li:hover {background-color: rgba(238,30,73,0.1);}
+.sample .page-width .sidebar-ul li:hover > .hide-ul li{display: block;}
+.sample .page-width .add-btn p:hover {color:#ee1e49; }
+
+/*------------------------------------content-------------------------------------*/
+.sample .hide-ul {padding-bottom: 12px;}
+.sample .hide-ul li {display:none; text-align: center; padding:12px 0;}
+
+.sample .container {width: 90%;}
+.sample .container-cont {width: 100%; overflow-y: unset}
+.sample .container-cont li {flex:1 1 100px; padding:0 6px;}
+.sample .container-cont .consent-section {width: 4400px;}
+.sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
+.sample .container-cont section {width: 14500px;}
+
+.sample .container-tit .tit-txt {display: flex; align-items: flex-end;}
+.sample .hidden-tab {display: flex; align-items: flex-end;}
+.sample .hidden-tab .tabs {display: flex;}
+.sample .hidden-tab .tabs p {font-size: 1.3rem; margin-left: 15px; color: #bbbbbb; line-height: 31px;}
+.sample .hidden-tab .tabs p:active {color:rgba(238,30,73,0.1); font-size: 1.5rem; font-weight: bold;}
+.sample .hidden-tab .tabs .active {color:#000; font-size: 1.5rem;}
+.sample .hidden-tab .cont-cnt {font-weight: normal; font-size: 17px; line-height: 30px}
+.sample .hidden-tab .add-btn {font-size: 18px; font-weight: normal; padding:0 12px}
+
+.sample .tab-table {overflow-x: auto}
+.sample .pagination .active p{border-bottom: 1px solid #ee1e49; width:35px; margin:18px auto;}
+.sample .pagination li:hover {color:#ee1e49}
+
+.consent-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.consent-section .cont-body .active {background-color: rgba(102,196,48,0.2);}
+.consent-section .cont-body .active li{overflow: unset; text-overflow: unset; white-space:normal;}
+
+.medical-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.medical-section .head-ul li {white-space: normal}
+.medical-section .cont-body .active {background-color: rgba(238, 30, 73, 0.2)}
+
+
 
 
 /*======Footer.js======*/
 .footer-wrap {background-color: #424242; padding-top:25px; padding-bottom:200px;}
 .footer-width {width: 1100px; margin:0 auto; color:white}
+
+/*===== 반응형 =====*/
+
+@media all and (max-width: 1124px) {
+    .main-rental .footer-wrap { width: 100%; min-width: 69.9rem;}
+}

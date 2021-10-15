@@ -13,7 +13,7 @@
             array('id' => $row[0],
                 'name' => $row[1],
                 'belong' => $row[2],
-                'autority' => $row[3]));
+                'authority' => $row[3]));
     }
     echo json_encode($arr);
 

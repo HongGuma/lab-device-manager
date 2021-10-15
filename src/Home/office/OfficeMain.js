@@ -33,11 +33,11 @@ class OfficeMain extends React.Component{
 
     render() {
         return (
-            <div className="office-wrap">
-                <div className="office-tit">
+            <div className="office page-wrap">
+                <div className="office page-tit">
                     <p>연구실 비품 관리</p>
                 </div>
-                <div className="office-width">
+                <div className="office page-width">
                     <SideBar currentURL={this.state.url} clickEvent={this.onClickEntry} tableName={this.state.tableName}/>
                     <OfficeContent entryID={this.state.entryID} entryName={this.state.entryName} />
                 </div>
