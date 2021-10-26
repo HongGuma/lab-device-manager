@@ -14,6 +14,30 @@
     $POST=json_decode(file_get_contents('php://input'), true);
 
     $parm = $POST['parm'];
+    $unique_num = $POST['unique_num'];
+    $false_nm = $POST['false_nm'];
+    $parti_date = $POST['parti_date'];
+    $sex = $POST['sex'];
+    $age = $POST['age'];
+    $cancel_date = $POST['cancel_date'];
+    $sortation = $POST['sortation'];
+    $secondary_use = $POST['secondary_use'];
+    $etc = $POST['etc'];
+    $type_quantity = $POST['type_quantity'];
+    $shelf_live = $POST['shelf_live'];
+    $secondary_offer = $POST['secondary_offer'];
+    $secondary_id_info = $POST['secondary_id_info'];
+    $report = $POST['report'];
+    $report_id = $POST['report_id'];
+    $request_update = $POST['request_update'];
+    $disease_name = $POST['disease_name'];
+    $disease_code_KR = $POST['disease_code_KR'];
+    $disease_code_EN = $POST['disease_code_EN'];
+    $pregnancy_week = $POST['pregnancy_week'];
+    $family_id  = $POST['family_id'];
+    $family_code = $POST['family_code'];
+    $disease_classification = $POST['disease_classification'];
+    $etc2 = $POST['etc2'];
 
     switch ($parm){
         case 'consent':
@@ -54,9 +78,20 @@
                 echo mysqli_error($conn);
             }
             break;
+        case 'consentInsert':
+            $sql = "INSERT INTO 10kG_consent (unique_num, false_nm, parti_date,sex,age,cancel_date,sortation,secondary_use,etc,type_and_quantity, shelf_live, secondary_offer, secondary_id_info, report, report_id, request_update,disease_nm, disease_code_KR, disease_code_EN, pregnancy_week,family_id, family_code, disease_classification, etc2)";
+            $sql = $sql."VALUES ('$unique_num','$false_nm','$parti_date','$sex','$age','$cancel_date','$sortation','$secondary_use','$etc','$type_quantity','$shelf_live','$secondary_offer','$secondary_id_info','$report','$report_id','$request_update','$disease_name','$disease_code_KR','$disease_code_EN','$pregnancy_week','$family_id','$family_code','$disease_classification','$etc2')";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
+            break;
+        case 'consentDelete':
+            $sql = "Delete from 10kG_consent where unique_num='$unique_num'";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
+            break;
         case 'survey':
             break;
-        case 'checkupItem':
+        case 'medicalItem':
             $sql = "select * from 10kG_medical_checkup_item";
             $result = mysqli_query($conn,$sql);
             $data = array();
@@ -110,6 +145,7 @@
                 echo mysqli_error($conn);
             }
             break;
+
 
     }
 

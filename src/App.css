@@ -190,12 +190,12 @@ body p {cursor:default;}
 
 .sample .container {width: 90%;}
 .sample .container-cont {width: 100%; overflow-y: unset}
-.sample .container-cont li {flex:1 1 100px; padding:0 6px;}
+.sample .container-cont li {flex:1 1 150px; padding:0 6px;}
 .sample .container-cont .consent-section {width: 4400px;}
 .sample .container-cont .cont-head li:nth-child(1) {line-height: normal;}
 .sample .container-cont section {width: 14500px;}
-
 .sample .container-tit .tit-txt {display: flex; align-items: flex-end;}
+
 .sample .hidden-tab {display: flex; align-items: flex-end;}
 .sample .hidden-tab .tabs {display: flex;}
 .sample .hidden-tab .tabs p {font-size: 1.3rem; margin-left: 15px; color: #bbbbbb; line-height: 31px;}
@@ -205,18 +205,25 @@ body p {cursor:default;}
 .sample .hidden-tab .add-btn {font-size: 18px; font-weight: normal; padding:0 12px}
 
 .sample .tab-table {overflow-x: auto}
+
 .sample .pagination .active p{border-bottom: 1px solid #ee1e49; width:35px; margin:18px auto;}
 .sample .pagination li:hover {color:#ee1e49}
 
+.sample .none {display: none;}
+
+.cont-body .active li{overflow: visible; text-overflow: unset; white-space:normal;}
+
 .consent-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .consent-section .cont-body .active {background-color: rgba(102,196,48,0.2);}
-.consent-section .cont-body .active li{overflow: unset; text-overflow: unset; white-space:normal;}
+.consent-section .insert-ul li {padding:0;}
+.consent-section .insert-btn {margin:0;}
+.consent-section .insert-btn li {margin-bottom:12px; padding: 12px 0;}
+.consent-section .insert-btn li:hover {background-color: rgba(238,30,73,0.1)}
 
 .medical-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .medical-section .head-ul li {white-space: normal}
 .medical-section .cont-body .active {background-color: rgba(238, 30, 73, 0.2)}
-
-
+/*.medical-section .cont-body .active li{overflow: visible; text-overflow: unset; white-space:normal;}*/
 
 
 /*======Footer.js======*/
