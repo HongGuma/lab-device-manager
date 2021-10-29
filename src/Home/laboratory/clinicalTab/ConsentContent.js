@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-
+import down_arrow from "../../../images/down_arrow_white.png";
+import up_arrow from "../../../images/up_arrow.png";
 
 /**
  * 동의서,참여자 정보에서 +추가 버튼 클릭시 출력되는 input 컴포넌트
@@ -134,26 +135,58 @@ const InsertConsent = ({URL,onClickConsentInsertDone}) => {
  * @param isInsertToggle :+추가 버튼 클릭 여부
  * @param onClickConsentInsertDone :'저장'버튼 클릭시 작동하는 함수. InsertConsent에 전달
  * @param isDeleteToggle
+ * @param onClickSort
  * @returns {JSX.Element}
  * @constructor
  */
-const ConsentContent = ({URL,consentPosts,onCheckSingle, onCheckAll, checkedAll, checkedItems, isInsertToggle,  onClickConsentInsertDone, isDeleteToggle}) => {
-    const titleList = ['고유번호', '가명', '참여일', '성별', '나이', '참여취소일', '구분','검체 2차적 사용','비고','종류 및 수량','보존기간','2차적 제공','2차 식별 정보','리포트','리포트ID','업데이트 신청자','질병명','질병코드','질병코드','임신주수','가족ID','가족관계','질환구분','비고'];
+const ConsentContent = ({
+                            URL,
+                            consentPosts,
+                            onCheckSingle,
+                            onCheckAll,
+                            checkedAll,
+                            checkedItems,
+                            isInsertToggle,
+                            onClickConsentInsertDone,
+                            isDeleteToggle,
+                            onClickSort
+}) => {
+    const titleList = ['고유번호', '가명', '참여일', '성별', '나이', '참여취소일', '구분','검체 2차적 사용','비고','종류 및 수량','보존기간','2차적 제공','2차 식별 정보','리포트','리포트ID','업데이트 신청자','질병명','질병코드(KR)','질병코드(EN)','임신주수','가족ID','가족관계','질환구분','비고2'];
+    const [clickedHead,setClickedHead] = useState(null);
     const [clickedItem,setClickedItem] = useState(null);
     const [changeToggle,setChangeToggle] = useState(false);
     const [bChecked,setChecked] = useState(false);
+    const [count,setCount] = useState(0);
+
     const allCheckHandler = () => setChecked(!checkedAll);
     const singleCheckHandler = (e,uniqueNum) => {
         setChecked(!bChecked);
         onCheckSingle(e,uniqueNum);
     }
     useEffect(()=>allCheckHandler,[checkedAll]);
-    function onClickItem(id){ setClickedItem(id) }
+
+    function onClickItem(id){ setClickedItem(id);}
+
+    function onClickHead(id,name){
+        setCount(count+1);
+        if(count === 0){
+            setClickedHead(id);
+            onClickSort(name,'desc');
+        }else if(count === 1){
+            setClickedHead(id);
+            onClickSort(name,'asc');
+        }else{
+            setCount(0);
+            setClickedHead(null);
+            onClickSort('none','none');
+        }
+
+    }
+
     function onDubleClickToggle(id){
         setClickedItem(id)
         setChangeToggle(!changeToggle);
     }
-
 
     return(
         <section className="consent-section">
@@ -169,8 +202,12 @@ const ConsentContent = ({URL,consentPosts,onCheckSingle, onCheckAll, checkedAll,
                         </label>
                     </li>
                     {titleList.map((name,idx) => (
-                        <li key ={idx}>
+                        <li className={clickedHead===idx?'active':''}
+                            key={idx}
+                            onClick={()=>onClickHead(idx,name)}>
                             <p>{name}</p>
+                            {count === 1 && <img src={down_arrow} alt="down arrow"/> }
+                            {count === 2 && <img src={up_arrow} alt="up arrow"/> }
                         </li>
                     ))}
                 </ul>
@@ -181,7 +218,8 @@ const ConsentContent = ({URL,consentPosts,onCheckSingle, onCheckAll, checkedAll,
                         <ul className={clickedItem === item.id ? "active body-ul":"body-ul"}
                             key={item.id}
                             onClick={()=>onClickItem(item.id)} >
-                            <li className={isDeleteToggle ? '':'none'}><input type="checkbox"
+                            <li className={isDeleteToggle ? '':'none'}>
+                                <input type="checkbox"
                                        onChange={(e)=>singleCheckHandler(e.target.checked,item.unique_num)}
                                        checked={checkedItems.has(item.unique_num)}/></li>
                             <li>{item.unique_num}</li>
