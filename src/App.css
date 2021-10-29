@@ -206,12 +206,12 @@ body p {cursor:default;}
 
 .sample .search {display: flex; align-items: center; margin: 22px 5px 3px 11px;}
 .sample .search .search-icon {width: 30px; height: 30px;}
-.sample .search button {font-size: 20px; font-weight: bold; background:none; border:none; padding:5px 8px;}
-.sample .search button:hover {color:#ee1e49; }
+.sample .search .refresh-icon {width: 50px; height: 50px; margin-left: 4px}
+.sample .search button {font-weight: bold; background:none; border:none; padding:5px 8px;}
 .sample .search .search-sel {width: 100px; height: 30px; margin-left: 12px; border:0; font-size: 16px}
 .sample .search .input-wrap {background-color: #ffa5b7; display: flex; align-items: center}
-.sample .search .input-sect {display:flex; background-color: white; margin-left:16px}
-.sample .search .input-sect input {width: 250px; height: 30px; border:0; }
+.sample .search .input-sect {display:flex; background-color: white; margin-left:8px}
+.sample .search .input-sect input {width: 270px; height: 30px; border:0; }
 .sample .search .input-sect img {width: 18px; height: 18px; margin: auto 8px;}
 
 .sample .tab-table {overflow-x: auto}
