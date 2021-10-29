@@ -90,6 +90,12 @@ const Login = () => {
         }
     }
 
+    function onKeyPress(e){
+        if(e.key === 'Enter'){
+            loginFunc();
+        }
+    }
+
     return (
         <div className="login-wrap">
             <div className="login-width">
@@ -101,7 +107,8 @@ const Login = () => {
                         </div>
                         <div className="login-input">
                             <p>비밀번호</p>
-                            <input type="password" name="adminPW" onChange={(e)=>inputPW(e)}/>
+                            <input type="password" name="adminPW" onChange={(e)=>inputPW(e)}
+                            onKeyPress={onKeyPress}/>
                         </div>
                         <div className="login-btn">
                             <button onClick={loginFunc}>로그인</button>
