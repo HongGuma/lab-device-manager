@@ -44,7 +44,7 @@ const UpdateItem = ({item, titleList, setUpdate, setDefault, setDoneUpdate}) => 
             },
             header: {'Content-Type': 'aplication/json'}
         }).then((res)=>{
-            console.log(res);
+            // console.log(res);
         });
         setUpdate(false);
         setDefault(true);

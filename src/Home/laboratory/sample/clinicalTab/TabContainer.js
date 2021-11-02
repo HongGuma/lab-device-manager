@@ -6,136 +6,21 @@
 *@etc(change)
 */
 import React, {useEffect, useState} from "react";
+import {CSVLink,CSVDownload} from "react-csv";
+import axios from "axios";
+
+import {Select, filteringConsentPosts, sortConsentPosts,exportFile} from "./TabContainerFunc";
 import ConsentContent from "./ConsentContent";
 import MedicalCheckupContent from "./MedicalCheckupContent";
 import SurveyContent from "./SurveyContent";
-import Pagination from "../Pagination";
-import axios from "axios";
-import searchIcon from "../../../images/search_white.png";
-import clearIcon from "../../../images/close_icon.png";
-import refreshIcon_pink from "../../../images/refresh_pink.png";
+import Pagination from "./Pagination";
 
-/**
- * 동의서 탭에서 출력할 리스트 필터링 하는 함수
- * @param inputTxt :input textbox에서 받은 text
- * @param originalList :필터링 전 리스트
- * @param selValue :select 에서 선택한 아이템
- * @returns {*} :필터링된 리스트 리턴
- */
-function filteringConsentPosts(inputTxt,originalList,selValue){
-    let result;
-    switch(selValue){
-        case "unique_num":
-            result = originalList.filter((el)=> el.unique_num.includes(inputTxt));
-            break;
-        case "false_nm":
-            result = originalList.filter((el)=> el.false_nm.includes(inputTxt));
-            break;
-        case "parti_date":
-            result = originalList.filter((el)=> el.parti_date.includes(inputTxt));
-            break;
-        case "sex":
-            result = originalList.filter((el)=>el.sex.includes(inputTxt));
-            break
-        default:
-            result = originalList;
-    }
-    return result;
-}
+import searchIcon from "../../../../images/search_white.png";
+import clearIcon from "../../../../images/close_icon.png";
+import refreshIcon_pink from "../../../../images/refresh_pink.png";
+import exportIcon from "../../../../images/export_pink.png";
 
-/**
- * 동의서 탭에서 항목 클릭시 정렬기능 수행하는 함수
- * @param originalList :정렬전 리스트
- * @param sortToggle :오름차순인지 내림차순인지 여부
- * @param name :클릭한 항목 이름
- * @returns {*} :정렬이 된 리스트 리턴
- */
-function sortConsentPosts(originalList,sortToggle,name){
-    let sortedPost;
-    switch(name){
-        case '고유번호':
-            if(sortToggle === 'desc'){
-                sortedPost = originalList.sort((a,b)=>a.unique_num.slice(5,10) > b.unique_num.slice(5,10) ? 1 : -1);
-            }else if(sortToggle === 'asc'){
-                sortedPost = originalList.sort((a,b)=>a.unique_num.slice(5,10) > b.unique_num.slice(5,10) ? -1 : 1);
-            }
-            break;
-        case '가명':
-            if(sortToggle === 'desc'){
-                sortedPost = originalList.sort((a,b)=> a.false_nm > b.false_nm ? 1 : -1);
-            }else if(sortToggle === 'asc'){
-                sortedPost = originalList.sort((a,b)=> a.false_nm > b.false_nm ? -1 : 1);
-            }
-            break;
-        case '참여일':
-            if(sortToggle === 'desc'){
-                sortedPost = originalList.sort((a,b)=> a.parti_date > b.parti_date ? 1 : -1);
-            }else if(sortToggle === 'asc'){
-                sortedPost = originalList.sort((a,b)=> a.parti_date > b.parti_date ? -1 : 1);
-            }
-            break;
-        case '성별':
-        case '나이':
-            if(sortToggle === 'desc'){
-                sortedPost = originalList.sort((a,b)=> a.age > b.age ? 1 : -1);
-            }else if(sortToggle === 'asc'){
-                sortedPost = originalList.sort((a,b)=> a.age > b.age ? -1 : 1);
-            }
-            break;
-        case '참여취소일':
-        case '구분':
-        case '검체 2차적 사용':
-        case '비고':
-        case '종류 및 수량':
-        case '보존기간':
-        case '2차적 제공':
-        case '2차 식별 정보':
-        case '리포트':
-        case '리포트 ID':
-            if(sortToggle === 'desc'){
-                sortedPost = originalList.sort((a,b)=> a.age > b.age ? 1 : -1);
-            }else if(sortToggle === 'asc'){
-                sortedPost = originalList.sort((a,b)=> a.age > b.age ? -1 : 1);
-            }
-            break;
-        case '업데이트 신청자':
-        case '질병명':
-        case '질병코드(KR)':
-        case '질병코드(EN)':
-        case '임신주수':
-        case '가족ID':
-        case '가족관계':
-        case '질환구분':
-        case '비고2':
-        default:
-            sortedPost = originalList.sort((a,b)=> a.id - b.id );
-    }
-    return sortedPost;
-}
 
-const Select = ({tabNum,onChangeHandler}) => {
-    const Consent = (
-        <select className="search-sel" onChange={(e)=>onChangeHandler(e)}>
-            <option value="unique_num">고유번호</option>
-            <option value="false_nm">가명</option>
-            <option value="prti_date">참여일</option>
-        </select>
-    )
-    const Medical = (
-        <select className="search-sel" onChange={(e)=>onChangeHandler(e)}>
-            <option value="r_2">고유번호</option>
-        </select>
-    )
-    if (tabNum === 1){
-        return Consent;
-    }
-    else if(tabNum === 3){
-        return Medical;
-    }
-    else{
-        return null;
-    }
-}
 
 /**
  * 상단 탭 클릭시 공통으로 사용되는 변수, 함수 담은 컴포넌트
@@ -164,6 +49,10 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
     const [checkedAll,setCheckAll] = useState(false);//'전체'체크 여부
     const [refreshToggle,setRefreshToggle] = useState(false);
 
+    const [CSVData,setCSVData] = useState(currentList);
+    const [CSVHeader,setCSVHeader] = useState(null);
+    const [CSVFileNm,setCSVFileNm] = useState(null);
+
     /**
      * 검색 기능 수행시, searchBtnToggle 변수 변경시 작동하는 훅
      */
@@ -172,7 +61,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
             setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
             setSearchBtnToggle(false);
         }
-    },[searchBtnToggle])
+    },[searchBtnToggle]);
+
     /**
      * 정렬 기능 수행시, sortToggle 변수 변경시 작동하는 훅
      */
@@ -181,28 +71,36 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
             setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
         }
     },[sortToggle]);
+
     /**
      * 추가 버튼 누를때, isInsert 변수 변경시만 작동하는 훅
      */
-    useEffect(()=>{
-        if(isInsert){ //+추가 버튼 누르면 제일 마지막 페이지로 이동
-            setCurrentPage(Math.ceil(currentPosts.length/postsPerPage));
-        }else{//한번더 누르면 첫 페이지로 이동
-            setCurrentPage(1);
-        }
-    },[isInsert])
+    // useEffect(()=>{
+    //     if(isInsert){ //+추가 버튼 누르면 제일 마지막 페이지로 이동
+    //         setCurrentPage(Math.ceil(currentPosts.length/postsPerPage));
+    //     }else{//한번더 누르면 첫 페이지로 이동
+    //         setCurrentPage(1);
+    //     }
+    // },[isInsert])
+
     /**
      * 하단 번호 클릭시, currentPage 변수 변경시 작동하는 훅
      */
     useEffect(()=>{
         setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
-    },[currentPage])
+    },[currentPage]);
+
+    /**
+     * 새로고침 버튼 클릭시, refreshToggle 변수 변경시 작동하는 훅
+     */
     useEffect(()=>{
         setCurrentPage(1);
         setCurrentList(posts);
         setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
+        setCSVData(currentList);
         setRefreshToggle(false);
-    },[refreshToggle])
+    },[refreshToggle]);
+
 
     /**
      * 하단 넘버링에서 숫자 클릭시 실행하는 함수, currentPage 변경함
@@ -210,8 +108,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
      */
     function paginate(pageNumber){
         setCurrentPage(pageNumber);
-        console.log(currentPage,indexOfFirst,indexOfLast);
     }
+
     /**
      * 체크박스 개별 선택
      * @param isChecked :체크 박스 클릭 여부
@@ -226,6 +124,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
             setCheckedItems(checkedItems);
         }
     }
+
     /**
      * 체크박스 전체 클릭
      * @param posts :해당 페이지만 전체 선택하려고 출력된 리스트 받음
@@ -253,29 +152,38 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
      * 삭제 버튼 클릭시
      */
     async function onClickDelete(){
-        if(checkedItems.size > 0){
-            for(let item of checkedItems){
-                await axios.post(URL,{parm:'consentDelete',unique_num:item});
+        if(window.confirm(checkedItems.size+'개의 데이터를 삭제하시겠습니까?')){
+            if(checkedItems.size > 0) {
+                for(let item of checkedItems) {
+                    await axios.post(URL, {parm: 'consentDelete', unique_num: item});
+                }
+                alert('삭제 되었습니다.');
+                onClickDeleteDone()
+                setDeleteToggle(false)
             }
-            alert('삭제완료.')
-            onClickDeleteDone()
-            setDeleteToggle(false)
+        }else{
+            alert('취소 되었습니다.');
         }
+
     }
+
     /**
      * 검색어 받는 handler
      * @param e :input에서 받아온 element
      */
     function inputSearchHandler(e){ setInputSearchText(e.target.value); }
+
     /**
      * select에서 선택한 아이템 받는 handler
      * @param e :input element
      */
     function selectSearchHandler(e){ setSelectSearchValue(e.target.value); }
+
     /**
      * 검색창에 x아이콘 클릭시 input textbox 비우는 함수
      */
     function onClickClear(){ setInputSearchText('');  }
+
     /**
      * 검색창에 돋보기 아이콘 클릭시
      */
@@ -284,6 +192,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
         const filtering = filteringConsentPosts(inputSearchText,posts,selectSearchValue);
         setCurrentList(filtering);
     }
+
     /**
      * 동의서 탭에서 항목 클릭시
      * @param name :클릭한 항목 이름
@@ -293,18 +202,24 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
         setSortToggle(toggle);
         const sorting = sortConsentPosts(currentList,toggle,name);
         setCurrentList(sorting);
-
     }
-    function onClickSortMedicalPosts(num,name){
 
-    }
+    /**
+     * 새로고침 함수
+     */
     function onClickRefresh(){
         onClickClear();
         setRefreshToggle(true);
     }
 
-
-
+    /**
+     * 엑셀 파일 내보내기
+     */
+    function onClickExportFile(){
+        exportFile(tabNum,setCSVHeader,setCSVFileNm,itemList);
+        // alert("파일 내보내기.\n준비중 입니다.");
+        setCSVData(currentList);
+    }
 
     return(
         <div className="sample tab-wrap">
@@ -317,10 +232,14 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                                    onChange={(e)=>inputSearchHandler(e)}/>
                             <img src={clearIcon} alt="clear" onClick={onClickClear}/>
                         </div>
-                        <button onClick={onClickSearchBtn}><img src={searchIcon} alt="검색 아이콘" className="search-icon"/></button>
+                        <button onClick={onClickSearchBtn}><img src={searchIcon} alt="검색" className="search-icon"/></button>
                     </div>
                     <button onClick={onClickRefresh}><img src={refreshIcon_pink} alt="새로고침" className="refresh-icon"/></button>
-
+                    <CSVLink headers={CSVHeader} data={CSVData} filename={CSVFileNm} target="_blank">
+                        <button onClick={onClickExportFile}>
+                            <img src={exportIcon} alt="파일 내보내기" className="export-icon"/>
+                        </button>
+                    </CSVLink>
                 </div>
             </div>
 
@@ -330,7 +249,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                                                  onCheckAll={onCheckAll} checkedAll={checkedAll}
                                                  isInsertToggle={isInsert}  onClickConsentInsertDone={onClickConsentInsertDone}
                                                  isDeleteToggle={isDeleteToggle}
-                                                 onClickSort={onClickSortConsentPosts}/>}
+                                                 onClickSort={onClickSortConsentPosts}
+                                                 refrashToggle={refreshToggle}/>}
                 {tabNum === 2 && <SurveyContent posts={posts}/>}
                 {tabNum === 3 && <MedicalCheckupContent medicalPosts={currentPosts} itemList={itemList}
                                                       onCheckSingle={onCheckSingle} checkedItems={checkedItems}

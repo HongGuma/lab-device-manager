@@ -205,9 +205,12 @@ body p {cursor:default;}
 .sample .hidden-tab .add-btn {font-size: 18px; font-weight: normal; padding:0 12px}
 
 .sample .search {display: flex; align-items: center; margin: 22px 5px 3px 11px;}
-.sample .search .search-icon {width: 30px; height: 30px;}
-.sample .search .refresh-icon {width: 50px; height: 50px; margin-left: 4px}
-.sample .search button {font-weight: bold; background:none; border:none; padding:5px 8px;}
+.sample .search .search-icon {width: 30px; height: 30px; padding: 4px 7px;}
+.sample .search .refresh-icon {width: 50px; height: 50px; margin:auto 6px;}
+.sample .search .refresh-icon:active {background-color: #b1b1b1; border-radius: 3px;}
+.sample .search .export-icon {width: 45px; height: 40px;}
+.sample .search .export-icon:active {background-color: #b1b1b1; border-radius: 3px;}
+.sample .search button {font-weight: bold; background:none; border:none;}
 .sample .search .search-sel {width: 100px; height: 30px; margin-left: 12px; border:0; font-size: 16px}
 .sample .search .input-wrap {background-color: #ffa5b7; display: flex; align-items: center}
 .sample .search .input-sect {display:flex; background-color: white; margin-left:8px}

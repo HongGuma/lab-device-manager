@@ -7,8 +7,8 @@
 */
 
 import React from 'react';
-import ClinicalContent from "./ClinicalContent";
-import ProjectTwoContent from "./ProjectTwoContent";
+import ClinicalContent from "./clinicalTab/ClinicalContent";
+import ProjectTwoContent from "../ProjectTwoContent";
 
 class SampleMain extends React.Component{
     constructor(props) {

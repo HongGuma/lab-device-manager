@@ -14,11 +14,11 @@ import Login from "./admin/Login";
 import Main from './Home/Main';
 import OfficeMain from './Home/office/OfficeMain';
 import ServerMain from "./Home/server/ServerMain";
-import LabMain from "./Home/laboratory/LabMain";
+import LabMain from "./Home/laboratory/lab/LabMain";
 import RentalMain from "./Home/rental/RentalMain";
 import Footer from "./Home/Footer"
 import Admin from "./admin/Admin";
-import SampleMain from "./Home/laboratory/SampleMain";
+import SampleMain from "./Home/laboratory/sample/SampleMain";
 
 function App(){
     return(

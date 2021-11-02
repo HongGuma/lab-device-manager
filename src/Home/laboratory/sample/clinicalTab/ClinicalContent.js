@@ -8,7 +8,7 @@
 
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import TabContainer from "./clinicalTab/TabContainer";
+import TabContainer from "./TabContainer";
 
 // /**
 //  * 하단에 숫자 출력하는 컴포넌트
@@ -558,9 +558,6 @@ const ClinicalContent = ({entryName}) => {
                 setError(e);
             }
             setLoading(false);
-            if(isInsertToggle){
-                setCurrentTab(1);
-            }
             setConsentInsertDone(false);
             setDeleteDone(false);
         };
@@ -571,11 +568,11 @@ const ClinicalContent = ({entryName}) => {
         else{ setClinical(false) }
         if(clinical){
             if(entryName===''){
-                setTabOpen(false)
+                setTabOpen(false);
             }else{
-                setTabOpen(true)
+                setTabOpen(true);
             }
-        }else { setTabOpen(false)}
+        }else { setTabOpen(false);}
     },[clinical, entryName, session])
 
     if(loading) return <div>로딩중...</div>
