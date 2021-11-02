@@ -221,6 +221,18 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
         setCSVData(currentList);
     }
 
+    /**
+     * 검색후 엔터
+     * @param e :ket evnet
+     */
+    function onKeyPress(e){
+        if(inputSearchText != null || inputSearchText !== ''){
+            if(e.key === 'Enter'){
+                onClickSearchBtn();
+            }
+        }
+    }
+
     return(
         <div className="sample tab-wrap">
             <div className="search-wrap">
@@ -229,7 +241,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                     <div className="input-wrap">
                         <div className="input-sect">
                             <input type="textbox" value={inputSearchText}
-                                   onChange={(e)=>inputSearchHandler(e)}/>
+                                   onChange={(e)=>inputSearchHandler(e)}
+                                   onKeyPress={(e)=>onKeyPress(e)}/>
                             <img src={clearIcon} alt="clear" onClick={onClickClear}/>
                         </div>
                         <button onClick={onClickSearchBtn}><img src={searchIcon} alt="검색" className="search-icon"/></button>
