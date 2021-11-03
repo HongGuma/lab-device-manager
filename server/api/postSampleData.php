@@ -14,6 +14,7 @@
     $POST=json_decode(file_get_contents('php://input'), true);
 
     $parm = $POST['parm'];
+    $id = $POST['id'];
     $unique_num = $POST['unique_num'];
     $false_nm = $POST['false_nm'];
     $parti_date = $POST['parti_date'];
@@ -38,6 +39,10 @@
     $family_code = $POST['family_code'];
     $disease_classification = $POST['disease_classification'];
     $etc2 = $POST['etc2'];
+
+    $update_col = $POST['col_nm'];
+    $update_data = $POST['update_data'];
+
 
     switch ($parm){
         case 'consent':
@@ -86,6 +91,11 @@
             break;
         case 'consentDelete':
             $sql = "Delete from 10kG_consent where unique_num='$unique_num'";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
+            break;
+        case 'consentUpdate':
+            $sql = "UPDATE 10kG_consent SET `false_nm` = '김민재2' WHERE (`consent_id` = '1') and (`unique_num` = 'U10K-00001')";
             $result = mysqli_query($conn,$sql);
             echo json_encode($result);
             break;

@@ -95,7 +95,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
      */
     useEffect(()=>{
         setCurrentPage(1);
-        setCurrentList(posts);
+        setCurrentList(posts.sort((a,b)=> a.id - b.id ));
         setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
         setCSVData(currentList);
         setRefreshToggle(false);
@@ -226,10 +226,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
      * @param e :ket evnet
      */
     function onKeyPress(e){
-        if(inputSearchText != null || inputSearchText !== ''){
-            if(e.key === 'Enter'){
-                onClickSearchBtn();
-            }
+        if(e.key === 'Enter'){
+            onClickSearchBtn();
         }
     }
 
@@ -275,7 +273,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                 </div>
             </div>
             <div className="tab-pagination">
-                <Pagination totalPosts={currentList.length} postsPerPage={postsPerPage} paginate={paginate} isInsertToggle={isInsert}/>
+                <Pagination totalPosts={currentList.length} postsPerPage={postsPerPage} paginate={paginate}
+                            isInsertToggle={isInsert} refreshToggle={refreshToggle}/>
             </div>
         </div>
     )

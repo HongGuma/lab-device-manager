@@ -2,15 +2,16 @@ import React, {useEffect, useState} from "react";
 
 
 /**
-  * 하단에 숫자 출력하는 컴포넌트
-  * @param totalPosts :총 post 개수 (리스트 전체 길이)
-  * @param postsPerPage :자를 page 개수 (13개씩 자르고 싶다면 postperpage=13
-  * @param paginate :페이지네이션 함수 (숫자를 누르면 tabcontent에 있는 currentPage가 변경
-  * @param isInsertToggle :+추가 버튼 클릭 여부
-  * @returns {JSX.Element}
-  * @constructor
-  */
-const Pagination = ({totalPosts,postsPerPage,paginate,isInsertToggle})=>{
+ * 하단에 숫자 출력하는 컴포넌트
+ * @param totalPosts :총 post 개수 (리스트 전체 길이)
+ * @param postsPerPage :자를 page 개수 (13개씩 자르고 싶다면 postperpage=13
+ * @param paginate :페이지네이션 함수 (숫자를 누르면 tabcontent에 있는 currentPage가 변경
+ * @param isInsertToggle :+추가 버튼 클릭 여부
+ * @param refreshToggle :새로고침 클릭 여부
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Pagination = ({totalPosts,postsPerPage,paginate,isInsertToggle,refreshToggle})=>{
     const numberPages = Math.ceil(totalPosts/postsPerPage); //하단 페이지네이션의 페이지 개수
     const numbers = []; //하단 페이지네이션의 숫자 리스트
     for (let i = 1; i<=Math.ceil(totalPosts/postsPerPage);i++){
@@ -33,6 +34,9 @@ const Pagination = ({totalPosts,postsPerPage,paginate,isInsertToggle})=>{
             setCurrentNumPage(1);
         }
     },[isInsertToggle])
+    useEffect(()=>{
+        onClickMoveBeginning();
+    },[refreshToggle])
 
     function onClickMoveNext(){ setCurrentNumPage(currentNumPage+1); } //하단 넘버링 화살표 누르면 다음 숫자 리스트 출력하는 함수
     function onClickMovePre(){ setCurrentNumPage(currentNumPage-1); } //하단 넘버링 화살표 누르면 이전 숫자 리스트 출력하는 함수
