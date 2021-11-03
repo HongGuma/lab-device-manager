@@ -81,8 +81,6 @@ class Main extends React.Component{
                 <section className="main-rental">
                     <RentalListContainer/>
                 </section>
-                <section>
-                </section>
             </div>
         );
     }
