@@ -10,9 +10,9 @@ import {CSVLink,CSVDownload} from "react-csv";
 import axios from "axios";
 
 import {Select, filteringConsentPosts, sortConsentPosts,exportFile} from "./TabContainerFunc";
-import ConsentContent from "./ConsentContent";
-import MedicalCheckupContent from "./MedicalCheckupContent";
-import SurveyContent from "./SurveyContent";
+import ConsentContents from "./ConsentContents";
+import MedicalCheckupContents from "./MedicalCheckupContents";
+import SurveyContents from "./SurveyContents";
 import Pagination from "./Pagination";
 
 import searchIcon from "../../../../images/search_white.png";
@@ -106,9 +106,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
      * 하단 넘버링에서 숫자 클릭시 실행하는 함수, currentPage 변경함
      * @param pageNumber :클릭한 숫자
      */
-    function paginate(pageNumber){
-        setCurrentPage(pageNumber);
-    }
+    function paginate(pageNumber){ setCurrentPage(pageNumber);}
 
     /**
      * 체크박스 개별 선택
@@ -255,17 +253,17 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
             </div>
 
             <div className="tab-table">
-                {tabNum === 1 && <ConsentContent URL={URL} consentPosts={currentPosts}
-                                                 onCheckSingle={onCheckSingle} checkedItems={checkedItems}
-                                                 onCheckAll={onCheckAll} checkedAll={checkedAll}
-                                                 isInsertToggle={isInsert}  onClickConsentInsertDone={onClickConsentInsertDone}
-                                                 isDeleteToggle={isDeleteToggle}
-                                                 onClickSort={onClickSortConsentPosts}
-                                                 refrashToggle={refreshToggle}/>}
-                {tabNum === 2 && <SurveyContent posts={posts}/>}
-                {tabNum === 3 && <MedicalCheckupContent medicalPosts={currentPosts} itemList={itemList}
-                                                      onCheckSingle={onCheckSingle} checkedItems={checkedItems}
-                                                      onCheckAll={onCheckAll} checkedAll={checkedAll} isDeleteToggle={isDeleteToggle}/>}
+                {tabNum === 1 && <ConsentContents URL={URL} consentPosts={currentPosts}
+                                                  onCheckSingle={onCheckSingle} checkedItems={checkedItems}
+                                                  onCheckAll={onCheckAll} checkedAll={checkedAll}
+                                                  isInsertToggle={isInsert} onClickConsentInsertDone={onClickConsentInsertDone}
+                                                  isDeleteToggle={isDeleteToggle}
+                                                  onClickSort={onClickSortConsentPosts}
+                                                  refrashToggle={refreshToggle}/>}
+                {tabNum === 2 && <SurveyContents posts={posts}/>}
+                {tabNum === 3 && <MedicalCheckupContents medicalPosts={currentPosts} itemList={itemList}
+                                                         onCheckSingle={onCheckSingle} checkedItems={checkedItems}
+                                                         onCheckAll={onCheckAll} checkedAll={checkedAll} isDeleteToggle={isDeleteToggle}/>}
             </div>
             <div>
                 <div>

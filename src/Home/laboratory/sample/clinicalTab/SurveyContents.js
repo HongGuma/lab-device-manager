@@ -1,6 +1,6 @@
 import React from "react";
 
-const SurveyContent = () => {
+const SurveyContents = () => {
     return(
         <section>
             <div>준비중</div>
@@ -8,4 +8,4 @@ const SurveyContent = () => {
     )
 }
 
-export default SurveyContent
+export default SurveyContents

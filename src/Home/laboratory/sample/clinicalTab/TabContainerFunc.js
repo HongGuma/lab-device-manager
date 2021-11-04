@@ -80,67 +80,67 @@ export function filteringConsentPosts(inputTxt,originalList,selValue){
             break;
         case "sex":
             result = originalList.filter((el)=>el.sex.includes(inputTxt));
-            break
+            break;
         case "age":
             result = originalList.filter((el)=>el.age.includes(inputTxt));
-            break
+            break;
         case "cancel_date":
             result = originalList.filter((el)=>el.cancel_date.includes(inputTxt));
-            break
+            break;
         case "sortation":
             result = originalList.filter((el)=>el.sortation.includes(inputTxt));
-            break
-        case "secondart_use":
-            result = originalList.filter((el)=>el.secondart_use.includes(inputTxt));
-            break
+            break;
+        case "secondary_use":
+            result = originalList.filter((el)=>el.secondary_use === inputTxt);
+            break;
         case "etc":
             result = originalList.filter((el)=>el.etc.includes(inputTxt));
-            break
+            break;
         case "type_quantity":
             result = originalList.filter((el)=>el.type_quantity.includes(inputTxt));
-            break
+            break;
         case "shelf_live":
             result = originalList.filter((el)=>el.shelf_live.includes(inputTxt));
-            break
+            break;
         case "secondary_offer":
-            result = originalList.filter((el)=>el.secondary_offer.includes(inputTxt));
-            break
+            result = originalList.filter((el)=>el.secondary_offer === inputTxt);
+            break;
         case "secondary_id_info":
             result = originalList.filter((el)=>el.secondary_id_info.includes(inputTxt));
-            break
+            break;
         case "report":
             result = originalList.filter((el)=>el.report.includes(inputTxt));
-            break
+            break;
         case "report_id":
             result = originalList.filter((el)=>el.report_id.includes(inputTxt));
-            break
+            break;
         case "request_update":
             result = originalList.filter((el)=>el.request_update.includes(inputTxt));
-            break
+            break;
         case "disease_name":
             result = originalList.filter((el)=>el.disease_name.includes(inputTxt));
-            break
+            break;
         case "disease_code_KR":
             result = originalList.filter((el)=>el.disease_code_KR.includes(inputTxt));
-            break
+            break;
         case "disease_code_EN":
             result = originalList.filter((el)=>el.disease_code_EN.includes(inputTxt));
-            break
+            break;
         case "pregnancy_week":
             result = originalList.filter((el)=>el.pregnancy_week.includes(inputTxt));
-            break
+            break;
         case "family_id":
             result = originalList.filter((el)=>el.family_id.includes(inputTxt));
-            break
+            break;
         case "family_code":
             result = originalList.filter((el)=>el.family_code.includes(inputTxt));
-            break
+            break;
         case "disease_classification":
             result = originalList.filter((el)=>el.disease_classification.includes(inputTxt));
-            break
+            break;
         case "etc2":
             result = originalList.filter((el)=>el.etc2.includes(inputTxt));
-            break
+            break;
         default:
             result = originalList;
     }
@@ -205,9 +205,21 @@ export function sortConsentPosts(originalList,sortToggle,name){
         case '업데이트 신청자':
         case '질병명':
         case '질병코드(KR)':
+            if(sortToggle === 'desc'){
+                sortedPost = originalList.sort((a,b)=> a.disease_code_KR > b.disease_code_KR ? 1 : -1);
+            }else if(sortToggle === 'asc'){
+                sortedPost = originalList.sort((a,b)=> a.disease_code_KR > b.disease_code_KR ? -1 : 1);
+            }
+            break;
         case '질병코드(EN)':
         case '임신주수':
         case '가족ID':
+            if(sortToggle === 'desc'){
+                sortedPost = originalList.sort((a,b)=> a.family_id > b.family_id ? 1 : -1);
+            }else if(sortToggle === 'asc'){
+                sortedPost = originalList.sort((a,b)=> a.family_id > b.family_id ? -1 : 1);
+            }
+            break;
         case '가족관계':
         case '질환구분':
         case '비고2':

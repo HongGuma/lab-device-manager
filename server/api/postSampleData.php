@@ -95,7 +95,7 @@
             echo json_encode($result);
             break;
         case 'consentUpdate':
-            $sql = "UPDATE 10kG_consent SET `false_nm` = '김민재2' WHERE (`consent_id` = '1') and (`unique_num` = 'U10K-00001')";
+            $sql = "UPDATE 10kG_consent SET `$update_col` = '$update_data' WHERE (`consent_id` = '$id') ";
             $result = mysqli_query($conn,$sql);
             echo json_encode($result);
             break;

@@ -128,7 +128,7 @@ import axios from "axios";
  * @returns {JSX.Element}
  * @constructor
  */
-const MedicalCheckupContent = ({medicalPosts,itemList,onCheckSingle,onCheckAll,checkedItems,checkedAll,isDeleteToggle}) => {
+const MedicalCheckupContents = ({medicalPosts,itemList,onCheckSingle,onCheckAll,checkedItems,checkedAll,isDeleteToggle}) => {
     const [clickedItem,setClickedItem] = useState(null);
     const [changeToggle,setChangeToggle] = useState(false);
     const [bChecked,setChecked] = useState(false);
@@ -211,4 +211,4 @@ const MedicalCheckupContent = ({medicalPosts,itemList,onCheckSingle,onCheckAll,c
     )
 }
 
-export default MedicalCheckupContent;
+export default MedicalCheckupContents;

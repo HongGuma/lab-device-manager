@@ -524,7 +524,7 @@ const HiddenTab = ({clickEvent,count, onClickInsertToggle, onClickDeleteToggle})
  * @returns {JSX.Element|null}
  * @constructor
  */
-const ClinicalContent = ({entryName}) => {
+const ClinicalContents = ({entryName}) => {
     const [currentTab,setCurrentTab] = useState(null);
     const [clinical,setClinical] = useState(false);
     const [isTabOpen,setTabOpen] = useState(false);
@@ -645,4 +645,4 @@ const ClinicalContent = ({entryName}) => {
     )
 }
 
-export default ClinicalContent
+export default ClinicalContents

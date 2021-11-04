@@ -42,7 +42,6 @@ const InsertConsent = ({URL,onClickConsentInsertDone}) => {
         type_quantity, shelf_live, secondary_offer, secondary_id_info, report, report_id, request_update,
         disease_name, disease_code_KR, disease_code_EN, pregnancy_week, family_id, family_code,
         disease_classification, etc2} = insertItem;
-
     function insertHandler(e){
         const {name,value} = e.target;
         setInsertItem({...insertItem, [name]:value});
@@ -90,6 +89,7 @@ const InsertConsent = ({URL,onClickConsentInsertDone}) => {
 
         })
     }
+
 
     return(
         <div>
@@ -139,7 +139,7 @@ const InsertConsent = ({URL,onClickConsentInsertDone}) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const ConsentContent = ({
+const ConsentContents = ({
                             URL,
                             consentPosts,
                             onCheckSingle, onCheckAll,
@@ -152,6 +152,7 @@ const ConsentContent = ({
     const [clickedHead,setClickedHead] = useState(null);
     const [clickedItem,setClickedItem] = useState(null);
     const [dubleClickedItem,setDubleClickedItem] = useState(null);
+    const [dubleClickedID,setDubleClickedID] = useState(null);
     const [updateItem,setUpdateItem] = useState(null);
     const [bChecked,setChecked] = useState(false);
     const [count,setCount] = useState(0);
@@ -168,6 +169,7 @@ const ConsentContent = ({
             setClickedHead(null);
         }
     },[refrashToggle]);
+
 
     function onClickItem(id){ setClickedItem(id);}
 
@@ -186,15 +188,39 @@ const ConsentContent = ({
         }
     }
 
-    function onDubleClickToggle(id,item){
-        setDubleClickedItem(id);
+    /**
+     * 딱 원하는 칸만 input textbox로 바뀌도록 하기 위한 함수
+     * @param id
+     * @param key
+     * @param item
+     */
+    function onDubleClickToggle(id,key,item){
+        setDubleClickedItem(key);
+        setDubleClickedID(id);
         setUpdateItem(item);
     }
     function onDubleClickHandler(e){
         setUpdateItem(e.target.value);
-        console.log(updateItem);
+    }
+    function onKeyPress(e){
+        if(e.key === 'Enter'){
+            if(window.confirm('수정 하시겠습니까?')){
+                axios.post(URL,{parm:'consentUpdate',col_nm:dubleClickedItem,update_data:updateItem,id:dubleClickedID}).then((res)=>{});
+            }
+            setDubleClickedItem(null);
+            setDubleClickedID(null);
+        }
     }
 
+    const Array = ({id,column,item}) => {
+        return (
+            dubleClickedID === id && dubleClickedItem === column ?
+            <li><input type="textbox" value={updateItem}
+                       onChange={(e)=>onDubleClickHandler(e)}
+                       onKeyPress={(e)=>onKeyPress(e)}/></li> :
+            <li onDoubleClick={()=>onDubleClickToggle(id,column,item)}>{item}</li>
+        )
+    }
     return(
         <section className="consent-section">
             <div className="cont-head">
@@ -229,33 +255,30 @@ const ConsentContent = ({
                                 <input type="checkbox"
                                        onChange={(e)=>singleCheckHandler(e.target.checked,item.unique_num)}
                                        checked={checkedItems.has(item.unique_num)}/></li>
-                            {dubleClickedItem === item.id ?
-                                <li><input type="textbox" value={updateItem}
-                                           onChange={(e)=>onDubleClickHandler(e)}/></li> :
-                                <li onDoubleClick={()=>onDubleClickToggle(item.id,item.unique_num)}>{item.unique_num}</li>}
-                            <li>{item.false_nm}</li>
-                            <li>{item.parti_date}</li>
-                            <li>{item.sex}</li>
-                            <li>{item.age}</li>
-                            <li>{item.cancel_date}</li>
-                            <li>{item.sortation}</li>
-                            <li>{item.secondary_use}</li>
-                            <li>{item.etc}</li>
-                            <li>{item.type_quantity}</li>
-                            <li>{item.shelf_live}</li>
-                            <li>{item.secondary_offer}</li>
-                            <li>{item.secondary_id_info}</li>
-                            <li>{item.report}</li>
-                            <li>{item.report_id}</li>
-                            <li>{item.request_update}</li>
-                            <li>{item.disease_name}</li>
-                            <li>{item.disease_code_KR}</li>
-                            <li>{item.disease_code_EN}</li>
-                            <li>{item.pregnancy_week}</li>
-                            <li>{item.family_id}</li>
-                            <li>{item.family_code}</li>
-                            <li>{item.disease_classification}</li>
-                            <li>{item.etc2}</li>
+                            {<Array id={item.id} column={'unique_num'} item={item.unique_num}/> }
+                            {<Array id={item.id} column={'false_nm'} item={item.false_nm}/> }
+                            {<Array id={item.id} column={'parti_date'} item={item.parti_date}/> }
+                            {<Array id={item.id} column={'sex'} item={item.sex}/> }
+                            {<Array id={item.id} column={'age'} item={item.age}/> }
+                            {<Array id={item.id} column={'cancel_date'} item={item.cancel_date}/> }
+                            {<Array id={item.id} column={'sortation'} item={item.sortation}/> }
+                            {<Array id={item.id} column={'secondary_use'} item={item.secondary_use}/> }
+                            {<Array id={item.id} column={'etc'} item={item.etc}/> }
+                            {<Array id={item.id} column={'type_quantity'} item={item.etc}/> }
+                            {<Array id={item.id} column={'shelf_live'} item={item.etc}/> }
+                            {<Array id={item.id} column={'secondary_offer'} item={item.etc}/> }
+                            {<Array id={item.id} column={'secondary_id_info'} item={item.etc}/> }
+                            {<Array id={item.id} column={'report'} item={item.etc}/> }
+                            {<Array id={item.id} column={'report_id'} item={item.etc}/> }
+                            {<Array id={item.id} column={'request_update'} item={item.etc}/> }
+                            {<Array id={item.id} column={'disease_name'} item={item.etc}/> }
+                            {<Array id={item.id} column={'disease_code_KR'} item={item.etc}/> }
+                            {<Array id={item.id} column={'disease_code_EN'} item={item.etc}/> }
+                            {<Array id={item.id} column={'pregnancy_week'} item={item.etc}/> }
+                            {<Array id={item.id} column={'family_id'} item={item.etc}/> }
+                            {<Array id={item.id} column={'family_code'} item={item.etc}/> }
+                            {<Array id={item.id} column={'disease_classification'} item={item.etc}/> }
+                            {<Array id={item.id} column={'etc2'} item={item.etc}/> }
                         </ul>
                     ))
                 }
@@ -266,4 +289,4 @@ const ConsentContent = ({
 }
 
 
-export default ConsentContent;
+export default ConsentContents;
