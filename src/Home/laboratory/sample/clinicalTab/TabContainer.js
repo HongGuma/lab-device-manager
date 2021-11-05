@@ -40,6 +40,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
     const [searchBtnToggle,setSearchBtnToggle] = useState(false); //검색 버튼 클릭 여부
     const [sortToggle,setSortToggle] = useState(null); //정렬 클릭 여부 (각 항목 클릭시)
     const [currentList,setCurrentList] = useState(posts); //현재 리스트
+    const listSize = currentList.length; //리스트 크기
     const postsPerPage = 15; //페이지 분할할 숫자
     const [currentPage,setCurrentPage] = useState(1); //현재 페이지
     const indexOfLast = currentPage * postsPerPage; //마지막 인덱스
@@ -52,6 +53,19 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
     const [CSVData,setCSVData] = useState(currentList);
     const [CSVHeader,setCSVHeader] = useState(null);
     const [CSVFileNm,setCSVFileNm] = useState(null);
+
+    const [testPost,setTestPost] = useState(null);
+    // useEffect(()=>{
+    //     if(refreshToggle){
+    //         const fetchList = async () => {
+    //             const res1 = await axios.post(URL,{parm:'consent'});
+    //             setTestPost(res1.data);
+    //         };
+    //         fetchList().then(r=>setCurrentList(testPost));
+    //         setRefreshToggle(false);
+    //     }
+    //
+    // },[refreshToggle]);
 
     /**
      * 검색 기능 수행시, searchBtnToggle 변수 변경시 작동하는 훅
@@ -100,6 +114,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
         setCSVData(currentList);
         setRefreshToggle(false);
     },[refreshToggle]);
+
 
 
     /**
@@ -156,8 +171,8 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                     await axios.post(URL, {parm: 'consentDelete', unique_num: item});
                 }
                 alert('삭제 되었습니다.');
-                onClickDeleteDone()
-                setDeleteToggle(false)
+                onClickDeleteDone();
+                setDeleteToggle(false);
             }
         }else{
             alert('취소 되었습니다.');
@@ -243,6 +258,9 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                         </div>
                         <button onClick={onClickSearchBtn}><img src={searchIcon} alt="검색" className="search-icon"/></button>
                     </div>
+                    <div className="number">
+                        <p>{listSize} 건</p>
+                    </div>
                     <button onClick={onClickRefresh}><img src={refreshIcon_pink} alt="새로고침" className="refresh-icon"/></button>
                     <CSVLink headers={CSVHeader} data={CSVData} filename={CSVFileNm} target="_blank">
                         <button onClick={onClickExportFile}>
@@ -251,7 +269,6 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                     </CSVLink>
                 </div>
             </div>
-
             <div className="tab-table">
                 {tabNum === 1 && <ConsentContents URL={URL} consentPosts={currentPosts}
                                                   onCheckSingle={onCheckSingle} checkedItems={checkedItems}

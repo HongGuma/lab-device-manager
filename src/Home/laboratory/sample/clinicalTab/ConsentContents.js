@@ -42,10 +42,10 @@ const InsertConsent = ({URL,onClickConsentInsertDone}) => {
         type_quantity, shelf_live, secondary_offer, secondary_id_info, report, report_id, request_update,
         disease_name, disease_code_KR, disease_code_EN, pregnancy_week, family_id, family_code,
         disease_classification, etc2} = insertItem;
+
     function insertHandler(e){
         const {name,value} = e.target;
         setInsertItem({...insertItem, [name]:value});
-
     }
 
     async function onClickInsertBtn(){
@@ -89,7 +89,6 @@ const InsertConsent = ({URL,onClickConsentInsertDone}) => {
 
         })
     }
-
 
     return(
         <div>
@@ -212,7 +211,7 @@ const ConsentContents = ({
         }
     }
 
-    const Array = ({id,column,item}) => {
+    const ContentsItem = ({id,column,item}) => {
         return (
             dubleClickedID === id && dubleClickedItem === column ?
             <li><input type="textbox" value={updateItem}
@@ -255,30 +254,30 @@ const ConsentContents = ({
                                 <input type="checkbox"
                                        onChange={(e)=>singleCheckHandler(e.target.checked,item.unique_num)}
                                        checked={checkedItems.has(item.unique_num)}/></li>
-                            {<Array id={item.id} column={'unique_num'} item={item.unique_num}/> }
-                            {<Array id={item.id} column={'false_nm'} item={item.false_nm}/> }
-                            {<Array id={item.id} column={'parti_date'} item={item.parti_date}/> }
-                            {<Array id={item.id} column={'sex'} item={item.sex}/> }
-                            {<Array id={item.id} column={'age'} item={item.age}/> }
-                            {<Array id={item.id} column={'cancel_date'} item={item.cancel_date}/> }
-                            {<Array id={item.id} column={'sortation'} item={item.sortation}/> }
-                            {<Array id={item.id} column={'secondary_use'} item={item.secondary_use}/> }
-                            {<Array id={item.id} column={'etc'} item={item.etc}/> }
-                            {<Array id={item.id} column={'type_quantity'} item={item.etc}/> }
-                            {<Array id={item.id} column={'shelf_live'} item={item.etc}/> }
-                            {<Array id={item.id} column={'secondary_offer'} item={item.etc}/> }
-                            {<Array id={item.id} column={'secondary_id_info'} item={item.etc}/> }
-                            {<Array id={item.id} column={'report'} item={item.etc}/> }
-                            {<Array id={item.id} column={'report_id'} item={item.etc}/> }
-                            {<Array id={item.id} column={'request_update'} item={item.etc}/> }
-                            {<Array id={item.id} column={'disease_name'} item={item.etc}/> }
-                            {<Array id={item.id} column={'disease_code_KR'} item={item.etc}/> }
-                            {<Array id={item.id} column={'disease_code_EN'} item={item.etc}/> }
-                            {<Array id={item.id} column={'pregnancy_week'} item={item.etc}/> }
-                            {<Array id={item.id} column={'family_id'} item={item.etc}/> }
-                            {<Array id={item.id} column={'family_code'} item={item.etc}/> }
-                            {<Array id={item.id} column={'disease_classification'} item={item.etc}/> }
-                            {<Array id={item.id} column={'etc2'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'unique_num'} item={item.unique_num}/> }
+                            {<ContentsItem id={item.id} column={'false_nm'} item={item.false_nm}/> }
+                            {<ContentsItem id={item.id} column={'parti_date'} item={item.parti_date}/> }
+                            {<ContentsItem id={item.id} column={'sex'} item={item.sex}/> }
+                            {<ContentsItem id={item.id} column={'age'} item={item.age}/> }
+                            {<ContentsItem id={item.id} column={'cancel_date'} item={item.cancel_date}/> }
+                            {<ContentsItem id={item.id} column={'sortation'} item={item.sortation}/> }
+                            {<ContentsItem id={item.id} column={'secondary_use'} item={item.secondary_use}/> }
+                            {<ContentsItem id={item.id} column={'etc'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'type_quantity'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'shelf_live'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'secondary_offer'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'secondary_id_info'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'report'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'report_id'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'request_update'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'disease_name'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'disease_code_KR'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'disease_code_EN'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'pregnancy_week'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'family_id'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'family_code'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'disease_classification'} item={item.etc}/> }
+                            {<ContentsItem id={item.id} column={'etc2'} item={item.etc}/> }
                         </ul>
                     ))
                 }
