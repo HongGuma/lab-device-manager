@@ -14,7 +14,7 @@
     $POST=json_decode(file_get_contents('php://input'), true);
 
     $parm = $POST['parm'];
-
+    $table = $POST['table'];
     $id = $POST['id'];
     $entry_len = $POST['entryLen'];
     $arr = $POST['arr'];
@@ -62,13 +62,13 @@
                 echo mysqli_error($conn);
             }
             break;
-        case 'consentInsert':
+        case 'insert':
             $schema = '';
             for($i = 1; $i<=$entry_len; $i++){
                 $schema = $schema."r_$i,";
             }
             $schema = substr($schema,0 ,-1);
-            $sql = "INSERT INTO 10kG_consent ($schema) values";
+            $sql = "INSERT INTO $table ($schema) values";
             $values = '';
             foreach($arr as $key => $value){
                 $values = $values."'$value',";
@@ -78,13 +78,13 @@
             $result = mysqli_query($conn,$sql);
             echo json_encode($result);
             break;
-        case 'consentDelete':
-//            $sql = "Delete from 10kG_consent where r_1='$r_1' AND consent_id = '$id'";
-//            $result = mysqli_query($conn,$sql);
-//            echo json_encode($result);
+        case 'delete':
+            $sql = "Delete from $table where id=$id";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
             break;
         case 'consentUpdate':
-            $sql = "UPDATE 10kG_consent SET `$update_col` = '$update_data' WHERE (`consent_id` = '$id') ";
+            $sql = "UPDATE 10kG_consent SET `$update_col` = '$update_data' WHERE (`id` = '$id') ";
             $result = mysqli_query($conn,$sql);
             echo json_encode($result);
             break;

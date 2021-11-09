@@ -143,10 +143,13 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setRefreshToggl
      * 삭제 버튼 클릭시
      */
     async function onClickDelete(){
+        let table='';
+        if(tabNum === 1){ table = '10kG_consent';}
+        else if(tabNum === 3){ table = '10kG_medical_checkup_result'}
         if(window.confirm(checkedItems.size+'개의 데이터를 삭제하시겠습니까?')){
             if(checkedItems.size > 0) {
                 for(let item of checkedItems) {
-                    await axios.post(URL, {parm: 'consentDelete',id: item})
+                    await axios.post(URL, {parm: 'delete',table:table, id: item})
                         .then(res=>{
                             console.log(res.data);
                         });

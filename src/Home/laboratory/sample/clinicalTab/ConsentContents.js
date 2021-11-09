@@ -5,130 +5,6 @@ import down_arrow from "../../../../images/down_arrow_white.png";
 import up_arrow from "../../../../images/up_arrow.png";
 import {DuplicateCheck} from './TabContainerFunc';
 
-/**
- * 동의서,참여자 정보에서 +추가 버튼 클릭시 출력되는 input 컴포넌트
- * @param URL
- * @param onClickConsentInsertDone :'저장'버튼 클릭시 작동하는 함수
- * @returns {JSX.Element}
- * @constructor
- */
-// const InsertConsent = ({URL,onClickConsentInsertDone}) => {
-//     const [insertItem,setInsertItem] = useState({
-//         unique_num:'-',
-//         false_nm:'-',
-//         parti_date:'-',
-//         sex:'-',
-//         age:'-',
-//         cancel_date:'-',
-//         sortation:'-',
-//         secondary_use:'-',
-//         etc:'-',
-//         type_quantity:'-',
-//         shelf_live:'-',
-//         secondary_offer:'-',
-//         secondary_id_info:'-',
-//         report:'-',
-//         report_id:'-',
-//         request_update:'-',
-//         disease_name:'-',
-//         disease_code_KR:'-',
-//         disease_code_EN:'-',
-//         pregnancy_week:'-',
-//         family_id:'-',
-//         family_code:'-',
-//         disease_classification:'-',
-//         etc2:'-',
-//     });
-//
-//     const { unique_num, false_nm, parti_date, sex, age, cancel_date, sortation, secondary_use, etc,
-//         type_quantity, shelf_live, secondary_offer, secondary_id_info, report, report_id, request_update,
-//         disease_name, disease_code_KR, disease_code_EN, pregnancy_week, family_id, family_code,
-//         disease_classification, etc2} = insertItem;
-//
-//     function insertHandler(e){
-//         const {name,value} = e.target;
-//         setInsertItem({...insertItem, [name]:value});
-//     }
-//
-//     async function onClickInsertBtn(){
-//         if(insertItem.unique_num == null || insertItem.unique_num === '-'){
-//             alert("고유 번호는 비울 수 없습니다.");
-//         }else{
-//             await axios({
-//                 method:'POST',
-//                 url:URL,
-//                 data:{
-//                     parm:'consentInsert',
-//                     unique_num:unique_num,
-//                     false_nm:false_nm,
-//                     parti_date:parti_date,
-//                     sex:sex,
-//                     age:age,
-//                     cancel_date:cancel_date,
-//                     sortation:sortation,
-//                     secondary_use:secondary_use,
-//                     etc:etc,
-//                     type_quantity:type_quantity,
-//                     shelf_live:shelf_live,
-//                     secondary_offer:secondary_offer,
-//                     secondary_id_info:secondary_id_info,
-//                     report:report,
-//                     report_id:report_id,
-//                     request_update:request_update,
-//                     disease_name:disease_name,
-//                     disease_code_KR:disease_code_KR,
-//                     disease_code_EN:disease_code_EN,
-//                     pregnancy_week:pregnancy_week,
-//                     family_id:family_id,
-//                     family_code:family_code,
-//                     disease_classification:disease_classification,
-//                     etc2:etc2
-//                 },
-//                 header:{'Content-Type': 'aplication/json'}
-//             }).then((res)=>{
-//                 if(res.data){
-//                     onClickConsentInsertDone();
-//                 }else{
-//                     alert("에러 발생. 관리자에게 문의하세요.")
-//                 }
-//             })
-//         }
-//
-//     }
-//
-//     return(
-//         <div>
-//             <ul className="insert-ul">
-//                 <li><input name="unique_num" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="false_nm" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="parti_date" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="sex" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="age" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="cancel_date" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="sortation" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="secondary_use" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="etc" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="type_quantity" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="shelf_live" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="secondary_offer" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="secondary_id_info" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="report" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="report_id" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="request_update" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="disease_name" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="disease_code_KR" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="disease_code_EN" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="pregnancy_week" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="family_id" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="family_code" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="disease_classification" type="textbox" onChange={insertHandler}/></li>
-//                 <li><input name="etc2" type="textbox" onChange={insertHandler}/></li>
-//             </ul>
-//             <ul className="insert-btn"><li onClick={onClickInsertBtn}>저장</li></ul>
-//         </div>
-//
-//     )
-// }
 
 const InsertConsent = ({URL,consentEntry}) => {
     const entrys = Object.values(consentEntry).length;
@@ -153,7 +29,8 @@ const InsertConsent = ({URL,consentEntry}) => {
                 method:'POST',
                 url:URL,
                 data:{
-                    parm:'consentInsert',
+                    parm:'insert',
+                    table:'10kG_consent',
                     entryLen:entrys,
                     arr:insertValue
                 },
@@ -172,30 +49,9 @@ const InsertConsent = ({URL,consentEntry}) => {
     return(
         <div>
             <ul className="insert-ul">
-                <li><input name="r_1" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_2" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_3" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_4" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_5" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_6" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_7" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_8" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_9" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_10" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_11" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_12" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_13" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_14" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_15" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_16" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_17" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_18" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_19" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_20" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_21" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_22" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_23" type="textbox" onChange={insertHandler}/></li>
-                <li><input name="r_24" type="textbox" onChange={insertHandler}/></li>
+                {consentEntry.map(item=>(
+                    <li><input type="textbox" name={"r_"+item.id}  onChange={(e)=>insertHandler(e)}/></li>
+                ))}
             </ul>
             <ul className="insert-btn"><li onClick={onClickInsertBtn}>저장</li></ul>
         </div>
@@ -277,7 +133,6 @@ const ConsentContents = ({
      */
     function onDubleClickHandler(e){
         setUpdateItem(e.target.value);
-        console.log("updateItem="+updateItem);
     }
 
     /**
@@ -320,6 +175,7 @@ const ConsentContents = ({
     //         ))
     //     )
     // }
+
 
     return(
         <section className="consent-section">
