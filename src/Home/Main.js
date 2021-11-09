@@ -23,7 +23,7 @@ class Main extends React.Component{
             tabNum: [0, 1, 2, 3],
             tabTitle: {
                 0: '사무용품',
-                1: '전자기기',
+                1: '서버비품',
                 2: '실험실비품',
                 3: '샘플관리'
             },
@@ -80,8 +80,6 @@ class Main extends React.Component{
                 </section>
                 <section className="main-rental">
                     <RentalListContainer/>
-                </section>
-                <section>
                 </section>
             </div>
         );

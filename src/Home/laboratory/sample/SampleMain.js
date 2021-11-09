@@ -7,8 +7,8 @@
 */
 
 import React from 'react';
-import ClinicalContent from "./ClinicalContent";
-import ProjectTwoContent from "./ProjectTwoContent";
+import ClinicalTab from "./clinicalTab/ClinicalTab";
+import ProjectTwoContent from "../ProjectTwoContent";
 
 class SampleMain extends React.Component{
     constructor(props) {
@@ -42,7 +42,7 @@ class SampleMain extends React.Component{
                                 </ul>
                             </div>
                         </section>
-                        {this.state.entryName==='임상팀' && <ClinicalContent entryName={this.state.entryName} />}
+                        {this.state.entryName==='임상팀' && <ClinicalTab entryName={this.state.entryName} />}
                         {this.state.entryName==='프로젝트2' && <ProjectTwoContent entryName={this.state.entryName}/>}
                     </div>
                 </div>

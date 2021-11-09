@@ -14,6 +14,17 @@
     $POST=json_decode(file_get_contents('php://input'), true);
 
     $parm = $POST['parm'];
+    $table = $POST['table'];
+    $id = $POST['id'];
+    $entry_len = $POST['entryLen'];
+    $arr = $POST['arr'];
+
+    $medical_insert_arr = $POST['insertData'];
+    $medical_column_arr = $POST['insertCol'];
+
+    $update_col = $POST['col_nm'];
+    $update_data = $POST['update_data'];
+
 
     switch ($parm){
         case 'consent':
@@ -23,41 +34,64 @@
             if($result){
                 while ($row = mysqli_fetch_array($result)){
                     array_push($data,
-                        array('id'=>$row[0],
-                            'unique_num'=>$row[1],
-                            'false_nm'=>$row[2],
-                            'parti_date'=>$row[3],
-                            'sex'=>$row[4],
-                            'age'=>$row[5],
-                            'cancel_date'=>$row[6],
-                            'sortation'=>$row[7],
-                            'secondary_use'=>$row[8],
-                            'etc'=>$row[9],
-                            'type_quantity'=>$row[10],
-                            'shelf_live'=>$row[11],
-                            'secondary_offer'=>$row[12],
-                            'secondary_id_info'=>$row[13],
-                            'report'=>$row[14],
-                            'report_id'=>$row[15],
-                            'request_update'=>$row[16],
-                            'disease_name'=>$row[17],
-                            'disease_code_KR'=>$row[18],
-                            'disease_code_EN'=>$row[19],
-                            'pregnancy_week'=>$row[20],
-                            'family_id'=>$row[21],
-                            'family_code'=>$row[22],
-                            'disease_classification'=>$row[23],
-                            'etc2'=>$row[24]));
+                        array(
+                            'id'=>$row[0],
+                            'r_1'=>$row[1], 'r_2'=>$row[2], 'r_3'=>$row[3], 'r_4'=>$row[4], 'r_5'=>$row[5],
+                            'r_6'=>$row[6], 'r_7'=>$row[7], 'r_8'=>$row[8], 'r_9'=>$row[9], 'r_10'=>$row[10],
+                            'r_11'=>$row[11], 'r_12'=>$row[12], 'r_13'=>$row[13], 'r_14'=>$row[14], 'r_15'=>$row[15],
+                            'r_16'=>$row[16], 'r_17'=>$row[17], 'r_18'=>$row[18], 'r_19'=>$row[19], 'r_20'=>$row[20],
+                            'r_21'=>$row[21], 'r_22'=>$row[22], 'r_23'=>$row[23], 'r_24'=>$row[24]));
                 }
                 echo json_encode($data);
             }else{
                 echo mysqli_error($conn);
             }
             break;
+        case 'consentEntry':
+            $sql = "select * from 10kG_consent_entry";
+            $result = mysqli_query($conn,$sql);
+            $data = array();
+            if($result){
+                while ($row = mysqli_fetch_array($result)){
+                    array_push($data,
+                        array('id'=>$row[0],
+                            'name'=>$row[1]));
+                }
+                echo json_encode($data);
+            }else{
+                echo mysqli_error($conn);
+            }
+            break;
+        case 'insert':
+            $schema = '';
+            for($i = 1; $i<=$entry_len; $i++){
+                $schema = $schema."r_$i,";
+            }
+            $schema = substr($schema,0 ,-1);
+            $sql = "INSERT INTO $table ($schema) values";
+            $values = '';
+            foreach($arr as $key => $value){
+                $values = $values."'$value',";
+            }
+            $values = substr($values,0 ,-1);
+            $sql = $sql."($values)";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
+            break;
+        case 'delete':
+            $sql = "Delete from $table where id=$id";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
+            break;
+        case 'consentUpdate':
+            $sql = "UPDATE 10kG_consent SET `$update_col` = '$update_data' WHERE (`id` = '$id') ";
+            $result = mysqli_query($conn,$sql);
+            echo json_encode($result);
+            break;
         case 'survey':
             break;
-        case 'checkupItem':
-            $sql = "select * from 10kG_medical_checkup_item";
+        case 'medicalEntry':
+            $sql = "select * from 10kG_medical_checkup_entry";
             $result = mysqli_query($conn,$sql);
             $data = array();
             if($result){
@@ -110,6 +144,21 @@
                 echo mysqli_error($conn);
             }
             break;
+        case "medicalInsert":
+            $sql = "INSERT INTO 10kG_medical_checkup_result (";
+            for($i=0;$i<count($medical_column_arr)-1;$i++){
+                $sql = $sql."'$medical_column_arr[$i]',";
+            }
+//            $sql = $sql."'$medical_column_arr[count($medical_column_arr)-1]') VALUES (";
+//            for($i=0;$i<count($medical_insert_arr)-1;$i++){
+//                $sql = $sql."'$medical_insert_arr[$i]',";
+//            }
+//            $sql = $sql."'$$medical_insert_arr[count($medical_insert_arr)-1]')";
+//            echo $sql;
+//            $result = mysqli_query($conn,$sql);
+//            echo json_encode($result);
+            break;
+
 
     }
 

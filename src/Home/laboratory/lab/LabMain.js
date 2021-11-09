@@ -7,7 +7,7 @@
 */
 import React from 'react';
 import LabContent from "./LabContent";
-import SideBar from "../container/SideBar";
+import SideBar from "../../container/SideBar";
 
 class LabMain extends React.Component{
     constructor(props) {
