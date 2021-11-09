@@ -38,9 +38,9 @@ const Pagination = ({totalPosts,postsPerPage,paginate,isInsertToggle,refreshTogg
     /**
      * 새로고침 버튼 누르면 첫 페이지로 돌아감
      */
-    useEffect(()=>{
-        onClickMoveBeginning();
-    },[refreshToggle])
+    // useEffect(()=>{
+    //     onClickMoveBeginning();
+    // },[refreshToggle])
 
     function onClickMoveNext(){ setCurrentNumPage(currentNumPage+1); } //하단 넘버링 화살표 누르면 다음 숫자 리스트 출력하는 함수
     function onClickMovePre(){ setCurrentNumPage(currentNumPage-1); } //하단 넘버링 화살표 누르면 이전 숫자 리스트 출력하는 함수

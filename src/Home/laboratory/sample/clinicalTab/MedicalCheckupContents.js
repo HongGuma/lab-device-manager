@@ -66,7 +66,8 @@ const InsertMedicalCheckup = ({medicalEntry,URL}) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const MedicalCheckupContents = ({URL,medicalPosts,currentEntry,onCheckSingle,onCheckAll,checkedItems,checkedAll,isInsertToggle,isDeleteToggle}) => {
+const MedicalCheckupContents = ({URL,medicalPosts,currentEntry,onCheckSingle,
+                                    onCheckAll,checkedItems,checkedAll,isInsertToggle,isDeleteToggle}) => {
     const [clickedItem,setClickedItem] = useState(null);
     const [changeToggle,setChangeToggle] = useState(false);
     const [bChecked,setChecked] = useState(false);

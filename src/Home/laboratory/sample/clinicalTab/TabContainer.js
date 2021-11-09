@@ -35,7 +35,8 @@ import exportIcon from "../../../../images/export_pink.png";
  * @returns {JSX.Element}
  * @constructor
  */
-const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle, isDeleteToggle, onClickConsentInsertDone, onClickDeleteDone}) => {
+const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setRefreshToggle,setDeleteToggle,
+                           isDeleteToggle, onClickConsentInsertDone}) => {
     const [inputSearchText,setInputSearchText] = useState(''); //검색창에서 입력받는 텍스트
     const [selectSearchValue,setSelectSearchValue] = useState("unique_num"); //select 에서 선택한 아이템
     const [searchBtnToggle,setSearchBtnToggle] = useState(false); //검색 버튼 클릭 여부
@@ -49,24 +50,12 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
     const [currentPosts,setCurrentPosts] = useState(currentList.slice(indexOfFirst,indexOfLast)); //현재 리스트 자른거
     const [checkedItems,setCheckedItems] = useState(new Set());//체크된 아이템 담은 set
     const [checkedAll,setCheckAll] = useState(false);//'전체'체크 여부
-    const [refreshToggle,setRefreshToggle] = useState(false);
 
     const [CSVData,setCSVData] = useState(currentList);
     const [CSVHeader,setCSVHeader] = useState(null);
     const [CSVFileNm,setCSVFileNm] = useState(null);
 
     const [testPost,setTestPost] = useState(null);
-    // useEffect(()=>{
-    //     if(refreshToggle){
-    //         const fetchList = async () => {
-    //             const res1 = await axios.post(URL,{parm:'consent'});
-    //             setTestPost(res1.data);
-    //         };
-    //         fetchList().then(r=>setCurrentList(testPost));
-    //         setRefreshToggle(false);
-    //     }
-    //
-    // },[refreshToggle]);
 
     /**
      * 검색 기능 수행시, searchBtnToggle 변수 변경시 작동하는 훅
@@ -87,16 +76,6 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
         }
     },[sortToggle]);
 
-    /**
-     * 추가 버튼 누를때, isInsert 변수 변경시만 작동하는 훅
-     */
-    // useEffect(()=>{
-    //     if(isInsert){ //+추가 버튼 누르면 제일 마지막 페이지로 이동
-    //         setCurrentPage(Math.ceil(currentPosts.length/postsPerPage));
-    //     }else{//한번더 누르면 첫 페이지로 이동
-    //         setCurrentPage(1);
-    //     }
-    // },[isInsert])
 
     /**
      * 하단 번호 클릭시, currentPage 변수 변경시 작동하는 훅
@@ -108,13 +87,13 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
     /**
      * 새로고침 버튼 클릭시, refreshToggle 변수 변경시 작동하는 훅
      */
-    useEffect(()=>{
-        setCurrentPage(1);
-        setCurrentList(posts.sort((a,b)=> a.id - b.id ));
-        setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
-        setCSVData(currentList);
-        setRefreshToggle(false);
-    },[refreshToggle]);
+    // useEffect(()=>{
+    //     setCurrentPage(1);
+    //     setCurrentList(posts.sort((a,b)=> a.id - b.id ));
+    //     setCurrentPosts(currentList.slice(indexOfFirst,indexOfLast));
+    //     setCSVData(currentList);
+    //     setRefreshToggle(false);
+    // },[refreshToggle]);
 
 
 
@@ -173,7 +152,6 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
                         });
                 }
                 alert('삭제 되었습니다.');
-                onClickDeleteDone();
                 setDeleteToggle(false);
             }else{
                 alert('삭제할 데이터가 없습니다.');
@@ -280,14 +258,16 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
                                                   isInsertToggle={isInsert} onClickConsentInsertDone={onClickConsentInsertDone}
                                                   isDeleteToggle={isDeleteToggle}
                                                   onClickSort={onClickSortConsentPosts}
-                                                  refrashToggle={refreshToggle}/>}
+                                                  // refrashToggle={refreshToggle}
+                />}
                 {/*{tabNum === 2 && <SurveyContents posts={posts}/>}*/}
                 {tabNum === 2 && <TabContents URL={URL} currentPosts={currentPosts} currentEntry={currentEntry}
                                               onCheckSingle={onCheckSingle} checkedItems={checkedItems}
                                               onCheckAll={onCheckAll} checkedAll={checkedAll}
                                               isInsertToggle={isInsert} onClickConsentInsertDone={onClickConsentInsertDone}
                                               isDeleteToggle={isDeleteToggle} onClickSort={onClickSortConsentPosts}
-                                              refrashToggle={refreshToggle}/>}
+                                              // refrashToggle={refreshToggle}
+                />}
                 {tabNum === 3 && <MedicalCheckupContents URL={URL} medicalPosts={currentPosts} currentEntry={currentEntry}
                                                          onCheckSingle={onCheckSingle} checkedItems={checkedItems}
                                                          onCheckAll={onCheckAll} checkedAll={checkedAll} isInsertToggle={isInsert} isDeleteToggle={isDeleteToggle}/>}
@@ -299,7 +279,9 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
             </div>
             <div className="tab-pagination">
                 <Pagination totalPosts={currentList.length} postsPerPage={postsPerPage} paginate={paginate}
-                            isInsertToggle={isInsert} refreshToggle={refreshToggle}/>
+                            isInsertToggle={isInsert}
+                            // refreshToggle={refreshToggle}
+                />
             </div>
         </div>
     )

@@ -66,9 +66,8 @@ const ClinicalTab = ({entryName}) => {
     const [loading,setLoading] = useState(null); //로딩 여부
     const [isInsertToggle,setInsertToggle] = useState(false); //추가 버튼 클릭 여부
     const [isDeleteToggle,setDeleteToggle] = useState(false); //삭제 버튼 클릭 여부
+    const [refreshToggle,setRefreshToggle] = useState(false);//새로고침 클릭 여부
 
-    const [consentInsertDone, setConsentInsertDone] = useState(false); //동의서 데이터 삽입 후 저장 버튼 클릭 여부
-    const [deleteDone, setDeleteDone] = useState(false); //데이터 삭제후 완료 여부 (공통)
 
     const [currentPost,setCurrentPost] = useState(null); //탭 클릭시 tabcontainer로 보낼 리스트
     const [currentEntry,setCurrentEntry] = useState(null); //탭 클릭시 tabcontainer로 보낼 항목
@@ -93,11 +92,12 @@ const ClinicalTab = ({entryName}) => {
                 setError(e);
             }
             setLoading(false);
-            setConsentInsertDone(false);
-            setDeleteDone(false);
+            setRefreshToggle(false);
+            setInsertToggle(false);
+            setDeleteToggle(false);
         };
         fetchList().then(r=>{});
-    },[/*consentInsertDone,deleteDone*/]);
+    },[refreshToggle]);
     useEffect(()=>{
         if (sessionStorage.getItem('auth')>7){setClinical(true);}
         else{ setClinical(false) }
@@ -127,16 +127,6 @@ const ClinicalTab = ({entryName}) => {
      */
     function onClickDeleteToggle(){
         setDeleteToggle(!isDeleteToggle)
-    }
-    /**
-     * 데이터 삽입, '저장' 버튼 클릭시 consentInsertDone 변경하는 함수
-     */
-    function onClickConsentInsertDone(){
-        setConsentInsertDone(true);
-        setInsertToggle(!isInsertToggle);
-    }
-    function onClickDeleteDone(){
-        setDeleteDone(true);
     }
     /**
      * 탭 클릭시 currentPost 변경하는 함수
@@ -174,8 +164,9 @@ const ClinicalTab = ({entryName}) => {
             <div className="sample container-cont">
                 {(currentTab===1 || currentTab===2 || currentTab===3) &&
                 <TabContainer URL={URL} posts={currentPost} tabNum={currentTab} currentEntry={currentEntry}
-                              isInsert={isInsertToggle} onClickConsentInsertDone={onClickConsentInsertDone}
-                              isDeleteToggle={isDeleteToggle} setDeleteToggle={setDeleteToggle} onClickDeleteDone={onClickDeleteDone} />
+                              isInsert={isInsertToggle}
+                              isDeleteToggle={isDeleteToggle} setDeleteToggle={setDeleteToggle}
+                              setRefreshToggle={setRefreshToggle}/>
                 }
 
             </div>
