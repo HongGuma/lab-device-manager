@@ -27,13 +27,17 @@ const Pagination = ({totalPosts,postsPerPage,paginate,isInsertToggle,refreshTogg
     const endNum = Math.ceil(totalPosts/postsPerPage) //하단 넘버링의 마지막 숫자 ex) 124번
     const endPage = Math.ceil(numberPages/perNum) //하단 넘버링의 마지막 페이지
 
-    useEffect(()=>{
-        if(isInsertToggle){ //추가 버튼 누르면 제일 마지막 페이지로 이동
-            setCurrentNumPage(endPage);
-        }else{ //한번더 누르면 제일 첫 페이지로 이동
-            setCurrentNumPage(1);
-        }
-    },[isInsertToggle])
+    // useEffect(()=>{
+    //     if(isInsertToggle){ //추가 버튼 누르면 제일 마지막 페이지로 이동
+    //         setCurrentNumPage(endPage);
+    //     }else{ //한번더 누르면 제일 첫 페이지로 이동
+    //         setCurrentNumPage(1);
+    //     }
+    // },[isInsertToggle])
+
+    /**
+     * 새로고침 버튼 누르면 첫 페이지로 돌아감
+     */
     useEffect(()=>{
         onClickMoveBeginning();
     },[refreshToggle])

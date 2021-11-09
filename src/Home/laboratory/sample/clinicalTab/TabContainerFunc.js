@@ -6,7 +6,8 @@
 *@etc(change)
 */
 
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
 
 /**
  * 검색창 앞 select
@@ -246,7 +247,7 @@ export function exportFile(tabNum,setCSVHeader,setCSVFileNm,itemList){
     const sec = today.getSeconds();
     const timeformat = year+''+month+''+day+''+hour+''+min+''+sec;
     if(tabNum===1){
-        setCSVFileNm('동의서_참여자_정보_'+timeformat+'.csv');
+        setCSVFileNm('만게놈_동의서_참여자_정보_'+timeformat+'.csv');
         const consentHader = [
             {label:'고유번호',key:'unique_num'},
             {label:'가명',key:'false_nm'},
@@ -275,7 +276,7 @@ export function exportFile(tabNum,setCSVHeader,setCSVFileNm,itemList){
         ];
         setCSVHeader(consentHader);
     }else if(tabNum===3){
-        setCSVFileNm('건강검진_'+timeformat+'.csv');
+        setCSVFileNm('만게놈_건강검진_'+timeformat+'.csv');
         const medicalHader = itemList.map((item)=>({label:item.name,key:'r_'+item.id}));
         setCSVHeader(medicalHader);
 
@@ -307,4 +308,6 @@ export function exportFile(tabNum,setCSVHeader,setCSVFileNm,itemList){
     }
 
 }
+
+
 

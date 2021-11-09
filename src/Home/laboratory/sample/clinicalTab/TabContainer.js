@@ -1,5 +1,5 @@
 /**
-*@title TabContent
+*@title TabContainer
 *@date 2021-10-29
 *@author 홍수희
 *@desc 임상팀 탭 클릭시 출력할 conent
@@ -10,6 +10,7 @@ import {CSVLink,CSVDownload} from "react-csv";
 import axios from "axios";
 
 import {Select, filteringConsentPosts, sortConsentPosts,exportFile} from "./TabContainerFunc";
+import TabContents from "./TabContents";
 import ConsentContents from "./ConsentContents";
 import MedicalCheckupContents from "./MedicalCheckupContents";
 import SurveyContents from "./SurveyContents";
@@ -27,14 +28,14 @@ import exportIcon from "../../../../images/export_pink.png";
  * @param URL :axios 통신시 필요한 url
  * @param posts :출력할 리스트
  * @param tabNum :탭 넘버
- * @param itemList :건강검진 탭에서 사용할 항목 리스트
+ * @param medicalEntry :건강검진 탭에서 사용할 항목 리스트
  * @param isInsert :'+추가' 버튼 클릭 여부
  * @param onClickDeleteToggle :'-삭제' 버튼 클릭 여부
  * @param onClickConsentInsertDone :함수. '저장'버튼 클릭시 clinicalConent의 consentInsertDone가 변경됨
  * @returns {JSX.Element}
  * @constructor
  */
-const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDeleteToggle, onClickConsentInsertDone, onClickDeleteDone}) => {
+const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle, isDeleteToggle, onClickConsentInsertDone, onClickDeleteDone}) => {
     const [inputSearchText,setInputSearchText] = useState(''); //검색창에서 입력받는 텍스트
     const [selectSearchValue,setSelectSearchValue] = useState("unique_num"); //select 에서 선택한 아이템
     const [searchBtnToggle,setSearchBtnToggle] = useState(false); //검색 버튼 클릭 여부
@@ -229,7 +230,7 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
      * 엑셀 파일 내보내기
      */
     function onClickExportFile(){
-        exportFile(tabNum,setCSVHeader,setCSVFileNm,itemList);
+        exportFile(tabNum,setCSVHeader,setCSVFileNm,currentEntry);
         // alert("파일 내보내기.\n준비중 입니다.");
         setCSVData(currentList);
     }
@@ -270,17 +271,23 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
                 </div>
             </div>
             <div className="tab-table">
-                {tabNum === 1 && <ConsentContents URL={URL} consentPosts={currentPosts}
+                {tabNum === 1 && <ConsentContents URL={URL} consentPosts={currentPosts} currentEntry={currentEntry}
                                                   onCheckSingle={onCheckSingle} checkedItems={checkedItems}
                                                   onCheckAll={onCheckAll} checkedAll={checkedAll}
                                                   isInsertToggle={isInsert} onClickConsentInsertDone={onClickConsentInsertDone}
                                                   isDeleteToggle={isDeleteToggle}
                                                   onClickSort={onClickSortConsentPosts}
                                                   refrashToggle={refreshToggle}/>}
-                {tabNum === 2 && <SurveyContents posts={posts}/>}
-                {tabNum === 3 && <MedicalCheckupContents medicalPosts={currentPosts} itemList={itemList}
+                {/*{tabNum === 2 && <SurveyContents posts={posts}/>}*/}
+                {tabNum === 2 && <TabContents URL={URL} currentPosts={currentPosts} currentEntry={currentEntry}
+                                              onCheckSingle={onCheckSingle} checkedItems={checkedItems}
+                                              onCheckAll={onCheckAll} checkedAll={checkedAll}
+                                              isInsertToggle={isInsert} onClickConsentInsertDone={onClickConsentInsertDone}
+                                              isDeleteToggle={isDeleteToggle} onClickSort={onClickSortConsentPosts}
+                                              refrashToggle={refreshToggle}/>}
+                {tabNum === 3 && <MedicalCheckupContents URL={URL} medicalPosts={currentPosts} currentEntry={currentEntry}
                                                          onCheckSingle={onCheckSingle} checkedItems={checkedItems}
-                                                         onCheckAll={onCheckAll} checkedAll={checkedAll} isDeleteToggle={isDeleteToggle}/>}
+                                                         onCheckAll={onCheckAll} checkedAll={checkedAll} isInsertToggle={isInsert} isDeleteToggle={isDeleteToggle}/>}
             </div>
             <div>
                 <div>
@@ -295,4 +302,4 @@ const TabContent = ({URL,posts, tabNum, itemList, isInsert,setDeleteToggle, isDe
     )
 }
 
-export default TabContent;
+export default TabContainer;

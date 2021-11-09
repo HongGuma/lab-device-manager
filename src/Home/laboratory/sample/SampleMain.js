@@ -7,7 +7,7 @@
 */
 
 import React from 'react';
-import ClinicalContents from "./clinicalTab/ClinicalContents";
+import ClinicalTab from "./clinicalTab/ClinicalTab";
 import ProjectTwoContent from "../ProjectTwoContent";
 
 class SampleMain extends React.Component{
@@ -42,7 +42,7 @@ class SampleMain extends React.Component{
                                 </ul>
                             </div>
                         </section>
-                        {this.state.entryName==='임상팀' && <ClinicalContents entryName={this.state.entryName} />}
+                        {this.state.entryName==='임상팀' && <ClinicalTab entryName={this.state.entryName} />}
                         {this.state.entryName==='프로젝트2' && <ProjectTwoContent entryName={this.state.entryName}/>}
                     </div>
                 </div>

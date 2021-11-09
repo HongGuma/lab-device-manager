@@ -227,6 +227,7 @@ body p {cursor:default;}
 
 .cont-body .active li{overflow: visible; text-overflow: unset; white-space:normal;}
 
+
 .consent-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .consent-section .head-ul .active {background-color: #666666; color:#ffffff; display: flex; justify-content: center; align-items: center}
 .consent-section .head-ul .active img {width: 30px; height: 30px;}
@@ -234,11 +235,13 @@ body p {cursor:default;}
 .consent-section .insert-ul li {padding:0;}
 .consent-section .insert-btn {margin:0;}
 .consent-section .insert-btn li {margin-bottom:12px; padding: 12px 0;}
-.consent-section .insert-btn li:hover {background-color: rgba(238,30,73,0.1)}
+.consent-section .insert-btn li:hover {background-color: rgba(102,196,48,0.1)}
 
 .medical-section li {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .medical-section .head-ul li {white-space: normal}
 .medical-section .cont-body .active {background-color: rgba(238, 30, 73, 0.2)}
+.medical-section .insert-btn li {margin-bottom:12px; padding: 12px 0;}
+.medical-section .insert-btn li:hover {background-color: rgba(238,30,73,0.1)}
 /*.medical-section .cont-body .active li{overflow: visible; text-overflow: unset; white-space:normal;}*/
 
 

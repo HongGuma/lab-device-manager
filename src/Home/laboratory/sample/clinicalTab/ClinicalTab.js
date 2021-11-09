@@ -9,6 +9,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import TabContainer from "./TabContainer";
+import TabContents from "./TabContents";
 
 const Tab2 = () => {
     return(
@@ -25,13 +26,11 @@ const Tab2 = () => {
  * @returns {JSX.Element}
  * @constructor :제목 옆 탭 출력 컴포넌트
  */
-const HiddenTab = ({clickEvent,count, onClickInsertToggle, onClickDeleteToggle}) => {
+const HiddenTab = ({clickEvent, onClickInsertToggle, onClickDeleteToggle}) => {
     const [currentNum,setCurrentNum] = useState(null);
-    const [num,setNum] = useState(null);
     function clickTab(num){ setCurrentNum(num);}
     useEffect(()=>{
         clickEvent(currentNum)
-        setNum(count)
     },[clickEvent, currentNum])
 
     return(
@@ -54,21 +53,25 @@ const HiddenTab = ({clickEvent,count, onClickInsertToggle, onClickDeleteToggle})
  * @returns {JSX.Element|null}
  * @constructor
  */
-const ClinicalContents = ({entryName}) => {
+const ClinicalTab = ({entryName}) => {
     const [currentTab,setCurrentTab] = useState(null);
     const [clinical,setClinical] = useState(false);
     const [isTabOpen,setTabOpen] = useState(false);
     const [consentPosts,setConsentPosts] = useState(null); //동의서, 참여자 정보 리스트
-    const [medicalItem, setMedicalItem] = useState(null); //건강검진 항목 리스트
+    const [consentEntry, setConsentEntry] = useState(null); //동의서, 참여자 항목 리스트
+    const [medicalEntry, setMedicalEntry] = useState(null); //건강검진 항목 리스트
     const [medicalResPosts,setMedicalResPosts] = useState(null); // 건강검진 결과 리스트
-    const [num,setNum] = useState(null); //hidden tab 에 보낼 숫자
+
     const [error,setError] = useState(null); //에러 여부
     const [loading,setLoading] = useState(null); //로딩 여부
     const [isInsertToggle,setInsertToggle] = useState(false); //추가 버튼 클릭 여부
     const [isDeleteToggle,setDeleteToggle] = useState(false); //삭제 버튼 클릭 여부
+
     const [consentInsertDone, setConsentInsertDone] = useState(false); //동의서 데이터 삽입 후 저장 버튼 클릭 여부
     const [deleteDone, setDeleteDone] = useState(false); //데이터 삭제후 완료 여부 (공통)
+
     const [currentPost,setCurrentPost] = useState(null); //탭 클릭시 tabcontainer로 보낼 리스트
+    const [currentEntry,setCurrentEntry] = useState(null); //탭 클릭시 tabcontainer로 보낼 항목
     const URL = 'http://210.218.217.110:3103/api/postSampleData.php';
     let session = sessionStorage.getItem('id');
 
@@ -80,10 +83,12 @@ const ClinicalContents = ({entryName}) => {
                 setLoading(null);
                 const res1 = await axios.post(URL,{parm:'consent'});
                 const res2 = await axios.post(URL,{parm:'medicalResult'});
-                const res3 = await axios.post(URL,{parm:'medicalItem'});
+                const res3 = await axios.post(URL,{parm:'medicalEntry'});
+                const res4 = await axios.post(URL,{parm:'consentEntry'});
                 setConsentPosts(res1.data);
                 setMedicalResPosts(res2.data);
-                setMedicalItem(res3.data);
+                setMedicalEntry(res3.data);
+                setConsentEntry(res4.data);
             }catch (e){
                 setError(e);
             }
@@ -108,7 +113,7 @@ const ClinicalContents = ({entryName}) => {
     if(loading) return <div>로딩중...</div>
     if(error) return <div>error! 관리자에게 문의하세요</div>
     if(!consentPosts) return null;
-    if(!medicalItem) return null;
+    if(!medicalEntry) return null;
 
 
     /**
@@ -142,14 +147,16 @@ const ClinicalContents = ({entryName}) => {
         switch(num){
             case 1:
                 setCurrentPost(consentPosts);
-                break
+                setCurrentEntry(consentEntry);
+                break;
             case 2:
+                setCurrentPost(consentPosts);
+                setCurrentEntry(consentEntry);
                 break;
             case 3:
                 setCurrentPost(medicalResPosts);
+                setCurrentEntry(medicalEntry);
                 break
-            default:
-                setNum(0)
         }
     }
 
@@ -165,13 +172,15 @@ const ClinicalContents = ({entryName}) => {
                 </div>
             </div>
             <div className="sample container-cont">
-                {(currentTab===1 || currentTab===3) && <TabContainer URL={URL} posts={currentPost} tabNum={currentTab} itemList={medicalItem}
-                                                                     isInsert={isInsertToggle} onClickConsentInsertDone={onClickConsentInsertDone}
-                                                                     isDeleteToggle={isDeleteToggle} setDeleteToggle={setDeleteToggle} onClickDeleteDone={onClickDeleteDone} />}
-                {currentTab===2 && <Tab2/>}
+                {(currentTab===1 || currentTab===2 || currentTab===3) &&
+                <TabContainer URL={URL} posts={currentPost} tabNum={currentTab} currentEntry={currentEntry}
+                              isInsert={isInsertToggle} onClickConsentInsertDone={onClickConsentInsertDone}
+                              isDeleteToggle={isDeleteToggle} setDeleteToggle={setDeleteToggle} onClickDeleteDone={onClickDeleteDone} />
+                }
+
             </div>
         </section>
     )
 }
 
-export default ClinicalContents
+export default ClinicalTab
