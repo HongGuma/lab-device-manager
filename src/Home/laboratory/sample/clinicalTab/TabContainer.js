@@ -147,10 +147,8 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
     function onCheckAll(posts,isChecked){
         if(isChecked){
             currentPosts.map((item)=>{
-                if(item.unique_num != null){
-                    checkedItems.add(item.unique_num);
-                }else{
-                    checkedItems.add(item.r_2);
+                if(item.id != null){
+                    checkedItems.add(item.id);
                 }
             });
             setCheckedItems(checkedItems);
@@ -169,11 +167,16 @@ const TabContainer = ({URL,posts, tabNum, currentEntry, isInsert,setDeleteToggle
         if(window.confirm(checkedItems.size+'개의 데이터를 삭제하시겠습니까?')){
             if(checkedItems.size > 0) {
                 for(let item of checkedItems) {
-                    await axios.post(URL, {parm: 'consentDelete', unique_num: item});
+                    await axios.post(URL, {parm: 'consentDelete',id: item})
+                        .then(res=>{
+                            console.log(res.data);
+                        });
                 }
                 alert('삭제 되었습니다.');
                 onClickDeleteDone();
                 setDeleteToggle(false);
+            }else{
+                alert('삭제할 데이터가 없습니다.');
             }
         }else{
             alert('취소 되었습니다.');

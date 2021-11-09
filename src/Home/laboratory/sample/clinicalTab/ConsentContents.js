@@ -294,7 +294,14 @@ const ConsentContents = ({
     function onKeyPress(e){
         if(e.key === 'Enter'){
             if(window.confirm('수정 하시겠습니까?')){
-                axios.post(URL,{parm:'consentUpdate',col_nm:dubleClickedItem,update_data:updateItem.update_data,id:dubleClickedID}).then((res)=>{});
+                axios.post(URL,{parm:'consentUpdate',col_nm:dubleClickedItem,update_data:updateItem,id:dubleClickedID})
+                    .then((res)=>{
+                        if(res.data){
+                            alert("수정 완료.");
+                        }else{
+                            alert("error! 수정 실패");
+                        }
+                    });
             }
             setDubleClickedItem(null);
             setDubleClickedID(null);
@@ -353,8 +360,8 @@ const ConsentContents = ({
                             onClick={()=>onClickItem(item.id)} >
                             <li className={isDeleteToggle ? '':'none'}>
                                 <input type="checkbox"
-                                       onChange={(e)=>singleCheckHandler(e.target.checked,item.unique_num)}
-                                       checked={checkedItems.has(item.unique_num)}/></li>
+                                       onChange={(e)=>singleCheckHandler(e.target.checked,item.id)}
+                                       checked={checkedItems.has(item.id)}/></li>
 
                             {dubleClickedID === item.id && dubleClickedItem === 'r_1' ?
                                 <li><input type="textbox" value={updateItem}
