@@ -1,11 +1,11 @@
 import React from "react";
 
 const SurveyContents = () => {
-    return(
-        <section>
-            <div>준비중</div>
-        </section>
-    )
-}
+  return (
+    <section>
+      <div>준비중</div>
+    </section>
+  );
+};
 
-export default SurveyContents
+export default SurveyContents;

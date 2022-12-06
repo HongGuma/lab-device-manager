@@ -1,6 +1,6 @@
 {
   "name": "lab_device_manager",
-  "homepage": "http://ms.kogic.kr",
+  "homepage": "localhost:3000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

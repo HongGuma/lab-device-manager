@@ -20,6 +20,7 @@
 .env.production.local
 
 #server
+/server/api/db_info.php
 /server/db_info.php
 
 npm-debug.log*
